@@ -18,95 +18,85 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const parallaxContainer = document.querySelector(".parallax-container");
     const video = document.getElementById("hero-video");
     
-    let targetTime = 0;
-    let currentVideoTime = 0;
     let isVideoLoaded = false;
-    let isSeeking = false;
+    let activeZone = null;
+    let reverseFrameId = null;
+    let isReverseSeeking = false;
+    let lastReverseFrameAt = 0;
+
+    const stopReversePlayback = () => {
+        if (reverseFrameId !== null) {
+            cancelAnimationFrame(reverseFrameId);
+            reverseFrameId = null;
+        }
+        isReverseSeeking = false;
+    };
+
+    const playReverse = () => {
+        const reverseStep = (now) => {
+            if (!video || activeZone !== "left" || video.currentTime <= 0) {
+                reverseFrameId = null;
+                return;
+            }
+
+            // Browser tidak mendukung playbackRate negatif secara konsisten.
+            // Seek mundur hanya dilakukan 30 FPS dan tidak pernah bertumpuk.
+            if (!isReverseSeeking && now - lastReverseFrameAt >= 33) {
+                isReverseSeeking = true;
+                lastReverseFrameAt = now;
+                video.currentTime = Math.max(0, video.currentTime - 0.045);
+            }
+            reverseFrameId = requestAnimationFrame(reverseStep);
+        };
+
+        reverseFrameId = requestAnimationFrame(reverseStep);
+    };
 
     if (video) {
         video.preload = "auto";
-        
-        video.addEventListener("play", () => {
-            video.pause();
-        });
+        video.loop = false;
+        video.playbackRate = 1;
         
         const initVideo = () => {
             if (!isVideoLoaded) {
                 isVideoLoaded = true;
                 video.pause();
-                if (video.duration) {
-                    targetTime = video.duration / 2;
-                    currentVideoTime = video.duration / 2;
-                    video.currentTime = currentVideoTime;
-                }
+                video.currentTime = 0;
             }
         };
 
         video.addEventListener("loadedmetadata", initVideo);
-        if (video.readyState >= 1) initVideo();
-
         video.addEventListener("seeked", () => {
-            isSeeking = false;
+            isReverseSeeking = false;
         });
+        if (video.readyState >= 1) initVideo();
     }
 
     document.addEventListener("mousemove", (e) => {
-        if (prefersReducedMotion) return;
-        
-        // 1. Parallax
-        if (parallaxContainer) {
-            const x = (e.clientX / window.innerWidth - 0.5) * 2;
-            const y = (e.clientY / window.innerHeight - 0.5) * 2;
-            
-            const moveX = x * -20; 
-            const moveY = y * -20;
-            const rotateX = y * 5;
-            const rotateY = x * -5;
-            
-            parallaxContainer.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        if (prefersReducedMotion || !isVideoLoaded || !video || !video.duration) return;
+
+        // Dua area: kanan memainkan video maju, kiri memainkan video mundur sampai 0 detik.
+        const nextZone = e.clientX < window.innerWidth / 2 ? "left" : "right";
+        if (nextZone === activeZone) return;
+        activeZone = nextZone;
+
+        if (activeZone === "left") {
+            // Hentikan forward playback sebelum reverse loop dimulai agar tidak saling bentrok.
+            video.pause();
+            stopReversePlayback();
+            playReverse();
+            return;
         }
 
-        // 2. Pembagian Layar menjadi 5 Bagian (Discrete Scrubbing)
-        if (isVideoLoaded && video && video.duration) {
-            const numSections = 5; // Layar dibagi 5
-            
-            // Tentukan posisi mouse berada di blok/bagian ke berapa (0 sampai 4)
-            const rawIndex = Math.floor((e.clientX / window.innerWidth) * numSections);
-            const sectionIndex = Math.max(0, Math.min(numSections - 1, rawIndex));
-            
-            // Konversi index ke persentase durasi video (0%, 25%, 50%, 75%, 100%)
-            const scrubProgress = sectionIndex / (numSections - 1);
-            
-            // Set target waktu (dikunci aman agar tidak kena glitch ujung durasi)
-            targetTime = Math.max(0.01, Math.min(scrubProgress * video.duration, video.duration - 0.05));
+        // Hentikan reverse loop sebelum memutar video secara normal ke arah kanan.
+        stopReversePlayback();
+        if (video.currentTime >= video.duration - 0.05) {
+            video.currentTime = 0;
         }
+        video.playbackRate = 1;
+        video.play().catch(() => {});
     });
-
-    function updateVideo() {
-        if (isVideoLoaded && video && video.duration && !prefersReducedMotion) {
-            if (!video.paused) {
-                video.pause();
-            }
-
-            const diff = targetTime - currentVideoTime;
-            
-            if (Math.abs(diff) > 0.01) {
-                // Kecepatan putaran antar 5 titik (agak cepat agar transisinya tegas tapi tetap mulus)
-                currentVideoTime += diff * 0.04;
-                
-                if (!isSeeking) {
-                    isSeeking = true;
-                    video.currentTime = currentVideoTime;
-                }
-            }
-        }
-        requestAnimationFrame(updateVideo);
-    }
-    
-    if (!prefersReducedMotion) {
-        updateVideo();
-    }
 });
+
