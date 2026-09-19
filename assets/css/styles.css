@@ -13,19 +13,22 @@ body {
     perspective: 1000px;
 }
 
-.hero-video-layer {
+.hero-cube-canvas,
+.hero-cube-fallback {
     position: absolute;
     inset: 0;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 1;
-    pointer-events: none;
 }
 
-.hero-video-layer.is-active {
+.hero-cube-canvas {
+    opacity: 0;
+}
+
+.hero-canvas-stack.is-ready .hero-cube-canvas {
     opacity: 0.9;
-    visibility: visible;
-    z-index: 2;
+}
+
+.hero-canvas-stack.is-ready .hero-cube-fallback {
+    opacity: 0;
 }
 
 /* Sine wave animation */

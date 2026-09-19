@@ -17,121 +17,93 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const forwardVideo = document.getElementById("hero-video-forward");
-    const reverseVideo = document.getElementById("hero-video-reverse");
-    let activeZone = "left";
-    let visibleVideo = forwardVideo;
-    let isReady = false;
-    let transitionId = 0;
+    const canvas = document.getElementById("hero-cube-canvas");
+    const canvasStack = document.querySelector(".hero-canvas-stack");
 
-    const setVisibleVideo = (activeVideo, inactiveVideo) => {
-        inactiveVideo.classList.remove("is-active");
-        activeVideo.classList.add("is-active");
-        visibleVideo = activeVideo;
+    if (!canvas || !canvasStack || prefersReducedMotion) return;
+
+    const context = canvas.getContext("2d", { alpha: true });
+    const frameCount = 215;
+    const frameRate = 60000 / 1001;
+    const frames = Array.from({ length: frameCount });
+    let loadedFrames = 0;
+    let currentFrame = 0;
+    let direction = 0;
+    let lastTimestamp = 0;
+    let animationFrameId = null;
+
+    const framePath = (index) => `assets/frames/cube-${String(index + 1).padStart(3, "0")}.webp`;
+
+    const drawFrame = (index) => {
+        const image = frames[index];
+        if (!image) return;
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
     };
 
-    const playDirection = (zone) => {
-        if (!isReady || zone === activeZone) return;
+    const animate = (timestamp) => {
+        if (!lastTimestamp) lastTimestamp = timestamp;
+        const elapsed = timestamp - lastTimestamp;
+        const frameStep = (elapsed * frameRate) / 1000;
+        lastTimestamp = timestamp;
 
-        const enteringRight = zone === "right";
-        const requestedVideo = enteringRight ? forwardVideo : reverseVideo;
-        const currentTransition = ++transitionId;
-        activeZone = zone;
+        if (direction !== 0) {
+            const previousFrameIndex = Math.round(currentFrame);
+            currentFrame = Math.max(0, Math.min(frameCount - 1, currentFrame + direction * frameStep));
+            const nextFrameIndex = Math.round(currentFrame);
 
-        // Jika video yang diminta sudah merupakan layer aktif, langsung play native
-        if (requestedVideo === visibleVideo) {
-            requestedVideo.playbackRate = 1;
-            requestedVideo.play().catch(() => {});
-            return;
-        }
-
-        const duration = forwardVideo.duration || 3.58;
-        const frameDuration = 1001 / 60000;
-        const totalFrames = 215;
-        const visibleFrameIndex = Math.max(0, Math.min(
-            totalFrames - 1,
-            Math.round((visibleVideo === forwardVideo
-                ? visibleVideo.currentTime
-                : duration - frameDuration - visibleVideo.currentTime) / frameDuration)
-        ));
-
-        // Reverse asset memakai urutan frame yang berlawanan. Dengan indeks diskret,
-        // frame yang ditampilkan saat swap identik, tanpa error pecahan timestamp.
-        const targetFrameIndex = enteringRight
-            ? visibleFrameIndex
-            : totalFrames - 1 - visibleFrameIndex;
-        const matchingTime = targetFrameIndex * frameDuration;
-
-        const inactiveVideo = visibleVideo;
-        const safeTargetTime = Math.max(0, Math.min(matchingTime, duration - 0.001));
-
-        // Video tujuan harus berhenti tepat di frame pasangan terlebih dahulu.
-        // Memulai play sebelum layer ditukar membuatnya maju satu frame dan menyebabkan glitch pose cube.
-        requestedVideo.pause();
-        requestedVideo.playbackRate = 1;
-
-        let hasSwapped = false;
-        const swapThenPlay = () => {
-            if (hasSwapped || currentTransition !== transitionId || activeZone !== zone) return;
-            hasSwapped = true;
-
-            // Tampilkan frame target yang sudah didekode, lalu jalankan playback pada frame browser berikutnya.
-            inactiveVideo.pause();
-            setVisibleVideo(requestedVideo, inactiveVideo);
-            requestAnimationFrame(() => {
-                if (currentTransition === transitionId && activeZone === zone) {
-                    requestedVideo.play().catch(() => {});
-                }
-            });
-        };
-
-        if (Math.abs(requestedVideo.currentTime - safeTargetTime) < 0.005) {
-            swapThenPlay();
-        } else {
-            requestedVideo.addEventListener("seeked", swapThenPlay, { once: true });
-            requestedVideo.currentTime = safeTargetTime;
-        }
-    };
-
-    if (forwardVideo && reverseVideo) {
-        forwardVideo.loop = false;
-        reverseVideo.loop = false;
-
-        // Ketika video reverse selesai mundur ke awal (sampai duration),
-        // kembalikan ke layer forwardVideo di detik 0 agar siap diputar lagi
-        reverseVideo.addEventListener("ended", () => {
-            reverseVideo.pause();
-            forwardVideo.currentTime = 0;
-            setVisibleVideo(forwardVideo, reverseVideo);
-        });
-
-        forwardVideo.addEventListener("ended", () => {
-            forwardVideo.pause();
-        });
-
-        let metadataCount = 0;
-        const markReady = () => {
-            metadataCount++;
-            if (metadataCount >= 2 && !isReady) {
-                isReady = true;
-                // Selalu mulai di frame 0 posisi awal kubus normal
-                const initialFrameDuration = 1001 / 60000;
-                forwardVideo.currentTime = 0;
-                reverseVideo.currentTime = (forwardVideo.duration || 3.58) - initialFrameDuration;
-                setVisibleVideo(forwardVideo, reverseVideo);
+            if (nextFrameIndex !== previousFrameIndex) {
+                drawFrame(nextFrameIndex);
             }
-        };
 
-        if (forwardVideo.readyState >= 1) markReady();
-        if (reverseVideo.readyState >= 1) markReady();
+            if (currentFrame <= 0 || currentFrame >= frameCount - 1) {
+                currentFrame = Math.round(currentFrame);
+                direction = 0;
+                drawFrame(currentFrame);
+            }
+        }
 
-        forwardVideo.addEventListener("loadedmetadata", markReady, { once: true });
-        reverseVideo.addEventListener("loadedmetadata", markReady, { once: true });
+        animationFrameId = requestAnimationFrame(animate);
+    };
 
-        document.addEventListener("mousemove", (e) => {
-            if (prefersReducedMotion || !isReady) return;
-            playDirection(e.clientX < window.innerWidth / 2 ? "left" : "right");
+    const setDirectionFromMouse = (event) => {
+        direction = event.clientX < window.innerWidth / 2 ? -1 : 1;
+
+        if ((direction < 0 && currentFrame <= 0) || (direction > 0 && currentFrame >= frameCount - 1)) {
+            direction = 0;
+        }
+    };
+
+    const preloadFrame = (index) => new Promise((resolve, reject) => {
+        const image = new Image();
+        image.decoding = "async";
+        image.addEventListener("load", async () => {
+            try {
+                await image.decode();
+                frames[index] = image;
+                resolve();
+            } catch (error) {
+                reject(error);
+            }
+        }, { once: true });
+        image.addEventListener("error", () => reject(new Error(`Cube frame gagal dimuat: ${framePath(index)}`)), { once: true });
+        image.src = framePath(index);
+    });
+
+    Promise.all(Array.from({ length: frameCount }, (_, index) => preloadFrame(index)))
+        .then(() => {
+            drawFrame(0);
+            canvasStack.classList.add("is-ready");
+            document.addEventListener("mousemove", setDirectionFromMouse);
+            animationFrameId = requestAnimationFrame(animate);
+        })
+        .catch((error) => {
+            console.error(error);
         });
-    }
+
+    window.addEventListener("pagehide", () => {
+        if (animationFrameId !== null) cancelAnimationFrame(animationFrameId);
+    }, { once: true });
 });
 
