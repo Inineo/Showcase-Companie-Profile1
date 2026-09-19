@@ -13,6 +13,21 @@ body {
     perspective: 1000px;
 }
 
+.hero-video-layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-video-layer.is-active {
+    opacity: 0.9;
+    visibility: visible;
+    z-index: 2;
+}
+
 /* Sine wave animation */
 .sine-wave {
     animation: wave-motion 4s ease-in-out infinite alternate;

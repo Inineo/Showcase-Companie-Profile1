@@ -53,15 +53,23 @@
                 <div class="absolute left-0 top-0 w-1/2 h-full bg-gradient-to-r from-[#030305] via-[#030305]/80 to-transparent z-10 opacity-80 mix-blend-multiply"></div>
                 
                 <div class="relative w-full h-full max-w-[1400px] flex items-center justify-center">
-                    <div class="w-[105vh] h-[105vh] lg:w-[82vw] lg:h-[82vh]">
-                        <!-- Removed autoplay and loop strictly so JS can control scrubbing without frame skipping -->
+                    <div class="hero-video-stack w-[105vh] h-[105vh] lg:w-[82vw] lg:h-[82vh] relative">
                         <video 
-                            id="hero-video"
+                            id="hero-video-forward"
                             src="assets/videos/hero-video.mp4" 
                             poster="assets/images/hero-cube.jpg"
                             muted 
                             playsinline
-                            class="w-full h-full object-contain mix-blend-screen opacity-90 video-float" 
+                            preload="auto"
+                            class="hero-video-layer is-active w-full h-full object-contain mix-blend-screen"
+                        ></video>
+                        <video
+                            id="hero-video-reverse"
+                            src="assets/videos/hero-video-reverse.mp4"
+                            muted
+                            playsinline
+                            preload="auto"
+                            class="hero-video-layer w-full h-full object-contain mix-blend-screen"
                         ></video>
                     </div>
                 </div>

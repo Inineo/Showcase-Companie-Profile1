@@ -11,92 +11,129 @@ document.addEventListener("DOMContentLoaded", () => {
             cursor.style.top = e.clientY + "px";
         });
 
-        const interactables = document.querySelectorAll("button, a");
-        interactables.forEach(el => {
-            el.addEventListener("mouseenter", () => cursor.classList.add("active"));
-            el.addEventListener("mouseleave", () => cursor.classList.remove("active"));
+        document.querySelectorAll("button, a").forEach((element) => {
+            element.addEventListener("mouseenter", () => cursor.classList.add("active"));
+            element.addEventListener("mouseleave", () => cursor.classList.remove("active"));
         });
     }
 
-    const video = document.getElementById("hero-video");
-    
-    let isVideoLoaded = false;
-    let activeZone = null;
-    let reverseFrameId = null;
-    let isReverseSeeking = false;
-    let lastReverseFrameAt = 0;
+    const forwardVideo = document.getElementById("hero-video-forward");
+    const reverseVideo = document.getElementById("hero-video-reverse");
+    let activeZone = "left";
+    let visibleVideo = forwardVideo;
+    let isReady = false;
+    let transitionId = 0;
 
-    const stopReversePlayback = () => {
-        if (reverseFrameId !== null) {
-            cancelAnimationFrame(reverseFrameId);
-            reverseFrameId = null;
-        }
-        isReverseSeeking = false;
+    const setVisibleVideo = (activeVideo, inactiveVideo) => {
+        inactiveVideo.classList.remove("is-active");
+        activeVideo.classList.add("is-active");
+        visibleVideo = activeVideo;
     };
 
-    const playReverse = () => {
-        const reverseStep = (now) => {
-            if (!video || activeZone !== "left" || video.currentTime <= 0) {
-                reverseFrameId = null;
-                return;
-            }
+    const playDirection = (zone) => {
+        if (!isReady || zone === activeZone) return;
 
-            // Browser tidak mendukung playbackRate negatif secara konsisten.
-            // Seek mundur hanya dilakukan 30 FPS dan tidak pernah bertumpuk.
-            if (!isReverseSeeking && now - lastReverseFrameAt >= 33) {
-                isReverseSeeking = true;
-                lastReverseFrameAt = now;
-                video.currentTime = Math.max(0, video.currentTime - 0.045);
-            }
-            reverseFrameId = requestAnimationFrame(reverseStep);
-        };
+        const enteringRight = zone === "right";
+        const requestedVideo = enteringRight ? forwardVideo : reverseVideo;
+        const currentTransition = ++transitionId;
+        activeZone = zone;
 
-        reverseFrameId = requestAnimationFrame(reverseStep);
-    };
-
-    if (video) {
-        video.preload = "auto";
-        video.loop = false;
-        video.playbackRate = 1;
-        
-        const initVideo = () => {
-            if (!isVideoLoaded) {
-                isVideoLoaded = true;
-                video.pause();
-                video.currentTime = 0;
-            }
-        };
-
-        video.addEventListener("loadedmetadata", initVideo);
-        video.addEventListener("seeked", () => {
-            isReverseSeeking = false;
-        });
-        if (video.readyState >= 1) initVideo();
-    }
-
-    document.addEventListener("mousemove", (e) => {
-        if (prefersReducedMotion || !isVideoLoaded || !video || !video.duration) return;
-
-        // Dua area: kanan memainkan video maju, kiri memainkan video mundur sampai 0 detik.
-        const nextZone = e.clientX < window.innerWidth / 2 ? "left" : "right";
-        if (nextZone === activeZone) return;
-        activeZone = nextZone;
-
-        if (activeZone === "left") {
-            // Hentikan forward playback sebelum reverse loop dimulai agar tidak saling bentrok.
-            video.pause();
-            stopReversePlayback();
-            playReverse();
+        // Jika video yang diminta sudah merupakan layer aktif, langsung play native
+        if (requestedVideo === visibleVideo) {
+            requestedVideo.playbackRate = 1;
+            requestedVideo.play().catch(() => {});
             return;
         }
 
-        // Hentikan reverse loop sebelum memutar video secara normal ke arah kanan.
-        stopReversePlayback();
-        if (video.currentTime >= video.duration - 0.05) {
-            video.currentTime = 0;
+        const duration = forwardVideo.duration || 3.58;
+        const currentProgressTime = visibleVideo === forwardVideo
+            ? visibleVideo.currentTime
+            : (duration - visibleVideo.currentTime);
+
+        const matchingTime = enteringRight
+            ? currentProgressTime
+            : (duration - currentProgressTime);
+
+        const inactiveVideo = visibleVideo;
+        const safeTargetTime = Math.max(0, Math.min(matchingTime, duration - 0.001));
+
+        // Jangan pause layer yang sedang terlihat. Biarkan ia terus bermain sampai
+        // frame pasangan dari video tujuan benar-benar siap, supaya tidak ada freeze.
+        requestedVideo.pause();
+        requestedVideo.playbackRate = 1;
+
+        let hasSwapped = false;
+        const doSwapAndPlay = () => {
+            if (hasSwapped || currentTransition !== transitionId || activeZone !== zone) return;
+            hasSwapped = true;
+            inactiveVideo.pause();
+            setVisibleVideo(requestedVideo, inactiveVideo);
+        };
+
+        const playThenSwap = () => {
+            if (currentTransition !== transitionId || activeZone !== zone) return;
+
+            requestedVideo.play().then(() => {
+                if (currentTransition !== transitionId || activeZone !== zone) {
+                    requestedVideo.pause();
+                    return;
+                }
+
+                // Frame callback berjalan sesudah decoder menyerahkan frame ke compositor.
+                if (typeof requestedVideo.requestVideoFrameCallback === "function") {
+                    requestedVideo.requestVideoFrameCallback(doSwapAndPlay);
+                } else {
+                    requestAnimationFrame(doSwapAndPlay);
+                }
+            }).catch(() => {});
+        };
+
+        if (Math.abs(requestedVideo.currentTime - safeTargetTime) < 0.005) {
+            playThenSwap();
+        } else {
+            requestedVideo.addEventListener("seeked", playThenSwap, { once: true });
+            requestedVideo.currentTime = safeTargetTime;
         }
-        video.playbackRate = 1;
-        video.play().catch(() => {});
-    });
+    };
+
+    if (forwardVideo && reverseVideo) {
+        forwardVideo.loop = false;
+        reverseVideo.loop = false;
+
+        // Ketika video reverse selesai mundur ke awal (sampai duration),
+        // kembalikan ke layer forwardVideo di detik 0 agar siap diputar lagi
+        reverseVideo.addEventListener("ended", () => {
+            reverseVideo.pause();
+            forwardVideo.currentTime = 0;
+            setVisibleVideo(forwardVideo, reverseVideo);
+        });
+
+        forwardVideo.addEventListener("ended", () => {
+            forwardVideo.pause();
+        });
+
+        let metadataCount = 0;
+        const markReady = () => {
+            metadataCount++;
+            if (metadataCount >= 2 && !isReady) {
+                isReady = true;
+                // Selalu mulai di frame 0 posisi awal kubus normal
+                forwardVideo.currentTime = 0;
+                reverseVideo.currentTime = (forwardVideo.duration || 3.58) - 0.001;
+                setVisibleVideo(forwardVideo, reverseVideo);
+            }
+        };
+
+        if (forwardVideo.readyState >= 1) markReady();
+        if (reverseVideo.readyState >= 1) markReady();
+
+        forwardVideo.addEventListener("loadedmetadata", markReady, { once: true });
+        reverseVideo.addEventListener("loadedmetadata", markReady, { once: true });
+
+        document.addEventListener("mousemove", (e) => {
+            if (prefersReducedMotion || !isReady) return;
+            playDirection(e.clientX < window.innerWidth / 2 ? "left" : "right");
+        });
+    }
 });
 
