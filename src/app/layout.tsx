@@ -5,6 +5,7 @@ import CustomCursor from '@/components/CustomCursor';
 
 const inter = Inter({
   subsets: ['latin'],
+  weight: ['300', '400', '500'],
   variable: '--font-inter',
   display: 'swap',
 });
@@ -22,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} antialiased bg-[#030305] text-gray-200 selection:bg-purple-900/50 selection:text-white`}>
+      <body className={`${inter.className} ${inter.variable} font-sans antialiased bg-[#030305] text-gray-200 selection:bg-purple-900/50 selection:text-white`}>
         <CustomCursor />
         {children}
       </body>

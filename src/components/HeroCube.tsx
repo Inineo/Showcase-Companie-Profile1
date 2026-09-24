@@ -93,16 +93,25 @@ export default function HeroCube() {
         image.src = framePath(index);
       });
 
-    Promise.all(Array.from({ length: frameCount }, (_, index) => preloadFrame(index)))
+    // Load frame 0 immediately for instant display
+    preloadFrame(0)
       .then(() => {
         if (!isMounted) return;
         drawFrame(0);
         container.classList.add('is-ready');
+
+        // Preload remaining frames for smooth interactive animation
+        return Promise.all(
+          Array.from({ length: frameCount - 1 }, (_, i) => preloadFrame(i + 1))
+        );
+      })
+      .then(() => {
+        if (!isMounted) return;
         window.addEventListener('mousemove', setDirectionFromMouse, { passive: true });
         animationFrameId = requestAnimationFrame(animate);
       })
       .catch((error) => {
-        console.warn('Cube frames could not be loaded, using fallback video:', error);
+        console.warn('Cube frames could not be loaded, using fallback:', error);
       });
 
     return () => {
@@ -122,15 +131,13 @@ export default function HeroCube() {
         height={720}
         aria-label="Interactive 3D animated cube"
       />
-      <video
-        className="hero-cube-fallback w-full h-full object-contain mix-blend-screen opacity-90 pointer-events-none"
-        autoPlay
-        loop
-        muted
-        playsInline
-      >
-        <source src="/assets/videos/cube.mp4" type="video/mp4" />
-      </video>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        id="hero-cube-fallback"
+        src="/assets/images/hero-cube.jpg"
+        alt="Abstract 3D cube"
+        className="hero-cube-fallback w-full h-full object-contain mix-blend-screen"
+      />
     </div>
   );
 }
