@@ -11,7 +11,7 @@
 <body class="bg-[#030305] text-gray-200 font-sans antialiased overflow-x-hidden selection:bg-purple-900/50 selection:text-white">
     
     <!-- Top Navigation -->
-    <nav class="fixed top-0 left-0 w-full p-6 md:p-10 flex justify-between items-center z-50 fade-in bg-gradient-to-b from-[#030305]/80 to-transparent backdrop-blur-[2px]">
+    <nav class="fixed top-0 left-0 w-full p-6 md:p-10 flex justify-between items-center z-[100] fade-in bg-[#030305]/90 backdrop-blur-md border-b border-white/5">
         <button class="flex items-center gap-3 text-xs md:text-sm tracking-[0.1em] uppercase hover:text-white text-gray-300 transition-colors">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                 <line x1="4" y1="9" x2="20" y2="9"></line>
@@ -112,15 +112,15 @@
         
     </main>
 
-    <!-- Section: What We Do (Curtain Effect covering Hero, header scrolls naturally after cards complete) -->
-    <section id="what-we-do" class="curtain-section relative z-30 w-full bg-[#050508] border-t border-purple-500/40 rounded-t-[3rem] shadow-[0_-30px_90px_rgba(0,0,0,0.98)] pb-32">
+    <!-- Section: What We Do (Curtain Effect covering Hero, header stays pinned at top beneath navbar) -->
+    <section id="what-we-do" class="curtain-section relative z-30 w-full bg-[#030305] border-t border-purple-500/40 rounded-t-[3rem] shadow-[0_-30px_90px_rgba(0,0,0,0.98)] pb-32">
         <!-- Clean Continuous Illuminated Horizon Rim Light -->
-        <div class="curtain-rim-light absolute top-0 left-0 right-0 h-[2px] rounded-t-[3rem] bg-gradient-to-r from-transparent via-purple-400 to-transparent pointer-events-none"></div>
+        <div class="curtain-rim-light absolute top-0 left-0 right-0 h-[2px] rounded-t-[3rem] bg-gradient-to-r from-transparent via-purple-400 to-transparent pointer-events-none z-50"></div>
 
-        <!-- Section Header (Static relative to What We Do section, so cards stack below it and push it up when section ends) -->
-        <div class="w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-20 pb-10 border-b border-white/10 bg-[#050508]">
+        <!-- Section Header Anchor (Opaque solid background bg-[#030305] pinned at top-[75px] with z-[50]) -->
+        <div class="sticky top-[75px] z-[50] w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-10 pb-6 bg-[#030305] border-b border-white/10 shadow-[0_25px_45px_rgba(3,3,5,1)]">
             <div class="flex flex-col md:flex-row md:items-end justify-between max-w-6xl mx-auto">
-                <div class="flex flex-col gap-2">
+                <div class="flex flex-col gap-3">
                     <div class="flex items-center gap-3">
                         <span class="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]"></span>
                         <span class="text-xs uppercase tracking-[0.25em] text-purple-400 font-mono">Capabilities // 02</span>
@@ -135,11 +135,11 @@
             </div>
         </div>
 
-        <!-- Overlapping Cards Stack Container (Cards dock cleanly with comfortable offsets below navbar) -->
-        <div class="cards-stack relative max-w-6xl mx-auto flex flex-col items-center px-6 md:px-16 lg:px-24 xl:px-32 pt-16">
+        <!-- Overlapping Cards Stack Container (Isolated z-[10] stacking context below header z-[50]) -->
+        <div class="cards-stack relative z-10 max-w-6xl mx-auto flex flex-col items-center px-6 md:px-16 lg:px-24 xl:px-32 pt-10">
             
             <!-- Card 01: Web Experiences -->
-            <article class="stack-card sticky-card group w-full bg-[#0c0c14] border border-white/15 hover:border-purple-500/60 rounded-3xl p-8 md:p-12 lg:p-14 transition-all duration-300 shadow-[0_-5px_30px_rgba(168,85,247,0.08),0_20px_50px_rgba(0,0,0,0.9)] mb-16 overflow-hidden" style="top: 100px;">
+            <article class="stack-card sticky-card group w-full bg-[#0c0c14] border border-white/15 hover:border-purple-500/60 rounded-3xl p-8 md:p-12 lg:p-14 transition-all duration-300 shadow-[0_-5px_30px_rgba(168,85,247,0.08),0_20px_50px_rgba(0,0,0,0.9)] mb-16 overflow-hidden z-10" style="top: 205px;">
                 <!-- Top Edge Highlight Line for Card 01 -->
                 <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/40 to-transparent"></div>
                 <!-- Ambient Glow Background Effect -->
@@ -192,7 +192,7 @@
             </article>
 
             <!-- Card 02: Business Systems -->
-            <article class="stack-card sticky-card group w-full bg-[#0e0e18] border border-white/15 hover:border-purple-500/60 rounded-3xl p-8 md:p-12 lg:p-14 transition-all duration-300 shadow-[0_-5px_30px_rgba(168,85,247,0.1),0_25px_60px_rgba(0,0,0,0.95)] mb-16 overflow-hidden" style="top: 125px;">
+            <article class="stack-card sticky-card group w-full bg-[#0e0e18] border border-white/15 hover:border-purple-500/60 rounded-3xl p-8 md:p-12 lg:p-14 transition-all duration-300 shadow-[0_-5px_30px_rgba(168,85,247,0.1),0_25px_60px_rgba(0,0,0,0.95)] mb-16 overflow-hidden z-20" style="top: 225px;">
                 <!-- Top Edge Highlight Line for Card 02 -->
                 <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400/50 to-transparent"></div>
                 <!-- Ambient Glow Background Effect -->
@@ -245,7 +245,7 @@
             </article>
 
             <!-- Card 03: Digital Products -->
-            <article class="stack-card sticky-card group w-full bg-[#10101f] border border-white/15 hover:border-purple-500/60 rounded-3xl p-8 md:p-12 lg:p-14 transition-all duration-300 shadow-[0_-5px_30px_rgba(168,85,247,0.12),0_30px_70px_rgba(0,0,0,0.98)] mb-16 overflow-hidden" style="top: 150px;">
+            <article class="stack-card sticky-card group w-full bg-[#10101f] border border-white/15 hover:border-purple-500/60 rounded-3xl p-8 md:p-12 lg:p-14 transition-all duration-300 shadow-[0_-5px_30px_rgba(168,85,247,0.12),0_30px_70px_rgba(0,0,0,0.98)] mb-16 overflow-hidden z-30" style="top: 245px;">
                 <!-- Top Edge Highlight Line for Card 03 -->
                 <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400/60 to-transparent"></div>
                 <!-- Ambient Glow Background Effect -->
