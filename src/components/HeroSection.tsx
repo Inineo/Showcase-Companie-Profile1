@@ -5,10 +5,10 @@ export default function HeroSection() {
     <main className="sticky top-0 w-full min-h-screen flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 pt-24 pb-16 z-0">
       {/* Left Content */}
       <div className="relative z-10 max-w-2xl flex flex-col gap-8 md:gap-10 mt-8 slide-up pointer-events-auto">
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-light leading-[1.05] tracking-tight text-white drop-shadow-2xl">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-light leading-[1.1] tracking-tight text-white drop-shadow-2xl">
           We build digital<br className="hidden sm:inline" /> experiences that make<br className="hidden sm:inline" /> businesses work better.
         </h1>
-        <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-md font-light tracking-wide drop-shadow-lg">
+        <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-md font-light tracking-wide drop-shadow-lg">
           KIBI helps businesses turn ideas, problems, and opportunities into practical digital products - websites, business systems, and digital experiences.
         </p>
         <button
