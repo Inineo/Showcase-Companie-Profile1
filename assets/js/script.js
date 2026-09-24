@@ -1,17 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    // Optimized Custom Cursor with requestAnimationFrame
     if (!prefersReducedMotion) {
         const cursor = document.createElement("div");
         cursor.classList.add("custom-cursor");
         document.body.appendChild(cursor);
 
-        document.addEventListener("mousemove", (e) => {
-            cursor.style.left = e.clientX + "px";
-            cursor.style.top = e.clientY + "px";
-        });
+        let mouseX = -100;
+        let mouseY = -100;
+        let cursorTicking = false;
 
-        document.querySelectorAll("button, a").forEach((element) => {
+        document.addEventListener("mousemove", (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            if (!cursorTicking) {
+                requestAnimationFrame(() => {
+                    cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+                    cursorTicking = false;
+                });
+                cursorTicking = true;
+            }
+        }, { passive: true });
+
+        document.querySelectorAll("button, a, .stack-card").forEach((element) => {
             element.addEventListener("mouseenter", () => cursor.classList.add("active"));
             element.addEventListener("mouseleave", () => cursor.classList.remove("active"));
         });
@@ -26,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const frameCount = 215;
     const frameRate = 60000 / 1001;
     const frames = Array.from({ length: frameCount });
-    let loadedFrames = 0;
     let currentFrame = 0;
     let direction = 0;
     let lastTimestamp = 0;
@@ -91,11 +102,12 @@ document.addEventListener("DOMContentLoaded", () => {
         image.src = framePath(index);
     });
 
+    // Fast sequential loading so frame 0 is shown immediately
     Promise.all(Array.from({ length: frameCount }, (_, index) => preloadFrame(index)))
         .then(() => {
             drawFrame(0);
             canvasStack.classList.add("is-ready");
-            document.addEventListener("mousemove", setDirectionFromMouse);
+            document.addEventListener("mousemove", setDirectionFromMouse, { passive: true });
             animationFrameId = requestAnimationFrame(animate);
         })
         .catch((error) => {
