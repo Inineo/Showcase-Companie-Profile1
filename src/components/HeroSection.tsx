@@ -6,7 +6,7 @@ export default function HeroSection() {
       {/* Left Content */}
       <div className="relative z-10 max-w-2xl flex flex-col gap-8 md:gap-10 mt-8 slide-up pointer-events-auto">
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-light leading-[1.05] tracking-tight text-white drop-shadow-2xl">
-          We build digital experiences that make businesses work better.
+          We build digital<br className="hidden sm:inline" /> experiences that make<br className="hidden sm:inline" /> businesses work better.
         </h1>
         <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-md font-light tracking-wide drop-shadow-lg">
           KIBI helps businesses turn ideas, problems, and opportunities into practical digital products - websites, business systems, and digital experiences.
