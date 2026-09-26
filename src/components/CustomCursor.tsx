@@ -26,31 +26,34 @@ export default function CustomCursor() {
       }
     };
 
-    const onMouseEnter = () => cursor.classList.add('active');
-    const onMouseLeave = () => cursor.classList.remove('active');
-
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
-
-    const attachHoverListeners = () => {
-      document.querySelectorAll('button, a, .stack-card').forEach((el) => {
-        el.addEventListener('mouseenter', onMouseEnter);
-        el.addEventListener('mouseleave', onMouseLeave);
-      });
+    /* ─── Event Delegation: Satu listener di document level ─── */
+    const onMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('button, a, .stack-card')) {
+        cursor.classList.add('active');
+      }
     };
 
-    attachHoverListeners();
+    const onMouseOut = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const related = e.relatedTarget as HTMLElement | null;
 
-    // Re-attach if DOM changes
-    const observer = new MutationObserver(attachHoverListeners);
-    observer.observe(document.body, { childList: true, subtree: true });
+      // Hanya hapus 'active' jika keluar dari elemen interaktif (bukan masuk ke child-nya)
+      if (target.closest('button, a, .stack-card')) {
+        if (!related || !related.closest('button, a, .stack-card')) {
+          cursor.classList.remove('active');
+        }
+      }
+    };
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('mouseover', onMouseOver, { passive: true });
+    document.addEventListener('mouseout', onMouseOut, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
-      observer.disconnect();
-      document.querySelectorAll('button, a, .stack-card').forEach((el) => {
-        el.removeEventListener('mouseenter', onMouseEnter);
-        el.removeEventListener('mouseleave', onMouseLeave);
-      });
+      document.removeEventListener('mouseover', onMouseOver);
+      document.removeEventListener('mouseout', onMouseOut);
     };
   }, []);
 

@@ -24,6 +24,7 @@ export default function HeroCube() {
     let lastTimestamp = 0;
     let animationFrameId: number | null = null;
     let isMounted = true;
+    let isVisible = true;
 
     const framePath = (index: number) =>
       `/assets/frames/cube-${String(index + 1).padStart(3, '0')}.webp`;
@@ -37,6 +38,14 @@ export default function HeroCube() {
 
     const animate = (timestamp: number) => {
       if (!isMounted) return;
+
+      // Hentikan rendering jika hero sudah tertutup section lain
+      if (!isVisible) {
+        lastTimestamp = 0;
+        animationFrameId = requestAnimationFrame(animate);
+        return;
+      }
+
       if (!lastTimestamp) lastTimestamp = timestamp;
       const elapsed = timestamp - lastTimestamp;
       const frameStep = (elapsed * frameRate) / 1000;
@@ -62,6 +71,7 @@ export default function HeroCube() {
     };
 
     const setDirectionFromMouse = (event: MouseEvent) => {
+      if (!isVisible) return;
       direction = event.clientX < window.innerWidth / 2 ? -1 : 1;
       if ((direction < 0 && currentFrame <= 0) || (direction > 0 && currentFrame >= frameCount - 1)) {
         direction = 0;
@@ -93,17 +103,62 @@ export default function HeroCube() {
         image.src = framePath(index);
       });
 
+    /* ─── Batch Preload: Muat 20 frame per batch agar tidak block main thread ─── */
+    const preloadBatch = async (startIndex: number, batchSize: number) => {
+      const end = Math.min(startIndex + batchSize, frameCount);
+      const batch = [];
+      for (let i = startIndex; i < end; i++) {
+        if (!frames[i]) {
+          batch.push(preloadFrame(i));
+        }
+      }
+      await Promise.all(batch);
+    };
+
+    const preloadAllBatched = async () => {
+      const BATCH_SIZE = 20;
+      for (let i = 1; i < frameCount; i += BATCH_SIZE) {
+        if (!isMounted) return;
+        await preloadBatch(i, BATCH_SIZE);
+        await new Promise<void>((r) => setTimeout(r, 0));
+      }
+    };
+
+    /* ─── Scroll-Based Visibility: Hero section sticky top-0 tidak keluar viewport,
+       jadi kita deteksi apakah section curtain (#what-we-do) sudah menutupi hero ─── */
+    const checkVisibility = () => {
+      const whatWeDo = document.getElementById('what-we-do');
+      if (!whatWeDo) {
+        isVisible = true;
+        return;
+      }
+      const rect = whatWeDo.getBoundingClientRect();
+      // Jika bagian atas section WhatWeDo sudah menutup lebih dari 60% tinggi viewport,
+      // artinya hero sudah sepenuhnya tertutup
+      isVisible = rect.top > window.innerHeight * 0.6;
+    };
+
+    let scrollTicking = false;
+    const onScroll = () => {
+      if (!scrollTicking) {
+        requestAnimationFrame(() => {
+          checkVisibility();
+          scrollTicking = false;
+        });
+        scrollTicking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    checkVisibility(); // Initial check
+
     // Load frame 0 immediately for instant display
     preloadFrame(0)
       .then(() => {
         if (!isMounted) return;
         drawFrame(0);
         container.classList.add('is-ready');
-
-        // Preload remaining frames for smooth interactive animation
-        return Promise.all(
-          Array.from({ length: frameCount - 1 }, (_, i) => preloadFrame(i + 1))
-        );
+        return preloadAllBatched();
       })
       .then(() => {
         if (!isMounted) return;
@@ -118,6 +173,7 @@ export default function HeroCube() {
       isMounted = false;
       if (animationFrameId !== null) cancelAnimationFrame(animationFrameId);
       window.removeEventListener('mousemove', setDirectionFromMouse);
+      window.removeEventListener('scroll', onScroll);
     };
   }, []);
 

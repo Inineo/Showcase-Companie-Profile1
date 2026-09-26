@@ -132,6 +132,41 @@
   box-shadow: 0 30px 80px -15px rgba(168, 85, 247, 0.15), 0 0 20px 1px rgba(255, 255, 255, 0.05);
 }
 
+/* ─── Selected Work Card Slider (GPU-promoted) ─── */
+.selected-card-active,
+.selected-card-idle {
+  will-change: transform, opacity;
+  contain: layout style;
+  transform: translateZ(0);
+  transition: box-shadow 0.3s ease, ring-color 0.3s ease;
+}
+
+.selected-card-active {
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.98), 0 0 60px rgba(168, 85, 247, 0.3);
+  outline: 1px solid rgba(255, 255, 255, 0.25);
+  outline-offset: -1px;
+}
+
+.selected-card-idle {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+  outline: 1px solid rgba(255, 255, 255, 0.1);
+  outline-offset: -1px;
+}
+
+.selected-card-idle:hover {
+  outline-color: rgba(192, 132, 252, 0.4);
+}
+
+/* ─── Hero Canvas GPU Promotion ─── */
+.hero-canvas-stack {
+  will-change: contents;
+  contain: layout style;
+}
+
+.hero-cube-canvas {
+  will-change: auto;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-play-state: paused !important;

@@ -7,8 +7,8 @@ export default function WhatWeDo() {
       {/* Clean Continuous Illuminated Horizon Rim Light */}
       <div className="curtain-rim-light absolute top-0 left-0 right-0 h-[2px] rounded-t-[3rem] bg-gradient-to-r from-transparent via-purple-400 to-transparent pointer-events-none z-50" />
 
-      {/* Section Header Anchor (Pinned at top-[75px] beneath Navbar with z-[50]) */}
-      <div className="sticky top-[75px] z-[50] w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-10 pb-6 bg-[#030305] border-b border-white/10 shadow-[0_25px_45px_rgba(3,3,5,1)]">
+      {/* Section Header (Pinned while cards stack, scrolls away with section) */}
+      <div className="sticky top-[75px] z-[50] w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-10 pb-6 bg-[#030305] border-b border-white/10 shadow-[0_25px_45px_rgba(3,3,5,1)]" style={{ contain: 'layout style paint' }}>
         <div className="flex flex-col md:flex-row md:items-end justify-between max-w-6xl mx-auto">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
@@ -31,7 +31,7 @@ export default function WhatWeDo() {
         {/* Card 01: Web Experiences */}
         <article
           className="stack-card sticky-card group w-full bg-[#0c0c14] border border-white/15 hover:border-purple-500/60 rounded-3xl p-8 md:p-12 lg:p-14 transition-all duration-300 shadow-[0_-5px_30px_rgba(168,85,247,0.08),0_20px_50px_rgba(0,0,0,0.9)] mb-16 overflow-hidden z-10"
-          style={{ top: '205px' }}
+          style={{ top: '260px' }}
         >
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
           <div className="absolute -top-24 -right-24 w-80 h-80 bg-purple-600/10 rounded-full blur-2xl pointer-events-none group-hover:bg-purple-600/20 transition-colors duration-500" />
@@ -89,7 +89,7 @@ export default function WhatWeDo() {
         {/* Card 02: Business Systems */}
         <article
           className="stack-card sticky-card group w-full bg-[#0e0e18] border border-white/15 hover:border-purple-500/60 rounded-3xl p-8 md:p-12 lg:p-14 transition-all duration-300 shadow-[0_-5px_30px_rgba(168,85,247,0.1),0_25px_60px_rgba(0,0,0,0.95)] mb-16 overflow-hidden z-20"
-          style={{ top: '225px' }}
+          style={{ top: '280px' }}
         >
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400/50 to-transparent" />
           <div className="absolute -top-24 -right-24 w-80 h-80 bg-purple-500/10 rounded-full blur-2xl pointer-events-none group-hover:bg-purple-500/20 transition-colors duration-500" />
@@ -147,7 +147,7 @@ export default function WhatWeDo() {
         {/* Card 03: Digital Products */}
         <article
           className="stack-card sticky-card group w-full bg-[#10101f] border border-white/15 hover:border-purple-500/60 rounded-3xl p-8 md:p-12 lg:p-14 transition-all duration-300 shadow-[0_-5px_30px_rgba(168,85,247,0.12),0_30px_70px_rgba(0,0,0,0.98)] mb-16 overflow-hidden z-30"
-          style={{ top: '245px' }}
+          style={{ top: '300px' }}
         >
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400/60 to-transparent" />
           <div className="absolute -top-24 -right-24 w-80 h-80 bg-purple-400/10 rounded-full blur-2xl pointer-events-none group-hover:bg-purple-400/20 transition-colors duration-500" />
