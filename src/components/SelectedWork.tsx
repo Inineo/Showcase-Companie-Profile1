@@ -143,57 +143,55 @@ const placeholderThemes = [
 ];
 
 export default function SelectedWork() {
-  const [angle, setAngle] = useState(0);
-  const angleRef = useRef(0);
-  const targetAngleRef = useRef<number | null>(null);
+  const [virtualIndex, setVirtualIndex] = useState(0);
+  const virtualIndexRef = useRef(0);
+  const targetIndexRef = useRef<number | null>(null);
 
   const isHovered = useRef(false);
   const isDragging = useRef(false);
   const pointerStartPos = useRef({ x: 0, y: 0 });
-  const dragStartAngle = useRef(0);
+  const dragStartIndex = useRef(0);
   const dragDistance = useRef(0);
   const animFrameId = useRef<number | null>(null);
 
   const total = projects.length;
-  const stepAngle = 360 / total; // 45 derajat per kartu
 
-  /* ─── Fungsi untuk Memutar Carousel & Membawa Kartu Pilihan Tepat ke Depan ─── */
+  /* ─── Fungsi untuk Membawa Kartu Pilihan Tepat ke Posisi Tengah Depan ─── */
   const bringToFront = useCallback(
     (index: number) => {
-      const cardTargetAngle = index * stepAngle;
-      const current = angleRef.current;
-      
-      // Hitung selisih terpendek dalam ruang melingkar (-180 sampai +180 derajat)
-      let diff = (cardTargetAngle - (current % 360)) % 360;
-      if (diff > 180) diff -= 360;
-      if (diff < -180) diff += 360;
+      const current = virtualIndexRef.current;
+      const currentNorm = ((current % total) + total) % total;
 
-      targetAngleRef.current = current + diff;
+      let diff = index - currentNorm;
+      if (diff > total / 2) diff -= total;
+      if (diff < -total / 2) diff += total;
+
+      targetIndexRef.current = current + diff;
     },
-    [stepAngle],
+    [total],
   );
 
-  /* ─── Main Animation Loop (Spring Lerp menuju target + Rotasi Lambat) ─── */
+  /* ─── Main Animation Loop: Bergerak Mulus Flat dari Kanan ke Kiri ─── */
   useEffect(() => {
-    const ROTATION_SPEED = 0.07; // Kecepatan putar default
+    const SPEED = 0.0018; // Kecepatan gerak kontinu yang halus
 
     const loop = () => {
-      // 1. Prioritas Utama: Jika sedang menuju kartu yang diklik (Bring to Front)
-      if (targetAngleRef.current !== null) {
-        const diff = targetAngleRef.current - angleRef.current;
-        if (Math.abs(diff) > 0.05) {
-          angleRef.current += diff * 0.1; // Smooth snappy transition
-          setAngle(angleRef.current);
+      // 1. Jika ada target kartu yang diklik untuk dibawa ke depan
+      if (targetIndexRef.current !== null) {
+        const diff = targetIndexRef.current - virtualIndexRef.current;
+        if (Math.abs(diff) > 0.005) {
+          virtualIndexRef.current += diff * 0.1; // Smooth snappy interpolation
+          setVirtualIndex(virtualIndexRef.current);
         } else {
-          angleRef.current = targetAngleRef.current;
-          targetAngleRef.current = null;
-          setAngle(angleRef.current);
+          virtualIndexRef.current = targetIndexRef.current;
+          targetIndexRef.current = null;
+          setVirtualIndex(virtualIndexRef.current);
         }
       }
-      // 2. Jika tidak sedang drag dan tidak sedang hover, jalankan perputaran halus otomatis
+      // 2. Pergerakan kontinu flat ke kiri (saat tidak di-drag dan tidak di-hover)
       else if (!isDragging.current && !isHovered.current) {
-        angleRef.current = angleRef.current + ROTATION_SPEED;
-        setAngle(angleRef.current);
+        virtualIndexRef.current += SPEED;
+        setVirtualIndex(virtualIndexRef.current);
       }
 
       animFrameId.current = requestAnimationFrame(loop);
@@ -223,11 +221,11 @@ export default function SelectedWork() {
 
   /* ─── Drag & Swipe Handlers ─── */
   const onPointerDown = (e: React.PointerEvent) => {
-    targetAngleRef.current = null;
+    targetIndexRef.current = null;
     isDragging.current = true;
     dragDistance.current = 0;
     pointerStartPos.current = { x: e.clientX, y: e.clientY };
-    dragStartAngle.current = angleRef.current;
+    dragStartIndex.current = virtualIndexRef.current;
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
@@ -237,10 +235,11 @@ export default function SelectedWork() {
     dragDistance.current = Math.hypot(deltaX, deltaY);
 
     if (dragDistance.current > 6) {
-      const deltaAngle = (deltaX / 400) * 45;
-      const newAngle = dragStartAngle.current - deltaAngle;
-      angleRef.current = newAngle;
-      setAngle(newAngle);
+      // 1 unit index = ~360px drag
+      const deltaIndex = deltaX / 360;
+      const newIndex = dragStartIndex.current - deltaIndex;
+      virtualIndexRef.current = newIndex;
+      setVirtualIndex(newIndex);
     }
   };
 
@@ -248,49 +247,49 @@ export default function SelectedWork() {
     isDragging.current = false;
   };
 
-  /* ─── Transform 3D Geometry: 5 Kartu Terlihat Penuh di Layar ─── */
+  /* ─── Transform Layered Flat Depth dengan Komposisi Seimbang ─── */
   const getCardTransform = (index: number) => {
-    const cardBaseAngle = index * stepAngle;
-    let relAngle = (cardBaseAngle - angle) % 360;
-    if (relAngle > 180) relAngle -= 360;
-    if (relAngle < -180) relAngle += 360;
+    // Selisih indeks relatif terhadap posisi tengah (-total/2 sampai +total/2)
+    let diff = (index - virtualIndex) % total;
+    if (diff > total / 2) diff -= total;
+    if (diff < -total / 2) diff += total;
 
-    const rad = (relAngle * Math.PI) / 180;
-    const cosVal = Math.cos(rad);
-    const sinVal = Math.sin(rad);
+    const sign = Math.sign(diff);
+    const absD = Math.abs(diff);
 
-    // Sebaran horizontal lebar agar 5 kartu memenuhi layar
-    const radiusX = 640;
-    const radiusZ = 220;
+    // Komposisi Seimbang:
+    // d = 0 -> x = 0 (tengah)
+    // d = 1 -> x = ±375px (memberikan ruang lega dengan kartu tengah)
+    // d = 2 -> x = ±670px (tidak terlalu jauh dari kartu samping)
+    // d > 2 -> berjejer proporsional dan memudar
+    let translateX = 0;
+    if (absD <= 1) {
+      translateX = sign * absD * 375;
+    } else {
+      translateX = sign * (375 + (absD - 1) * 295);
+    }
 
-    const translateX = sinVal * radiusX;
-    const translateZ = (cosVal - 1) * radiusZ;
-    // Rotasi melengkung ke arah tengah
-    const rotateY = -relAngle * 0.26;
-    // Scale: Tengah (1.0), Samping dekat (~0.84), Samping jauh (~0.68)
-    const scale = 0.65 + 0.35 * Math.max(0, cosVal);
+    // Scale: Tengah (1.0), Samping Dekat (~0.85), Samping Jauh (~0.72)
+    const scale = Math.max(0.62, 1.0 - Math.min(1, absD / 2.6) * 0.32);
 
-    // Batas kartu yang terlihat: 5 kartu di depan
-    const isVisible = Math.abs(relAngle) <= 105;
-    const isCenter = Math.abs(relAngle) < 18;
+    // Z-Index: Bertingkat rapi dari depan ke belakang
+    const zIndex = Math.round((3.5 - Math.min(3.5, absD)) * 25);
 
-    // Gradasi kecerahan & opacity
-    const opacity = !isVisible
-      ? 0
-      : Math.max(0, 0.2 + 0.8 * Math.pow(Math.max(0, cosVal), 1.2));
+    // Brightness: Tengah terang (1.0), samping dekat (~0.72), samping jauh (~0.46)
+    const isCenter = absD < 0.28;
+    const brightness = isCenter ? 1 : Math.max(0.36, 1.0 - (absD / 2.6) * 0.62);
 
-    // Kartu paling pinggir redup, kartu tengah terang benderang
-    const brightness = isCenter ? 1 : Math.max(0.35, 0.45 + 0.55 * Math.pow(Math.max(0, cosVal), 1.5));
-    const zIndex = Math.round((cosVal + 1) * 100);
+    // Opacity: 5 kartu di tengah (absD <= 2.35) terlihat jelas, di luar itu memudar halus
+    const opacity = absD > 2.85 ? 0 : absD <= 2.35 ? 1 : Math.max(0, 1 - (absD - 2.35) / 0.5);
 
     return {
       style: {
-        transform: `translateX(${translateX}px) translateZ(${translateZ}px) scale(${scale}) rotateY(${rotateY}deg)`,
+        transform: `translateX(${translateX}px) scale(${scale})`, // FLAT! Tanpa rotateY
         opacity,
         zIndex,
         position: 'absolute' as const,
         filter: `brightness(${brightness})`,
-        pointerEvents: isVisible ? ('auto' as const) : ('none' as const),
+        pointerEvents: opacity > 0.3 ? ('auto' as const) : ('none' as const),
       },
       isCenter,
     };
@@ -331,10 +330,10 @@ export default function SelectedWork() {
       {/* Atmospheric Ambient Red/Purple Glow di belakang kartu */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[600px] bg-gradient-to-r from-red-950/15 via-purple-600/30 to-red-950/15 rounded-full blur-[150px] pointer-events-none" />
 
-      {/* 3D 5-Card Viewport (Layar Penuh, Lebar, Melengkung) */}
+      {/* 5-Card Layered Viewport (Layar Penuh, Flat, Komposisi Seimbang) */}
       <div
         className="relative w-full max-w-[1700px] mx-auto flex items-center justify-center cursor-grab active:cursor-grabbing px-4"
-        style={{ height: '580px', perspective: '1400px', transformStyle: 'preserve-3d' }}
+        style={{ height: '580px' }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -348,12 +347,12 @@ export default function SelectedWork() {
             <div
               key={project.id}
               onClick={(e) => {
-                // Jika pergeseran mouse melebihi 12px saat menekan, anggap sebagai drag bukan klik
+                // Jika gerakan drag lebih dari 12px, jangan trigger klik
                 if (dragDistance.current > 12) {
                   return;
                 }
 
-                // Jika kartu BUKAN di tengah (berada di samping/belakang), putar carousel dan bawa kartu ke depan
+                // Jika kartu BUKAN di tengah (di samping/belakang), geser kartu meluncur maju ke tengah depan
                 if (!isCenter) {
                   e.preventDefault();
                   e.stopPropagation();
@@ -361,18 +360,18 @@ export default function SelectedWork() {
                   return;
                 }
 
-                // Jika sudah berada di depan dan memiliki link valid (bukan #), buka link
+                // Jika sudah berada di depan tengah dan link valid, buka link
                 if (project.href && project.href !== '#') {
                   window.location.href = project.href;
                 }
               }}
               className={`
                 group block w-[260px] sm:w-[290px] md:w-[320px] rounded-[26px] overflow-hidden
-                transition-all duration-300 cursor-pointer
+                transition-shadow duration-300 cursor-pointer
                 ${
                   isCenter
                     ? 'shadow-[0_30px_90px_rgba(0,0,0,0.98),0_0_60px_rgba(168,85,247,0.3)] ring-1 ring-white/25'
-                    : 'shadow-[0_20px_50px_rgba(0,0,0,0.85)] ring-1 ring-white/10 hover:ring-purple-400/40 hover:scale-[1.03]'
+                    : 'shadow-[0_20px_50px_rgba(0,0,0,0.85)] ring-1 ring-white/10 hover:ring-purple-400/40'
                 }
               `}
               style={style}
