@@ -124,7 +124,6 @@ export default function SelectedWork() {
   const virtualIndexRef = useRef(0);
   const targetIndexRef = useRef<number | null>(null);
   const isVisibleRef = useRef(false);
-  const isHoveredRef = useRef(false);
   const isDraggingRef = useRef(false);
   const pointerStartX = useRef(0);
   const dragStartIndex = useRef(0);
@@ -223,8 +222,8 @@ export default function SelectedWork() {
           }
           applyTransforms(virtualIndexRef.current);
         }
-        // 2. Auto-scroll
-        else if (!isDraggingRef.current && !isHoveredRef.current) {
+        // 2. Auto-scroll (tetap berjalan walau di-hover mouse, hanya pause saat user aktif dragging/menyeret kartu)
+        else if (!isDraggingRef.current) {
           virtualIndexRef.current += SPEED;
           applyTransforms(virtualIndexRef.current);
         }
@@ -320,8 +319,7 @@ export default function SelectedWork() {
       ref={sectionRef}
       id="selected-work"
       className="relative z-40 w-full bg-[#030305] pt-32 pb-44 overflow-hidden select-none"
-      onMouseEnter={() => { isHoveredRef.current = true; }}
-      onMouseLeave={() => { isHoveredRef.current = false; isDraggingRef.current = false; }}
+      onMouseLeave={() => { isDraggingRef.current = false; }}
     >
       {/* Section Header */}
       <div className="relative z-10 w-full px-6 md:px-16 lg:px-24 xl:px-32 mb-16">
