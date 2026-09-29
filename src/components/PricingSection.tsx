@@ -294,18 +294,35 @@ export default function PricingSection() {
               return (
                 <div
                   key={pkg.id}
-                  className={`group relative rounded-3xl p-8 md:p-10 flex flex-col justify-between transition-colors duration-200 overflow-hidden ${
+                  className={`group relative rounded-3xl p-8 md:p-10 flex flex-col justify-between transition-all duration-300 overflow-hidden ${
                     isPopular
-                      ? 'bg-[#0e0e18] border border-purple-500/80 shadow-[0_15px_40px_rgba(168,85,247,0.12)]'
-                      : 'bg-[#0c0c14] border border-white/15 hover:border-purple-500/50'
+                      ? 'bg-[#0e0e18] border border-purple-500/80 shadow-[0_20px_60px_-15px_rgba(168,85,247,0.3)]'
+                      : 'bg-[#0c0c14] border border-white/15 hover:border-purple-500/60 hover:shadow-[0_20px_50px_-15px_rgba(168,85,247,0.2)]'
                   }`}
                   style={{
                     transform: 'translateZ(0)',
                     contain: 'layout style',
                   }}
                 >
-                  {/* Subtle Accent Edge */}
-                  <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/30 to-transparent pointer-events-none" />
+                  {/* Atmospheric Radial Gradient Glow - Muncul saat diarahkan mouse/pointer */}
+                  <div
+                    className="absolute -top-20 -right-20 w-84 h-84 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
+                    style={{
+                      background: 'radial-gradient(circle, rgba(168, 85, 247, 0.32) 0%, rgba(147, 51, 234, 0.15) 45%, transparent 70%)',
+                      transform: 'translateZ(0)',
+                    }}
+                  />
+
+                  {/* Corner Accent Rim Light - Muncul saat diarahkan mouse/pointer */}
+                  <div
+                    className="absolute top-0 right-0 w-52 h-36 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
+                    style={{
+                      background: 'radial-gradient(ellipse at top right, rgba(192, 132, 252, 0.3) 0%, transparent 65%)',
+                    }}
+                  />
+
+                  {/* Subtle Top Accent Edge - Lebih terang saat diarahkan mouse/pointer */}
+                  <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400/30 to-transparent group-hover:via-purple-400/80 transition-all duration-500 pointer-events-none" />
 
                   <div className="relative z-10">
                     {/* Index & Badge */}
@@ -477,18 +494,35 @@ export default function PricingSection() {
                 return (
                   <div
                     key={pkg.id}
-                    className={`group relative rounded-3xl p-8 md:p-10 flex flex-col justify-between transition-colors duration-200 overflow-hidden ${
+                    className={`group relative rounded-3xl p-8 md:p-10 flex flex-col justify-between transition-all duration-300 overflow-hidden ${
                       isPopular
-                        ? 'bg-[#0e0e18] border border-purple-500/80 shadow-[0_15px_40px_rgba(168,85,247,0.12)]'
-                        : 'bg-[#0c0c14] border border-white/15 hover:border-purple-500/50'
+                        ? 'bg-[#0e0e18] border border-purple-500/80 shadow-[0_20px_60px_-15px_rgba(168,85,247,0.3)]'
+                        : 'bg-[#0c0c14] border border-white/15 hover:border-purple-500/60 hover:shadow-[0_20px_50px_-15px_rgba(168,85,247,0.2)]'
                     }`}
                     style={{
                       transform: 'translateZ(0)',
                       contain: 'layout style',
                     }}
                   >
-                    {/* Subtle Accent Edge */}
-                    <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/30 to-transparent pointer-events-none" />
+                    {/* Atmospheric Radial Gradient Glow - Muncul saat diarahkan mouse/pointer */}
+                    <div
+                      className="absolute -top-20 -right-20 w-84 h-84 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
+                      style={{
+                        background: 'radial-gradient(circle, rgba(168, 85, 247, 0.32) 0%, rgba(147, 51, 234, 0.15) 45%, transparent 70%)',
+                        transform: 'translateZ(0)',
+                      }}
+                    />
+
+                    {/* Corner Accent Rim Light - Muncul saat diarahkan mouse/pointer */}
+                    <div
+                      className="absolute top-0 right-0 w-52 h-36 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
+                      style={{
+                        background: 'radial-gradient(ellipse at top right, rgba(192, 132, 252, 0.3) 0%, transparent 65%)',
+                      }}
+                    />
+
+                    {/* Subtle Top Accent Edge - Lebih terang saat diarahkan mouse/pointer */}
+                    <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400/30 to-transparent group-hover:via-purple-400/80 transition-all duration-500 pointer-events-none" />
 
                     <div className="relative z-10">
                       {/* Index */}
