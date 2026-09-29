@@ -160,7 +160,7 @@ export default function SelectedWork() {
     [total],
   );
 
-  /* ─── Direct DOM update: bypass React re-render entirely ─── */
+  /* ─── Direct DOM update: bypass React re-render entirely (GPU accelerated) ─── */
   const applyTransforms = useCallback(
     (vIndex: number) => {
       for (let i = 0; i < total; i++) {
@@ -169,11 +169,17 @@ export default function SelectedWork() {
 
         const { translateX, scale, zIndex, brightness, opacity, isCenter } = computeCardProps(i, vIndex);
 
-        el.style.transform = `translateX(${translateX}px) scale(${scale})`;
+        // Hardware-accelerated 3D transform without triggering layout recalculations
+        el.style.transform = `translate3d(${translateX}px, 0, 0) scale(${scale})`;
         el.style.opacity = String(opacity);
         el.style.zIndex = String(zIndex);
-        el.style.filter = `brightness(${brightness})`;
         el.style.pointerEvents = opacity > 0.3 ? 'auto' : 'none';
+
+        // Update brightness overlay element rather than costly CSS filter: brightness() on whole container
+        const dimEl = el.querySelector<HTMLDivElement>('.card-dim-overlay');
+        if (dimEl) {
+          dimEl.style.opacity = String(Math.max(0, 1 - brightness));
+        }
 
         // Toggle shadow/ring classes via dataset flag
         if (isCenter && el.dataset.center !== '1') {
@@ -205,31 +211,47 @@ export default function SelectedWork() {
     [total],
   );
 
-  /* ─── Main Animation Loop (direct DOM, no setState) ─── */
+  /* ─── Main Animation Loop (Strictly locked to 60 FPS on 175Hz+ monitors) ─── */
   useEffect(() => {
-    const SPEED = 0.0018;
+    // Lock tepat di 60 FPS (1000 / 60 = 16.666ms)
+    const TARGET_FPS = 60;
+    const FRAME_DURATION = 1000 / TARGET_FPS;
+    const SPEED_PER_FRAME = 0.0018; // Per-frame increment di 60fps
 
-    const loop = () => {
-      if (isVisibleRef.current) {
-        // 1. Bring-to-front interpolation
+    let lastFrameTime = performance.now();
+
+    const loop = (currentTime: number) => {
+      animFrameId.current = requestAnimationFrame(loop);
+
+      if (!isVisibleRef.current) {
+        lastFrameTime = currentTime;
+        return;
+      }
+
+      const elapsed = currentTime - lastFrameTime;
+
+      // Hanya kalkulasi & eksekusi DOM update jika interval 60fps (16.6ms) sudah tercapai
+      if (elapsed >= FRAME_DURATION) {
+        // Kurangi elapsed dengan sisa frame agar interval tetap akurat
+        lastFrameTime = currentTime - (elapsed % FRAME_DURATION);
+
+        // 1. Bring-to-front lerp (locked 60fps)
         if (targetIndexRef.current !== null) {
           const diff = targetIndexRef.current - virtualIndexRef.current;
-          if (Math.abs(diff) > 0.005) {
-            virtualIndexRef.current += diff * 0.1;
+          if (Math.abs(diff) > 0.002) {
+            virtualIndexRef.current += diff * 0.12;
           } else {
             virtualIndexRef.current = targetIndexRef.current;
             targetIndexRef.current = null;
           }
           applyTransforms(virtualIndexRef.current);
         }
-        // 2. Auto-scroll (tetap berjalan walau di-hover mouse, hanya pause saat user aktif dragging/menyeret kartu)
+        // 2. Auto-scroll mulus terkunci 60fps
         else if (!isDraggingRef.current) {
-          virtualIndexRef.current += SPEED;
+          virtualIndexRef.current += SPEED_PER_FRAME;
           applyTransforms(virtualIndexRef.current);
         }
       }
-
-      animFrameId.current = requestAnimationFrame(loop);
     };
 
     animFrameId.current = requestAnimationFrame(loop);
@@ -382,6 +404,12 @@ export default function SelectedWork() {
                     <div className="w-36 h-36 rounded-full blur-2xl" style={{ background: theme.accent }} />
                   </div>
                 )}
+
+                {/* Lightweight Black Dim Overlay (Zero layout-cost brightness dimming) */}
+                <div
+                  className="card-dim-overlay absolute inset-0 bg-black pointer-events-none transition-opacity duration-150"
+                  style={{ opacity: 0, willChange: 'opacity' }}
+                />
 
                 <div className="absolute top-5 left-5 right-5 flex items-center justify-between z-10">
                   <div
