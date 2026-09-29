@@ -221,10 +221,13 @@ export default function PricingSection() {
       {/* Illuminated Horizon Rim Light (Consistent with WhatWeDo) */}
       <div className="curtain-rim-light absolute top-0 left-0 right-0 h-[2px] rounded-t-[3rem] bg-gradient-to-r from-transparent via-purple-400 to-transparent pointer-events-none z-50" />
 
-      {/* Lightweight GPU-friendly ambient glow (transform3d layer) */}
+      {/* Lightweight GPU-friendly ambient glow (zero-cost Radial Gradient shader) */}
       <div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-purple-600/[0.06] rounded-full blur-[100px] pointer-events-none"
-        style={{ transform: 'translate3d(-50%, 0, 0)', willChange: 'transform' }}
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full pointer-events-none opacity-60"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(168, 85, 247, 0.12) 0%, rgba(147, 51, 234, 0.04) 50%, transparent 70%)',
+          transform: 'translate3d(-50%, 0, 0)',
+        }}
       />
 
       {/* Section Header */}

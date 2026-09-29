@@ -213,26 +213,24 @@ export default function SelectedWork() {
 
   /* ─── Main Animation Loop (Strictly locked to 60 FPS on 175Hz+ monitors) ─── */
   useEffect(() => {
-    // Lock tepat di 60 FPS (1000 / 60 = 16.666ms)
     const TARGET_FPS = 60;
     const FRAME_DURATION = 1000 / TARGET_FPS;
-    const SPEED_PER_FRAME = 0.0018; // Per-frame increment di 60fps
+    const SPEED_PER_FRAME = 0.0018;
 
     let lastFrameTime = performance.now();
 
     const loop = (currentTime: number) => {
-      animFrameId.current = requestAnimationFrame(loop);
-
+      // Hentikan scheduling jika section sudah tidak terlihat (misal user masuk ke PricingSection)
       if (!isVisibleRef.current) {
-        lastFrameTime = currentTime;
+        animFrameId.current = null;
         return;
       }
 
+      animFrameId.current = requestAnimationFrame(loop);
+
       const elapsed = currentTime - lastFrameTime;
 
-      // Hanya kalkulasi & eksekusi DOM update jika interval 60fps (16.6ms) sudah tercapai
       if (elapsed >= FRAME_DURATION) {
-        // Kurangi elapsed dengan sisa frame agar interval tetap akurat
         lastFrameTime = currentTime - (elapsed % FRAME_DURATION);
 
         // 1. Bring-to-front lerp (locked 60fps)
@@ -254,28 +252,35 @@ export default function SelectedWork() {
       }
     };
 
-    animFrameId.current = requestAnimationFrame(loop);
-
-    return () => {
-      if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
-    };
-  }, [applyTransforms]);
-
-  /* ─── IntersectionObserver: Pause saat off-screen ─── */
-  useEffect(() => {
+    // IntersectionObserver mendeteksi kapan harus start / stop loop
     const section = sectionRef.current;
     if (!section) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        isVisibleRef.current = entry.isIntersecting;
+        const isNowVisible = entry.isIntersecting;
+        isVisibleRef.current = isNowVisible;
+
+        if (isNowVisible && !animFrameId.current) {
+          lastFrameTime = performance.now();
+          animFrameId.current = requestAnimationFrame(loop);
+        } else if (!isNowVisible && animFrameId.current) {
+          cancelAnimationFrame(animFrameId.current);
+          animFrameId.current = null;
+        }
       },
-      { threshold: 0.05 },
+      { threshold: 0.01, rootMargin: '0px 0px -50px 0px' },
     );
     observer.observe(section);
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      if (animFrameId.current) {
+        cancelAnimationFrame(animFrameId.current);
+        animFrameId.current = null;
+      }
+    };
+  }, [applyTransforms]);
 
   /* ─── Global Pointer Release ─── */
   useEffect(() => {
@@ -363,8 +368,14 @@ export default function SelectedWork() {
         </div>
       </div>
 
-      {/* Atmospheric Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[600px] bg-gradient-to-r from-red-950/15 via-purple-600/30 to-red-950/15 rounded-full blur-[150px] pointer-events-none" />
+      {/* Atmospheric Ambient Glow (Hardware-accelerated Radial Gradient Shader - zero blur cost) */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] rounded-full pointer-events-none opacity-70"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(168, 85, 247, 0.22) 0%, rgba(120, 20, 50, 0.1) 45%, transparent 70%)',
+          transform: 'translate3d(-50%, -50%, 0)',
+        }}
+      />
 
       {/* Card Viewport */}
       <div
