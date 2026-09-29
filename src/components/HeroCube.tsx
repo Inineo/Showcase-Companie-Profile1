@@ -192,6 +192,7 @@ export default function HeroCube() {
         id="hero-cube-fallback"
         src="/assets/images/hero-cube.jpg"
         alt="Abstract 3D cube"
+        fetchPriority="high"
         className="hero-cube-fallback w-full h-full object-contain mix-blend-screen"
       />
     </div>
