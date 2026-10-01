@@ -120,6 +120,21 @@
   animation: scrollDotMotion 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
 
+/* Hanging Price Tag Natural Pendulum Swing (Berporos pada Lubang Cincin) */
+@keyframes tagSwayNatural {
+  0%, 100% {
+    transform: rotate(4deg);
+  }
+  50% {
+    transform: rotate(14deg);
+  }
+}
+
+.animate-tag-sway {
+  transform-origin: 8px 34px; /* Posisi lubang eyelet cincin */
+  animation: tagSwayNatural 3.2s ease-in-out infinite;
+}
+
 /* Overlapping Stacked Cards */
 .sticky-card {
   position: sticky;
