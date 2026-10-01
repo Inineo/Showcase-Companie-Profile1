@@ -290,6 +290,36 @@ export default function PricingSection() {
             </div>
           </div>
 
+          {/* ─── BUNDLE SPECIAL OFFER PROMO BANNER ─── */}
+          <div className="mb-8 p-4 md:p-5 rounded-2xl bg-gradient-to-r from-purple-950/40 via-purple-900/20 to-black/60 border border-purple-500/40 shadow-[0_0_25px_rgba(168,85,247,0.15)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="flex items-start md:items-center gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(168,85,247,0.4)]">
+                <span className="text-sm font-mono font-bold text-purple-300">20%</span>
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs uppercase tracking-widest font-mono text-purple-300 font-semibold">
+                    Special Bundle Offer
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    Hemat Biaya Dev
+                  </span>
+                </div>
+                <p className="text-xs md:text-sm text-gray-300 font-light mt-0.5">
+                  Dapatkan <strong className="text-white font-medium">Diskon 20% untuk Biaya Development</strong> jika Anda mengambil paket <strong className="text-purple-300 font-medium">Recurring Retainer</strong> bersamaan dengan kontrak pembangunan selama <strong className="text-white font-medium">6 atau 12 bulan</strong>.
+                </p>
+              </div>
+            </div>
+            <a
+              href="https://wa.me/6282349239232?text=Halo%20KIBI,%20saya%20tertarik%20dengan%20promo%20diskon%2020%25%20development%20bundling%20recurring%206/12%20bulan"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-mono uppercase tracking-wider whitespace-nowrap transition-all duration-200 shadow-[0_0_15px_rgba(168,85,247,0.4)] shrink-0 self-stretch md:self-auto text-center"
+            >
+              Klaim Promo Bundling
+            </a>
+          </div>
+
           {/* ─── TAB 1: WEBSITE DEVELOPMENT ─── */}
           {activeTab === 'development' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 items-stretch">
@@ -424,10 +454,13 @@ export default function PricingSection() {
             <div className="space-y-8">
               {/* Billing Cycle Options */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-3 rounded-2xl bg-[#0c0c14] border border-white/10">
-                <div className="flex items-center gap-2.5">
+                <div className="flex flex-wrap items-center gap-2.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
                   <span className="text-xs uppercase tracking-wider font-mono text-gray-300">
                     Opsi Retainer
+                  </span>
+                  <span className="text-[10px] font-mono text-purple-300 bg-purple-500/20 border border-purple-500/30 px-2 py-0.5 rounded-full">
+                    Bundling 6/12 Bln: Diskon 20% Biaya Dev
                   </span>
                 </div>
 
@@ -660,8 +693,13 @@ export default function PricingSection() {
                   </table>
                 </div>
 
-                <div className="mt-4 pt-4 border-t border-white/10 text-[11px] text-gray-400 font-light leading-relaxed">
-                  <span className="text-white font-medium">Catatan:</span> Bundling project baru mendapatkan diskon khusus. Jam support tidak carry-over. Response time berlaku hari kerja (Sen–Jum 09.00–18.00 WIB).
+                <div className="mt-4 pt-4 border-t border-white/10 text-[11px] text-gray-400 font-light leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <span className="text-white font-medium">Bundling Spesial:</span> Mengambil paket Recurring 6 atau 12 bulan bersamaan dengan pembuatan website memberikan <strong className="text-emerald-300 font-medium">potongan 20% langsung pada biaya development</strong>.
+                  </div>
+                  <div className="text-[10px] text-gray-500 font-mono shrink-0">
+                    *Jam support tidak carry-over. Response time hari kerja.
+                  </div>
                 </div>
               </div>
             </div>

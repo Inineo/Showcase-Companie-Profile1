@@ -40,7 +40,7 @@ export default function Navbar() {
       />
 
       <nav
-        className={`fixed top-0 left-0 w-full p-6 md:p-10 flex justify-between items-center z-[100] bg-[#030305]/90 backdrop-blur-md border-b border-white/5 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed top-0 left-0 w-full p-6 md:p-10 flex justify-between items-center z-[100] bg-[#030305]/95 backdrop-blur-md border-b border-purple-500/40 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.8),0_4px_20px_rgba(168,85,247,0.15)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isHidden && !isHovering
             ? '-translate-y-full opacity-0 pointer-events-none'
             : 'translate-y-0 opacity-100 pointer-events-auto'
@@ -48,6 +48,8 @@ export default function Navbar() {
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
+        {/* Crisp illuminated curtain bottom edge line */}
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-400 to-transparent pointer-events-none shadow-[0_0_12px_rgba(168,85,247,0.8)]" />
         <button
           type="button"
           className="flex items-center gap-3 text-xs md:text-sm tracking-[0.1em] uppercase hover:text-white text-gray-300 transition-colors cursor-pointer"
