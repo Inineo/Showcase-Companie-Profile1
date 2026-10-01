@@ -2,7 +2,7 @@ import HeroCube from './HeroCube';
 
 export default function HeroSection() {
   return (
-    <main className="sticky top-0 w-full min-h-screen flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 pt-24 pb-16 z-0">
+    <main className="sticky top-0 w-full min-h-screen flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 pt-24 pb-16 z-0 bg-black">
       {/* Left Content */}
       <div className="relative z-10 max-w-2xl flex flex-col gap-8 md:gap-10 mt-8 slide-up pointer-events-auto">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-light leading-[1.1] tracking-tight text-white drop-shadow-2xl">
@@ -24,11 +24,11 @@ export default function HeroSection() {
       </div>
 
       {/* 3D Hero Canvas Background */}
-      <div className="absolute inset-0 w-full h-full flex items-center justify-center z-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 w-full h-full flex items-center justify-center z-0 pointer-events-none overflow-hidden bg-black">
         <div className="parallax-container w-full h-full flex items-center justify-center relative">
-          {/* Overlay shadow for left text readability */}
-          <div className="absolute left-0 top-0 w-1/2 h-full bg-gradient-to-r from-[#030305] via-[#030305]/80 to-transparent z-10 opacity-80 mix-blend-multiply" />
-          
+          {/* Overlay matches the source cube frames' pure-black background */}
+          <div className="absolute left-0 top-0 w-1/2 h-full bg-gradient-to-r from-black via-black/80 to-transparent z-10 opacity-80 mix-blend-multiply" />
+
           <div className="relative w-full h-full max-w-[1400px] flex items-center justify-center">
             <HeroCube />
           </div>
@@ -41,7 +41,7 @@ export default function HeroSection() {
           <span className="text-lg font-light text-white tracking-wide">Philosophy</span>
           <span className="text-xs text-gray-500 font-mono tracking-widest">//01</span>
         </div>
-        
+
         <div className="flex flex-col gap-5">
           <div className="group cursor-default">
             <h2 className="text-sm text-gray-300 font-medium mb-2 tracking-wide group-hover:text-white transition-colors">Design + Technology</h2>
@@ -55,7 +55,7 @@ export default function HeroSection() {
               Every element serves a purpose. Aesthetics and functionality working in perfect synchronization.
             </p>
           </div>
-          
+
           {/* Sine wave graph */}
           <div className="mt-6 h-12 w-full border-t border-b border-white/5 flex items-center relative overflow-hidden">
             <svg viewBox="0 0 200 40" className="w-full h-full stroke-purple-500/50 fill-none" preserveAspectRatio="none">
