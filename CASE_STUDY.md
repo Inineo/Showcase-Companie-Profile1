@@ -98,34 +98,99 @@ Peluang penyempurnaan lainnya adalah menerapkan progressive loading untuk frame 
 
 | Area | Technology | Peran |
 | --- | --- | --- |
-| Structure | HTML5 | Struktur konten semantik untuk landing page. |
-| Styling | Vanilla CSS | Animasi, responsive behavior, visual treatment, dan preference reduced motion. |
-| UI utilities | Tailwind CSS CDN | Utility class untuk layout dan styling cepat pada markup. |
-| Interactivity | Vanilla JavaScript | Cursor interaction, preloading frame, serta kontrol arah animasi. |
-| Hero animation | Canvas 2D + WebP image sequence | Rendering animasi kubus dua arah secara stabil. |
-| Typography | Google Fonts — Inter | Tipografi utama antarmuka. |
-| Asset preparation | FFmpeg | Mengekstrak dan mengoptimalkan sumber video menjadi frame WebP. |
+| Framework | Next.js 16.3.6 (Turbopack) | React framework dengan SSR/SSG, routing otomatis, dan optimasi performa. |
+| UI Library | React 19 | Arsitektur berbasis komponen dengan hooks dan server components. |
+| Language | TypeScript 5 | Type-safe development dengan IntelliSense dan compile-time checks. |
+| Styling | Tailwind CSS v4 | Utility-first CSS framework dengan custom animations dan theming. |
+| Interactivity | React Hooks + Canvas API | State management, cursor interaction, dan bidirectional cube animation. |
+| Hero Animation | Canvas 2D + WebP sequence | Rendering 215 frame animasi kubus dua arah secara stabil dan responsif. |
+| Typography | Google Fonts (Inter) via next/font | Tipografi premium dengan automatic font optimization. |
+| Animations | CSS Keyframes + Tailwind | Breathing borders, gradient pulse, floating glass effects. |
+| Asset Preparation | FFmpeg | Ekstraksi dan optimasi sumber video menjadi 215 WebP frames. |
+
+## Key Features & Implementations
+
+### Floating Glass Navbar
+- Rounded glassmorphism design dengan backdrop-blur
+- Gradient pulse glow animation pada rim light
+- Auto-hide saat scroll dengan smooth transitions
+- Responsive positioning dengan navbar visibility tracking
+
+### Gradient Breathing Borders
+- Custom keyframe animation: `curtain-breathing-gradient`
+- Opacity transitions: 0.3 → 1 → 0.3 (3s ease-in-out)
+- Gradient: `from-black via-purple-400 to-black`
+- Applied to Pricing section curtain borders
+
+### Pricing Section
+- Development packages dengan 4 tier (Starter, Business, E-Commerce, Custom)
+- Recurring retainer packages dengan 3 billing cycles (monthly, 6-month, 12-month)
+- Hanging price tag dengan natural pendulum animation
+- Indonesian currency formatting (RB untuk ribu, JT untuk juta)
+- Gradient breathing effect pada section borders
+
+### Curtain Section Architecture
+- Z-index stacking context untuk depth effect
+- Rounded top borders (`rounded-t-[3rem]`) untuk overlapping style
+- Deep shadows: `shadow-[0_-30px_90px_rgba(0,0,0,0.98)]`
+- Sticky headers dengan dynamic positioning
 
 ## Project Structure
 
 ```text
 .
-├── index.html
-├── CASE_STUDY.md
-└── assets
-    ├── css/styles.css
-    ├── frames/cube-001.webp … cube-215.webp
-    ├── images/hero-cube.jpg
-    ├── js/script.js
-    └── videos/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx              # Root layout dengan metadata SEO
+│   │   ├── page.tsx                # Main page composition
+│   │   ├── globals.css             # Global styles, animations, keyframes
+│   │   └── favicon.ico
+│   └── components/
+│       ├── Navbar.tsx              # Floating glass navbar dengan auto-hide
+│       ├── CustomCursor.tsx        # Custom cursor dengan interaction states
+│       ├── HeroSection.tsx         # Hero text content dan philosophy panel
+│       ├── HeroCube.tsx            # Interactive bidirectional cube animation
+│       ├── WhatWeDo.tsx            # Services section dengan sticky cards
+│       ├── SelectedWork.tsx        # Portfolio carousel dengan navigation
+│       └── PricingSection.tsx      # Pricing dengan breathing borders
+├── public/
+│   └── assets/
+│       ├── frames/                 # 215 WebP frames (cube-001 ... cube-215)
+│       └── images/                 # Static images (hero-cube.jpg, etc)
+├── package.json
+├── tsconfig.json
+├── tailwind.config.ts
+├── next.config.ts
+├── README.md
+└── CASE_STUDY.md
 ```
 
 ## Run Locally
 
-Jalankan proyek melalui local HTTP server agar asset dapat dimuat dengan benar:
+Install dependencies dan jalankan development server:
 
-```powershell
-python -m http.server 8000
+```bash
+npm install
+npm run dev
 ```
 
-Buka `http://localhost:8000` pada browser modern yang mendukung Canvas 2D dan WebP.
+Buka `http://localhost:3000` pada browser modern.
+
+### Production Build
+
+```bash
+npm run build
+npm start
+```
+
+### Browser Support
+
+Proyek ini membutuhkan browser modern dengan dukungan:
+- ES2020+ JavaScript
+- Canvas 2D API
+- WebP image format
+- CSS backdrop-filter (untuk glassmorphism)
+- CSS Grid dan Flexbox
+
+Tested pada Chrome, Edge, Firefox, dan Safari versi terbaru.
+

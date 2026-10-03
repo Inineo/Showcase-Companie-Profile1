@@ -1,112 +1,171 @@
-﻿# KIBI — Cinematic Digital Solutions Prototype
+# KIBI — Cinematic Digital Solutions Showcase
 
-A polished, single-page company-profile prototype for **KIBI**, a studio that helps businesses turn ideas, problems, and opportunities into practical digital products.
+A polished, modern company-profile showcase built with **Next.js 16** for **KIBI**, a digital studio that transforms business challenges into practical digital solutions.
 
-This prototype explores a cinematic landing-page experience: the hero cube responds to which half of the viewport the user is exploring, creating a tactile visual introduction without conventional video scrubbing.
+This showcase demonstrates a premium cinematic landing experience with interactive hero cube, floating glass navigation, gradient breathing borders, and comprehensive service pricing.
 
-## Prototype Purpose
+## Showcase Purpose
 
-The website demonstrates how a digital studio or technology consultancy can present its positioning through a minimal, premium visual system.
+The website demonstrates how a digital studio can present its positioning through a minimal, premium visual system with cutting-edge animations and interactions.
 
 It focuses on:
 
-- A strong hero message with a clear business proposition.
-- A dark, editorial design language with restrained purple accents.
-- A responsive company-profile layout.
-- A high-performance interactive hero visual that runs reliably in both directions.
+- Strong hero message with interactive 3D cube visualization
+- Dark editorial design language with refined purple accents
+- Floating glass navbar with gradient glow effects
+- Gradient breathing animations on section borders
+- Comprehensive service and pricing sections
+- High-performance Next.js + React architecture
 
 ## Features
 
-### Cinematic Hero Cube
+### Interactive Hero Cube
 
-The central cube animation is rendered from a WebP image sequence rather than a continuously scrubbed HTML video.
+The central cube animation renders from a WebP image sequence with bidirectional control:
 
-- Mouse on the **right half** of the viewport advances the cube animation.
-- Mouse on the **left half** reverses the cube animation.
-- The animation pauses at its first or last frame.
-- All frames are preloaded and decoded before interaction starts, avoiding video-decoder switching, reverse-seek glitches, and missing frames.
-- A static cube poster is displayed while frames are loading.
+- Mouse on **right half** advances the cube animation forward
+- Mouse on **left half** reverses the cube animation backward
+- Animation pauses at first or last frame
+- All 215 frames preloaded and decoded before interaction
+- Static poster displays during loading
+- Automatic fade detection stops animation when section scrolls out
 
 ### Premium Visual Treatment
 
-- Dark cinematic background and screen-blended cube visual.
-- Glass-style philosophy panel for large screens.
-- Animated sine-wave accent.
-- Refined load-in motion for the content and navigation.
-- Custom cursor on devices that do not request reduced motion.
+- **Floating Glass Navbar**: Rounded glass-morphism design with gradient pulse glow
+- **Gradient Breathing Borders**: Animated section borders with smooth opacity transitions
+- **Pricing Section**: Gradient breathing effect on curtain borders
+- **Dark cinematic background** with strategic purple accents
+- **Custom cursor** with interaction feedback
+- **Micro-animations** and smooth transitions throughout
+- Refined load-in motion for content and navigation
+
+### Section Features
+
+#### What We Do
+- Sticky header with navbar visibility tracking
+- Overlapping card stack with hover interactions
+- Service capability cards with metrics
+- Static purple border (80% opacity)
+
+#### Pricing
+- Development packages with pricing tiers
+- Recurring retainer packages with breathing gradient borders
+- Hanging price tag animations
+- Contact form integration
+- Thousand/million suffixes (RB/JT) for Indonesian currency
 
 ### Responsive Layout
 
-- Hero copy is prioritized on smaller screens.
-- The philosophy panel appears on larger desktop breakpoints.
-- Cube container scales down across desktop and mobile sizes while retaining its central visual role.
+- Mobile-first responsive design
+- Navbar adapts to scroll position
+- Philosophy panel appears on larger breakpoints
+- Cube scales appropriately across all devices
+- Touch-friendly interactions
 
-### Accessibility and Motion Preferences
+### Accessibility and Motion
 
-- Respects `prefers-reduced-motion`.
-- Uses semantic `main`, a primary page heading, descriptive fallback image text, and a canvas label.
+- Respects `prefers-reduced-motion`
+- Semantic HTML5 structure
+- Proper heading hierarchy
+- ARIA labels and descriptive text
+- Keyboard navigation support
 
-## Technology
+## Technology Stack
 
-| Area | Technology |
-| --- | --- |
-| Structure | HTML5 |
-| Interactivity | Vanilla JavaScript |
-| Styling | Vanilla CSS + Tailwind CSS CDN utility classes |
-| Hero animation | Canvas 2D + preloaded WebP image sequence |
-| Fonts | Google Fonts — Inter |
-| Asset preparation | FFmpeg used to extract and optimize the original cube video into frames |
-
-## How the Cube Animation Works
-
-The original 3.59-second, 59.94 FPS cube animation was converted into **215 WebP frames** in `assets/frames`.
-
-`assets/js/script.js` loads and decodes every frame into memory, then uses one `<canvas>` element to render frame indices:
-
-```text
-left viewport  → frame index decreases → cube moves backwards
-right viewport → frame index increases → cube moves forwards
-```
-
-This removes the need to swap separate forward/reverse video decoders during interaction. The result is deterministic direction changes using the same source frames in either direction.
-
-## Use Cases
-
-This prototype is well suited for:
-
-- Digital agency or consultancy landing pages.
-- Creative studio company profiles.
-- Product design, branding, and technology showcase sites.
-- Interactive portfolio homepages.
-- Campaign microsites that require a high-impact but lightweight hero interaction.
+| Area | Technology | Purpose |
+| --- | --- | --- |
+| Framework | Next.js 16.3.6 (Turbopack) | React framework with SSR/SSG capabilities |
+| UI Library | React 19 | Component-based architecture |
+| Styling | Tailwind CSS v4 | Utility-first CSS framework |
+| TypeScript | TypeScript 5 | Type-safe development |
+| Fonts | Google Fonts (Inter) | Premium typography |
+| Hero Animation | Canvas 2D + WebP sequence | 215-frame bidirectional animation |
+| Asset Prep | FFmpeg | Frame extraction and optimization |
 
 ## Project Structure
 
 ```text
 .
-├── index.html
-└── assets
-    ├── css/styles.css
-    ├── frames/cube-001.webp … cube-215.webp
-    ├── images/hero-cube.jpg
-    ├── js/script.js
-    └── videos
-        ├── hero-video.mp4
-        └── hero-video-reverse.mp4
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx          # Root layout with metadata
+│   │   ├── page.tsx            # Main page composition
+│   │   └── globals.css         # Global styles and animations
+│   └── components/
+│       ├── Navbar.tsx          # Floating glass navbar
+│       ├── CustomCursor.tsx    # Custom cursor component
+│       ├── HeroSection.tsx     # Hero with text content
+│       ├── HeroCube.tsx        # Interactive cube animation
+│       ├── WhatWeDo.tsx        # Services section
+│       ├── SelectedWork.tsx    # Portfolio carousel
+│       └── PricingSection.tsx  # Pricing with breathing effect
+├── public/
+│   └── assets/
+│       ├── frames/             # 215 WebP frames
+│       └── images/             # Static assets
+└── package.json
 ```
 
-> **Note:** The MP4 files are retained as source/production assets. The live hero interaction uses the WebP frame sequence and Canvas renderer.
+## Key Animations
+
+### Breathing Border Animation
+Pricing section features gradient breathing effect:
+- Gradient: `from-black via-purple-400 to-black`
+- Opacity: 0.3 → 1 → 0.3 (3s ease-in-out infinite)
+- Creates organic, living border effect
+
+### Navbar Glow Animation
+Floating navbar with gradient pulse:
+- Top/bottom rim light with gradient
+- Smooth opacity transitions
+- Responsive to scroll position
+
+### Curtain Section Transitions
+Sections overlap with:
+- Rounded top borders (`rounded-t-[3rem]`)
+- Deep shadows for depth
+- Gradient rim lights
+- Z-index stacking context
 
 ## Run Locally
 
-Because the prototype loads image assets at runtime, serve it from a local HTTP server rather than opening `index.html` directly.
+Install dependencies and start development server:
 
-```powershell
-python -m http.server 8000
+```bash
+npm install
+npm run dev
 ```
 
-Then open `http://localhost:8000`.
+Open `http://localhost:3000`
+
+### Production Build
+
+```bash
+npm run build
+npm start
+```
 
 ## Browser Support
 
-The experience targets modern browsers with Canvas 2D and WebP support, including current Chrome, Edge, Firefox, and Safari releases.
+Targets modern browsers with:
+- ES2020+ JavaScript support
+- Canvas 2D API
+- WebP image format
+- CSS Grid and Flexbox
+- CSS backdrop-filter
+
+Tested on latest versions of Chrome, Edge, Firefox, and Safari.
+
+## Performance
+
+- Static generation with Next.js SSG
+- Optimized WebP frames (215 × ~30KB)
+- GPU-accelerated animations
+- Lazy loading for images
+- Font optimization with next/font
+
+## License
+
+Prototype showcase for portfolio demonstration.
+
