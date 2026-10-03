@@ -38,18 +38,16 @@ export default function Navbar() {
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       />
-
       <nav
-        className={`fixed top-0 left-0 w-full p-6 md:p-10 flex justify-between items-center z-[100] bg-[#030305]/95 backdrop-blur-md border-b border-purple-500/40 shadow-[0_10px_30px_-5px_rgba(0,0,0,0.8),0_4px_20px_rgba(168,85,247,0.15)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed top-4 left-4 right-4 md:top-6 md:left-8 md:right-8 lg:left-12 lg:right-12 p-5 md:p-7 flex justify-between items-center z-[100] bg-[#030305]/65 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_12px_40px_-16px_rgba(0,0,0,0.9),0_0_30px_rgba(168,85,247,0.08)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isHidden && !isHovering
-            ? '-translate-y-full opacity-0 pointer-events-none'
+            ? '-translate-y-[calc(100%+2rem)] opacity-0 pointer-events-none'
             : 'translate-y-0 opacity-100 pointer-events-auto'
         }`}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
-        {/* Crisp illuminated curtain bottom edge line */}
-        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-purple-400 to-transparent pointer-events-none shadow-[0_0_12px_rgba(168,85,247,0.8)]" />
+        {/* Soft glass highlight — keeps the navbar edge quiet over the hero */}
         <button
           type="button"
           className="flex items-center gap-3 text-xs md:text-sm tracking-[0.1em] uppercase hover:text-white text-gray-300 transition-colors cursor-pointer"
@@ -77,3 +75,5 @@ export default function Navbar() {
     </>
   );
 }
+
+

@@ -324,158 +324,316 @@ export default function PricingSection() {
       {/* Illuminated Horizon Rim Light */}
       <div className="curtain-rim-light absolute top-0 left-0 right-0 h-[2px] rounded-t-[3rem] bg-gradient-to-r from-transparent via-purple-400 to-transparent pointer-events-none z-50" />
 
-        {/* Ambient glow */}
-        <div
-          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full pointer-events-none opacity-60"
-          style={{
-            background: 'radial-gradient(ellipse at center, rgba(168, 85, 247, 0.12) 0%, rgba(147, 51, 234, 0.04) 50%, transparent 70%)',
-            transform: 'translate3d(-50%, 0, 0)',
-          }}
-        />
+      {/* Ambient glow */}
+      <div
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full pointer-events-none opacity-60"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(168, 85, 247, 0.12) 0%, rgba(147, 51, 234, 0.04) 50%, transparent 70%)',
+          transform: 'translate3d(-50%, 0, 0)',
+        }}
+      />
 
-        {/* Section Header */}
-        <div className="relative z-10 w-full px-6 md:px-12 lg:px-16 xl:px-20 mb-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between max-w-7xl mx-auto">
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-3">
-                <span className="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]" />
-                <span className="text-xs uppercase tracking-[0.25em] text-purple-400 font-mono">
-                  Investment // 04
+      {/* Section Header */}
+      <div className="relative z-10 w-full px-6 md:px-12 lg:px-16 xl:px-20 mb-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between max-w-7xl mx-auto">
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]" />
+              <span className="text-xs uppercase tracking-[0.25em] text-purple-400 font-mono">
+                Investment // 04
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-white leading-tight">
+              Transparent Pricing.
+            </h2>
+          </div>
+          <p className="text-gray-400 text-xs md:text-sm font-light max-w-md mt-3 md:mt-0 leading-relaxed">
+            Paket transparan terstruktur tanpa biaya tersembunyi. Disesuaikan untuk akselerasi kehadiran digital dan keandalan sistem Anda.
+          </p>
+        </div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
+        {/* Universal Control Header: Balanced Layout */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 pb-6 border-b border-white/10">
+          {/* Left Column: Tab Switcher & Billing Cycle Selector */}
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Tab Switcher */}
+            <div className="flex items-center gap-1 p-1 rounded-full bg-[#0c0c14] border border-white/15 shadow-inner">
+              <button
+                onClick={() => setActiveTab('development')}
+                className={`px-5 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer ${activeTab === 'development'
+                    ? 'bg-purple-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]'
+                    : 'text-gray-400 hover:text-white hover:bg-white/[0.04]'
+                  }`}
+              >
+                Development
+              </button>
+              <button
+                onClick={() => setActiveTab('recurring')}
+                className={`px-5 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer ${activeTab === 'recurring'
+                    ? 'bg-purple-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]'
+                    : 'text-gray-400 hover:text-white hover:bg-white/[0.04]'
+                  }`}
+              >
+                Recurring Retainer
+              </button>
+            </div>
+
+            {/* Retainer Cycle Selector (seamlessly integrated next to switcher) */}
+            {activeTab === 'recurring' && (
+              <div className="flex items-center gap-1 p-1 rounded-full bg-[#0c0c14] border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.15)]">
+                <button
+                  onClick={() => setBillingCycle('monthly')}
+                  className={`px-3 py-1.5 rounded-full text-[11px] font-mono transition-all cursor-pointer ${billingCycle === 'monthly'
+                      ? 'bg-purple-600 text-white shadow-sm'
+                      : 'text-gray-400 hover:text-white'
+                    }`}
+                >
+                  Bulanan
+                </button>
+                <button
+                  onClick={() => setBillingCycle('6month')}
+                  className={`px-3 py-1.5 rounded-full text-[11px] font-mono transition-all cursor-pointer flex items-center gap-1 ${billingCycle === '6month'
+                      ? 'bg-purple-600 text-white shadow-sm'
+                      : 'text-gray-400 hover:text-white'
+                    }`}
+                >
+                  6 Bulan
+                  <span className="text-[9px] text-purple-200 bg-black/40 px-1 py-0.5 rounded-full">
+                    -10%
+                  </span>
+                </button>
+                <button
+                  onClick={() => setBillingCycle('12month')}
+                  className={`px-3 py-1.5 rounded-full text-[11px] font-mono transition-all cursor-pointer flex items-center gap-1 ${billingCycle === '12month'
+                      ? 'bg-purple-600 text-white shadow-sm'
+                      : 'text-gray-400 hover:text-white'
+                    }`}
+                >
+                  12 Bulan
+                  <span className="text-[9px] text-emerald-300 bg-emerald-500/20 px-1 py-0.5 rounded-full">
+                    -20%
+                  </span>
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Right Column: Explanatory Text with aligned indicator */}
+          <div className="text-xs text-gray-400 font-light text-left md:text-right">
+            {activeTab === 'development' ? (
+              <div className="flex items-center md:justify-end gap-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_6px_rgba(168,85,247,0.8)] shrink-0" />
+                <span className="leading-normal">
+                  <strong className="text-white font-medium">One-Time Project:</strong> Hak milik source code 100%, deployment cloud siap pakai.
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-white leading-tight">
-                Transparent Pricing.
-              </h2>
-            </div>
-            <p className="text-gray-400 text-xs md:text-sm font-light max-w-md mt-3 md:mt-0 leading-relaxed">
-              Paket transparan terstruktur tanpa biaya tersembunyi. Disesuaikan untuk akselerasi kehadiran digital dan keandalan sistem Anda.
-            </p>
+            ) : (
+              <div className="flex items-center md:justify-end gap-2.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)] shrink-0" />
+                <span className="leading-normal">
+                  <strong className="text-white font-medium">Ongoing Retainer:</strong> Hosting, maintenance & monitoring 24/7 terjamin.
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
-          {/* Universal Control Header: Balanced Layout */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 pb-6 border-b border-white/10">
-            {/* Left Column: Tab Switcher & Billing Cycle Selector */}
-            <div className="flex flex-wrap items-center gap-3">
-              {/* Tab Switcher */}
-              <div className="flex items-center gap-1 p-1 rounded-full bg-[#0c0c14] border border-white/15 shadow-inner">
-                <button
-                  onClick={() => setActiveTab('development')}
-                  className={`px-5 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer ${
-                    activeTab === 'development'
-                      ? 'bg-purple-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]'
-                      : 'text-gray-400 hover:text-white hover:bg-white/[0.04]'
-                  }`}
-                >
-                  Development
-                </button>
-                <button
-                  onClick={() => setActiveTab('recurring')}
-                  className={`px-5 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer ${
-                    activeTab === 'recurring'
-                      ? 'bg-purple-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]'
-                      : 'text-gray-400 hover:text-white hover:bg-white/[0.04]'
-                  }`}
-                >
-                  Recurring Retainer
-                </button>
-              </div>
+        {/* ─── TAB 1: WEBSITE DEVELOPMENT ─── */}
+        {activeTab === 'development' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 items-stretch">
+            {DEV_PACKAGES.map((pkg) => {
+              const isPopular = pkg.popular;
+              const isCardFour = pkg.id === '04';
 
-              {/* Retainer Cycle Selector (seamlessly integrated next to switcher) */}
-              {activeTab === 'recurring' && (
-                <div className="flex items-center gap-1 p-1 rounded-full bg-[#0c0c14] border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.15)]">
-                  <button
-                    onClick={() => setBillingCycle('monthly')}
-                    className={`px-3 py-1.5 rounded-full text-[11px] font-mono transition-all cursor-pointer ${
-                      billingCycle === 'monthly'
-                        ? 'bg-purple-600 text-white shadow-sm'
-                        : 'text-gray-400 hover:text-white'
+              return (
+                <div
+                  key={pkg.id}
+                  className={`group relative rounded-2xl p-6 flex flex-col transition-all duration-300 ${isCardFour ? 'overflow-visible' : 'overflow-hidden'
+                    } ${isPopular
+                      ? 'bg-[#0e0e18] border border-purple-500/80 shadow-[0_12px_40px_-10px_rgba(168,85,247,0.3)]'
+                      : 'bg-[#0c0c14] border border-white/15 hover:border-purple-500/60 hover:shadow-[0_12px_35px_-10px_rgba(168,85,247,0.2)]'
                     }`}
-                  >
-                    Bulanan
-                  </button>
-                  <button
-                    onClick={() => setBillingCycle('6month')}
-                    className={`px-3 py-1.5 rounded-full text-[11px] font-mono transition-all cursor-pointer flex items-center gap-1 ${
-                      billingCycle === '6month'
-                        ? 'bg-purple-600 text-white shadow-sm'
-                        : 'text-gray-400 hover:text-white'
-                    }`}
-                  >
-                    6 Bulan
-                    <span className="text-[9px] text-purple-200 bg-black/40 px-1 py-0.5 rounded-full">
-                      -10%
-                    </span>
-                  </button>
-                  <button
-                    onClick={() => setBillingCycle('12month')}
-                    className={`px-3 py-1.5 rounded-full text-[11px] font-mono transition-all cursor-pointer flex items-center gap-1 ${
-                      billingCycle === '12month'
-                        ? 'bg-purple-600 text-white shadow-sm'
-                        : 'text-gray-400 hover:text-white'
-                    }`}
-                  >
-                    12 Bulan
-                    <span className="text-[9px] text-emerald-300 bg-emerald-500/20 px-1 py-0.5 rounded-full">
-                      -20%
-                    </span>
-                  </button>
-                </div>
-              )}
-            </div>
+                  style={{
+                    transform: 'translateZ(0)',
+                    contain: isCardFour ? 'none' : 'layout style',
+                  }}
+                >
+                  {/* Hanging Price Tag Overlay on Top Right of Card 4 */}
+                  {isCardFour && (
+                    <HangingPriceTag
+                      type="dev"
+                      discountText="-20%"
+                      tagSubtitle="DEV"
+                      dealTitle="Bundling Deal"
+                      dealDesc="Retainer 6/12 Bln"
+                      linkHref="https://wa.me/6282349239232?text=Halo%20KIBI,%20saya%20tertarik%20dengan%20promo%20diskon%2020%25%20development%20bundling%20recurring%206/12%20bulan"
+                    />
+                  )}
 
-            {/* Right Column: Explanatory Text with aligned indicator */}
-            <div className="text-xs text-gray-400 font-light text-left md:text-right">
-              {activeTab === 'development' ? (
-                <div className="flex items-center md:justify-end gap-2.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_6px_rgba(168,85,247,0.8)] shrink-0" />
-                  <span className="leading-normal">
-                    <strong className="text-white font-medium">One-Time Project:</strong> Hak milik source code 100%, deployment cloud siap pakai.
-                  </span>
+                  {/* Hover glow */}
+                  <div
+                    className="absolute -top-16 -right-16 w-60 h-60 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
+                    style={{
+                      background: 'radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(147, 51, 234, 0.1) 45%, transparent 70%)',
+                      transform: 'translateZ(0)',
+                    }}
+                  />
+
+                  {/* Top accent */}
+                  <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400/30 to-transparent group-hover:via-purple-400/80 transition-all duration-500 pointer-events-none" />
+
+                  <div className="relative z-10 flex flex-col flex-1">
+                    {/* Header: Index & Badge */}
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-xs font-mono tracking-widest text-purple-400 uppercase">
+                          // {pkg.id}
+                      </span>
+                      {isPopular ? (
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-purple-300 bg-purple-500/20 border border-purple-500/40 shadow-[0_0_8px_rgba(168,85,247,0.3)]">
+                          Popular
+                        </span>
+                      ) : (
+                        pkg.badge && (
+                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-gray-400 bg-white/[0.04] border border-white/10">
+                            {pkg.badge}
+                          </span>
+                        )
+                      )}
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-xl font-light text-white tracking-tight leading-snug mb-1.5 group-hover:text-purple-300 transition-colors">
+                      {pkg.name}
+                    </h3>
+                    <p className="text-xs text-gray-400 font-light leading-relaxed mb-5 min-h-[36px] line-clamp-2">
+                      {pkg.description}
+                    </p>
+
+                    {/* Price */}
+                    <div className="pt-3 pb-4 border-t border-white/10 mb-5 min-h-[72px] flex flex-col justify-end">
+                      {pkg.id === '04' && (
+                        <span className="text-[10px] uppercase tracking-widest font-mono text-gray-500 block mb-0.5">
+                          Starting From
+                        </span>
+                      )}
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-2xl md:text-3xl font-light text-white tracking-tight font-mono">
+                          {pkg.price}
+                        </span>
+                        {pkg.priceSub && (
+                          <span className="text-xs font-mono text-purple-400 font-normal">
+                            {pkg.priceSub}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Features */}
+                    <div className="space-y-2.5 mb-5 flex-1 flex flex-col justify-between">
+                      <div className="space-y-2.5">
+                        {pkg.features.map((feat, i) => (
+                          <div key={i} className="flex items-start gap-2 text-xs text-gray-300 font-light">
+                            <span className="w-1.5 h-1.5 rounded-full bg-purple-400/80 mt-1.5 shrink-0" />
+                            <span className="leading-relaxed">{feat}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Extra bottom info / SLA slot for perfect alignment */}
+                      <div className="pt-3 min-h-[58px] flex flex-col justify-end">
+                        {pkg.examples ? (
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
+                            <span className="text-[9px] uppercase tracking-widest font-mono text-purple-400 block mb-1">
+                              Kategori Solusi:
+                            </span>
+                            <div className="flex flex-wrap gap-1">
+                              {pkg.examples.map((ex, idx) => (
+                                <span key={idx} className="text-[10px] text-gray-300 bg-white/[0.05] border border-white/10 rounded px-1.5 py-0.5 font-mono">
+                                  {ex}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        ) : pkg.note ? (
+                          <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-purple-400/60 shrink-0" />
+                            <p className="text-[10px] text-gray-400 font-light italic leading-tight font-mono">
+                              {pkg.note}
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80 shrink-0" />
+                            <span className="text-[10px] text-gray-400 font-mono">
+                              Full Source Code & Deployment
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA */}
+                  <a
+                    href="https://wa.me/6282349239232?text=Halo%20KIBI,%20saya%20tertarik%20dengan%20layanan%20Website%20"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`relative z-10 w-full py-3 px-4 rounded-xl text-xs font-mono uppercase tracking-wider text-center transition-all duration-300 cursor-pointer block mt-auto ${isPopular
+                        ? 'bg-purple-600 hover:bg-purple-500 text-white shadow-[0_0_16px_rgba(168,85,247,0.4)]'
+                        : 'bg-white/[0.05] hover:bg-white/10 hover:border-purple-500/40 text-gray-300 hover:text-white border border-white/15'
+                      }`}
+                  >
+                    {pkg.ctaText}
+                  </a>
                 </div>
-              ) : (
-                <div className="flex items-center md:justify-end gap-2.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)] shrink-0" />
-                  <span className="leading-normal">
-                    <strong className="text-white font-medium">Ongoing Retainer:</strong> Hosting, maintenance & monitoring 24/7 terjamin.
-                  </span>
-                </div>
-              )}
-            </div>
+              );
+            })}
           </div>
+        )}
 
-          {/* ─── TAB 1: WEBSITE DEVELOPMENT ─── */}
-          {activeTab === 'development' && (
+        {/* ─── TAB 2: RECURRING RETAINER ─── */}
+        {activeTab === 'recurring' && (
+          <div className="space-y-8">
+            {/* Recurring Cards - compact 4-column */}
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 items-stretch">
-              {DEV_PACKAGES.map((pkg) => {
+              {RECURRING_PACKAGES.map((pkg) => {
                 const isPopular = pkg.popular;
                 const isCardFour = pkg.id === '04';
+                let displayPrice = pkg.priceMonthly;
+                let periodLabel = '/bln';
+
+                if (billingCycle === '6month') {
+                  displayPrice = pkg.price6m;
+                  periodLabel = '/bln';
+                } else if (billingCycle === '12month') {
+                  displayPrice = pkg.price12m;
+                  periodLabel = '/bln';
+                }
 
                 return (
                   <div
                     key={pkg.id}
-                    className={`group relative rounded-2xl p-6 flex flex-col transition-all duration-300 ${
-                      isCardFour ? 'overflow-visible' : 'overflow-hidden'
-                    } ${
-                      isPopular
+                    className={`group relative rounded-2xl p-6 flex flex-col transition-all duration-300 ${isCardFour ? 'overflow-visible' : 'overflow-hidden'
+                      } ${isPopular
                         ? 'bg-[#0e0e18] border border-purple-500/80 shadow-[0_12px_40px_-10px_rgba(168,85,247,0.3)]'
                         : 'bg-[#0c0c14] border border-white/15 hover:border-purple-500/60 hover:shadow-[0_12px_35px_-10px_rgba(168,85,247,0.2)]'
-                    }`}
+                      }`}
                     style={{
                       transform: 'translateZ(0)',
                       contain: isCardFour ? 'none' : 'layout style',
                     }}
                   >
-                    {/* Hanging Price Tag Overlay on Top Right of Card 4 */}
+                    {/* Hanging Price Tag Overlay on Top Right of Card 4 (Custom Retainer) */}
                     {isCardFour && (
                       <HangingPriceTag
-                        type="dev"
+                        type="recurring"
                         discountText="-20%"
-                        tagSubtitle="DEV"
-                        dealTitle="Bundling Deal"
-                        dealDesc="Retainer 6/12 Bln"
-                        linkHref="https://wa.me/6282349239232?text=Halo%20KIBI,%20saya%20tertarik%20dengan%20promo%20diskon%2020%25%20development%20bundling%20recurring%206/12%20bulan"
+                        tagSubtitle="RETAINER"
+                        dealTitle="Kontrak 12 Bln"
+                        dealDesc="Diskon 20% Dev"
+                        linkHref="https://wa.me/6282349239232?text=Halo%20KIBI,%20saya%20tertarik%20dengan%20Custom%20Retainer%20dan%20promo%20bundling%20diskon%2020%25"
                       />
                     )}
 
@@ -492,10 +650,10 @@ export default function PricingSection() {
                     <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400/30 to-transparent group-hover:via-purple-400/80 transition-all duration-500 pointer-events-none" />
 
                     <div className="relative z-10 flex flex-col flex-1">
-                      {/* Header: Index & Badge */}
+                      {/* Index & Badge */}
                       <div className="flex items-center justify-between mb-4">
                         <span className="text-xs font-mono tracking-widest text-purple-400 uppercase">
-                          // {pkg.id}
+                            // {pkg.id}
                         </span>
                         {isPopular ? (
                           <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-purple-300 bg-purple-500/20 border border-purple-500/40 shadow-[0_0_8px_rgba(168,85,247,0.3)]">
@@ -510,31 +668,37 @@ export default function PricingSection() {
                         )}
                       </div>
 
-                      {/* Title */}
+                      {/* Name & Target */}
                       <h3 className="text-xl font-light text-white tracking-tight leading-snug mb-1.5 group-hover:text-purple-300 transition-colors">
                         {pkg.name}
                       </h3>
                       <p className="text-xs text-gray-400 font-light leading-relaxed mb-5 min-h-[36px] line-clamp-2">
-                        {pkg.description}
+                        {pkg.target}
                       </p>
 
                       {/* Price */}
                       <div className="pt-3 pb-4 border-t border-white/10 mb-5 min-h-[72px] flex flex-col justify-end">
-                        {pkg.id === '04' && (
-                          <span className="text-[10px] uppercase tracking-widest font-mono text-gray-500 block mb-0.5">
-                            Starting From
-                          </span>
-                        )}
                         <div className="flex items-baseline gap-1">
                           <span className="text-2xl md:text-3xl font-light text-white tracking-tight font-mono">
-                            {pkg.price}
+                            {displayPrice}
                           </span>
-                          {pkg.priceSub && (
-                            <span className="text-xs font-mono text-purple-400 font-normal">
-                              {pkg.priceSub}
+                          {pkg.id !== '04' && (
+                            <span className="text-xs font-mono text-purple-400">
+                              {periodLabel}
                             </span>
                           )}
                         </div>
+
+                        {billingCycle !== 'monthly' && pkg.id !== '04' ? (
+                          <div className="mt-1 text-[11px] font-mono text-emerald-400 flex items-center gap-1.5">
+                            <span className="w-1 h-1 rounded-full bg-emerald-400" />
+                            <span>Hemat {billingCycle === '6month' ? pkg.discount6m : pkg.discount12m}</span>
+                          </div>
+                        ) : (
+                          <div className="mt-1 text-[11px] font-mono text-gray-500 invisible">
+                            placeholder
+                          </div>
+                        )}
                       </div>
 
                       {/* Features */}
@@ -548,50 +712,30 @@ export default function PricingSection() {
                           ))}
                         </div>
 
-                        {/* Extra bottom info / SLA slot for perfect alignment */}
+                        {/* SLA compact */}
                         <div className="pt-3 min-h-[58px] flex flex-col justify-end">
-                          {pkg.examples ? (
-                            <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
-                              <span className="text-[9px] uppercase tracking-widest font-mono text-purple-400 block mb-1">
-                                Kategori Solusi:
-                              </span>
-                              <div className="flex flex-wrap gap-1">
-                                {pkg.examples.map((ex, idx) => (
-                                  <span key={idx} className="text-[10px] text-gray-300 bg-white/[0.05] border border-white/10 rounded px-1.5 py-0.5 font-mono">
-                                    {ex}
-                                  </span>
-                                ))}
-                              </div>
+                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 space-y-1 text-[11px] font-mono text-gray-300">
+                            <div className="flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                              <span className="truncate">{pkg.slaResponse}</span>
                             </div>
-                          ) : pkg.note ? (
-                            <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full bg-purple-400/60 shrink-0" />
-                              <p className="text-[10px] text-gray-400 font-light italic leading-tight font-mono">
-                                {pkg.note}
-                              </p>
+                            <div className="text-gray-500 pl-3 text-[10px]">
+                              {pkg.slaEmergency}
                             </div>
-                          ) : (
-                            <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80 shrink-0" />
-                              <span className="text-[10px] text-gray-400 font-mono">
-                                Full Source Code & Deployment
-                              </span>
-                            </div>
-                          )}
+                          </div>
                         </div>
                       </div>
                     </div>
 
                     {/* CTA */}
                     <a
-                      href="https://wa.me/6282349239232?text=Halo%20KIBI,%20saya%20tertarik%20dengan%20layanan%20Website%20"
+                      href="https://wa.me/6282349239232?text=Halo%20KIBI,%20saya%20tertarik%20paket%20Recurring%20"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`relative z-10 w-full py-3 px-4 rounded-xl text-xs font-mono uppercase tracking-wider text-center transition-all duration-300 cursor-pointer block mt-auto ${
-                        isPopular
+                      className={`relative z-10 w-full py-3 px-4 rounded-xl text-xs font-mono uppercase tracking-wider text-center transition-all duration-300 cursor-pointer block mt-auto ${isPopular
                           ? 'bg-purple-600 hover:bg-purple-500 text-white shadow-[0_0_16px_rgba(168,85,247,0.4)]'
                           : 'bg-white/[0.05] hover:bg-white/10 hover:border-purple-500/40 text-gray-300 hover:text-white border border-white/15'
-                      }`}
+                        }`}
                     >
                       {pkg.ctaText}
                     </a>
@@ -599,255 +743,100 @@ export default function PricingSection() {
                 );
               })}
             </div>
-          )}
 
-          {/* ─── TAB 2: RECURRING RETAINER ─── */}
-          {activeTab === 'recurring' && (
-            <div className="space-y-8">
-              {/* Recurring Cards - compact 4-column */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 items-stretch">
-                {RECURRING_PACKAGES.map((pkg) => {
-                  const isPopular = pkg.popular;
-                  const isCardFour = pkg.id === '04';
-                  let displayPrice = pkg.priceMonthly;
-                  let periodLabel = '/bln';
-
-                  if (billingCycle === '6month') {
-                    displayPrice = pkg.price6m;
-                    periodLabel = '/bln';
-                  } else if (billingCycle === '12month') {
-                    displayPrice = pkg.price12m;
-                    periodLabel = '/bln';
-                  }
-
-                  return (
-                    <div
-                      key={pkg.id}
-                      className={`group relative rounded-2xl p-6 flex flex-col transition-all duration-300 ${
-                        isCardFour ? 'overflow-visible' : 'overflow-hidden'
-                      } ${
-                        isPopular
-                          ? 'bg-[#0e0e18] border border-purple-500/80 shadow-[0_12px_40px_-10px_rgba(168,85,247,0.3)]'
-                          : 'bg-[#0c0c14] border border-white/15 hover:border-purple-500/60 hover:shadow-[0_12px_35px_-10px_rgba(168,85,247,0.2)]'
-                      }`}
-                      style={{
-                        transform: 'translateZ(0)',
-                        contain: isCardFour ? 'none' : 'layout style',
-                      }}
-                    >
-                      {/* Hanging Price Tag Overlay on Top Right of Card 4 (Custom Retainer) */}
-                      {isCardFour && (
-                        <HangingPriceTag
-                          type="recurring"
-                          discountText="-20%"
-                          tagSubtitle="RETAINER"
-                          dealTitle="Kontrak 12 Bln"
-                          dealDesc="Diskon 20% Dev"
-                          linkHref="https://wa.me/6282349239232?text=Halo%20KIBI,%20saya%20tertarik%20dengan%20Custom%20Retainer%20dan%20promo%20bundling%20diskon%2020%25"
-                        />
-                      )}
-
-                      {/* Hover glow */}
-                      <div
-                        className="absolute -top-16 -right-16 w-60 h-60 rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"
-                        style={{
-                          background: 'radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(147, 51, 234, 0.1) 45%, transparent 70%)',
-                          transform: 'translateZ(0)',
-                        }}
-                      />
-
-                      {/* Top accent */}
-                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400/30 to-transparent group-hover:via-purple-400/80 transition-all duration-500 pointer-events-none" />
-
-                      <div className="relative z-10 flex flex-col flex-1">
-                        {/* Index & Badge */}
-                        <div className="flex items-center justify-between mb-4">
-                          <span className="text-xs font-mono tracking-widest text-purple-400 uppercase">
-                            // {pkg.id}
-                          </span>
-                          {isPopular ? (
-                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-purple-300 bg-purple-500/20 border border-purple-500/40 shadow-[0_0_8px_rgba(168,85,247,0.3)]">
-                              Popular
-                            </span>
-                          ) : (
-                            pkg.badge && (
-                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-gray-400 bg-white/[0.04] border border-white/10">
-                                {pkg.badge}
-                              </span>
-                            )
-                          )}
-                        </div>
-
-                        {/* Name & Target */}
-                        <h3 className="text-xl font-light text-white tracking-tight leading-snug mb-1.5 group-hover:text-purple-300 transition-colors">
-                          {pkg.name}
-                        </h3>
-                        <p className="text-xs text-gray-400 font-light leading-relaxed mb-5 min-h-[36px] line-clamp-2">
-                          {pkg.target}
-                        </p>
-
-                        {/* Price */}
-                        <div className="pt-3 pb-4 border-t border-white/10 mb-5 min-h-[72px] flex flex-col justify-end">
-                          <div className="flex items-baseline gap-1">
-                            <span className="text-2xl md:text-3xl font-light text-white tracking-tight font-mono">
-                              {displayPrice}
-                            </span>
-                            {pkg.id !== '04' && (
-                              <span className="text-xs font-mono text-purple-400">
-                                {periodLabel}
-                              </span>
-                            )}
-                          </div>
-
-                          {billingCycle !== 'monthly' && pkg.id !== '04' ? (
-                            <div className="mt-1 text-[11px] font-mono text-emerald-400 flex items-center gap-1.5">
-                              <span className="w-1 h-1 rounded-full bg-emerald-400" />
-                              <span>Hemat {billingCycle === '6month' ? pkg.discount6m : pkg.discount12m}</span>
-                            </div>
-                          ) : (
-                            <div className="mt-1 text-[11px] font-mono text-gray-500 invisible">
-                              placeholder
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Features */}
-                        <div className="space-y-2.5 mb-5 flex-1 flex flex-col justify-between">
-                          <div className="space-y-2.5">
-                            {pkg.features.map((feat, i) => (
-                              <div key={i} className="flex items-start gap-2 text-xs text-gray-300 font-light">
-                                <span className="w-1.5 h-1.5 rounded-full bg-purple-400/80 mt-1.5 shrink-0" />
-                                <span className="leading-relaxed">{feat}</span>
-                              </div>
-                            ))}
-                          </div>
-
-                          {/* SLA compact */}
-                          <div className="pt-3 min-h-[58px] flex flex-col justify-end">
-                            <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 space-y-1 text-[11px] font-mono text-gray-300">
-                              <div className="flex items-center gap-1.5">
-                                <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-                                <span className="truncate">{pkg.slaResponse}</span>
-                              </div>
-                              <div className="text-gray-500 pl-3 text-[10px]">
-                                {pkg.slaEmergency}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* CTA */}
-                      <a
-                        href="https://wa.me/6282349239232?text=Halo%20KIBI,%20saya%20tertarik%20paket%20Recurring%20"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`relative z-10 w-full py-3 px-4 rounded-xl text-xs font-mono uppercase tracking-wider text-center transition-all duration-300 cursor-pointer block mt-auto ${
-                          isPopular
-                            ? 'bg-purple-600 hover:bg-purple-500 text-white shadow-[0_0_16px_rgba(168,85,247,0.4)]'
-                            : 'bg-white/[0.05] hover:bg-white/10 hover:border-purple-500/40 text-gray-300 hover:text-white border border-white/15'
-                        }`}
-                      >
-                        {pkg.ctaText}
-                      </a>
-                    </div>
-                  );
-                })}
+            {/* Discount Matrix Table - Compact */}
+            <div className="p-5 md:p-7 rounded-2xl bg-[#0c0c14] border border-white/15">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4 pb-4 border-b border-white/10">
+                <div>
+                  <span className="text-[10px] uppercase tracking-widest font-mono text-purple-400 block mb-1">
+                    Diskon Komitmen Kontrak
+                  </span>
+                  <h4 className="text-base md:text-lg font-light text-white">
+                    Perbandingan Durasi & Penghematan
+                  </h4>
+                </div>
+                <p className="text-[11px] text-gray-400 font-light max-w-xs">
+                  Potongan hingga 20% dengan pembayaran di muka pada awal periode.
+                </p>
               </div>
 
-              {/* Discount Matrix Table - Compact */}
-              <div className="p-5 md:p-7 rounded-2xl bg-[#0c0c14] border border-white/15">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4 pb-4 border-b border-white/10">
-                  <div>
-                    <span className="text-[10px] uppercase tracking-widest font-mono text-purple-400 block mb-1">
-                      Diskon Komitmen Kontrak
-                    </span>
-                    <h4 className="text-base md:text-lg font-light text-white">
-                      Perbandingan Durasi & Penghematan
-                    </h4>
-                  </div>
-                  <p className="text-[11px] text-gray-400 font-light max-w-xs">
-                    Potongan hingga 20% dengan pembayaran di muka pada awal periode.
-                  </p>
-                </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-[11px] text-left">
+                  <thead>
+                    <tr className="border-b border-white/10 text-gray-400 font-mono text-[10px] uppercase tracking-wider">
+                      <th className="py-2.5 px-3">Durasi</th>
+                      <th className="py-2.5 px-3 text-center">Starter</th>
+                      <th className="py-2.5 px-3 text-center">Growth</th>
+                      <th className="py-2.5 px-3 text-center">Business</th>
+                      <th className="py-2.5 px-3 text-center">Diskon</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 font-mono">
+                    <tr className="hover:bg-white/[0.02] transition-colors">
+                      <td className="py-2.5 px-3 font-normal text-white">
+                        Bulanan
+                      </td>
+                      <td className="py-2.5 px-3 text-center text-gray-300">Rp750rb</td>
+                      <td className="py-2.5 px-3 text-center text-gray-300">Rp1,5jt</td>
+                      <td className="py-2.5 px-3 text-center text-gray-300">Rp2,5jt</td>
+                      <td className="py-2.5 px-3 text-center text-gray-500">—</td>
+                    </tr>
+                    <tr className="hover:bg-white/[0.02] transition-colors">
+                      <td className="py-2.5 px-3 font-normal text-white">
+                        6 Bulan
+                      </td>
+                      <td className="py-2.5 px-3 text-center text-purple-300">Rp675rb</td>
+                      <td className="py-2.5 px-3 text-center text-purple-300">Rp1,35jt</td>
+                      <td className="py-2.5 px-3 text-center text-purple-300">Rp2,25jt</td>
+                      <td className="py-2.5 px-3 text-center">
+                        <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px]">
+                          -10%
+                        </span>
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-white/[0.02] transition-colors">
+                      <td className="py-2.5 px-3 font-normal text-white">
+                        12 Bulan
+                      </td>
+                      <td className="py-2.5 px-3 text-center text-emerald-400 font-medium">Rp600rb</td>
+                      <td className="py-2.5 px-3 text-center text-emerald-400 font-medium">Rp1,2jt</td>
+                      <td className="py-2.5 px-3 text-center text-emerald-400 font-medium">Rp2jt</td>
+                      <td className="py-2.5 px-3 text-center">
+                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px]">
+                          -20%
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full text-[11px] text-left">
-                    <thead>
-                      <tr className="border-b border-white/10 text-gray-400 font-mono text-[10px] uppercase tracking-wider">
-                        <th className="py-2.5 px-3">Durasi</th>
-                        <th className="py-2.5 px-3 text-center">Starter</th>
-                        <th className="py-2.5 px-3 text-center">Growth</th>
-                        <th className="py-2.5 px-3 text-center">Business</th>
-                        <th className="py-2.5 px-3 text-center">Diskon</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5 font-mono">
-                      <tr className="hover:bg-white/[0.02] transition-colors">
-                        <td className="py-2.5 px-3 font-normal text-white">
-                          Bulanan
-                        </td>
-                        <td className="py-2.5 px-3 text-center text-gray-300">Rp750rb</td>
-                        <td className="py-2.5 px-3 text-center text-gray-300">Rp1,5jt</td>
-                        <td className="py-2.5 px-3 text-center text-gray-300">Rp2,5jt</td>
-                        <td className="py-2.5 px-3 text-center text-gray-500">—</td>
-                      </tr>
-                      <tr className="hover:bg-white/[0.02] transition-colors">
-                        <td className="py-2.5 px-3 font-normal text-white">
-                          6 Bulan
-                        </td>
-                        <td className="py-2.5 px-3 text-center text-purple-300">Rp675rb</td>
-                        <td className="py-2.5 px-3 text-center text-purple-300">Rp1,35jt</td>
-                        <td className="py-2.5 px-3 text-center text-purple-300">Rp2,25jt</td>
-                        <td className="py-2.5 px-3 text-center">
-                          <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px]">
-                            -10%
-                          </span>
-                        </td>
-                      </tr>
-                      <tr className="hover:bg-white/[0.02] transition-colors">
-                        <td className="py-2.5 px-3 font-normal text-white">
-                          12 Bulan
-                        </td>
-                        <td className="py-2.5 px-3 text-center text-emerald-400 font-medium">Rp600rb</td>
-                        <td className="py-2.5 px-3 text-center text-emerald-400 font-medium">Rp1,2jt</td>
-                        <td className="py-2.5 px-3 text-center text-emerald-400 font-medium">Rp2jt</td>
-                        <td className="py-2.5 px-3 text-center">
-                          <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px]">
-                            -20%
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+              <div className="mt-4 pt-4 border-t border-white/10 text-[11px] text-gray-400 font-light leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <span className="text-white font-medium">Bundling Spesial:</span> Mengambil paket Recurring 6 atau 12 bulan bersamaan dengan pembuatan website memberikan <strong className="text-emerald-300 font-medium">potongan 20% langsung pada biaya development</strong>.
                 </div>
-
-                <div className="mt-4 pt-4 border-t border-white/10 text-[11px] text-gray-400 font-light leading-relaxed flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <div>
-                    <span className="text-white font-medium">Bundling Spesial:</span> Mengambil paket Recurring 6 atau 12 bulan bersamaan dengan pembuatan website memberikan <strong className="text-emerald-300 font-medium">potongan 20% langsung pada biaya development</strong>.
-                  </div>
-                  <div className="text-[10px] text-gray-500 font-mono shrink-0">
-                    *Jam support tidak carry-over. Response time hari kerja.
-                  </div>
+                <div className="text-[10px] text-gray-500 font-mono shrink-0">
+                  *Jam support tidak carry-over. Response time hari kerja.
                 </div>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
+      </div>
 
-        {/* ─── CONTACT SUBSECTION (Fully integrated into the same curtain surface) ─── */}
+      {/* ─── CONTACT SUBSECTION (Fully integrated into the same curtain surface) ─── */}
+      <div
+        id="contact"
+        className="relative w-full min-h-[90vh] flex items-center pt-24 pb-20 mt-16 border-t border-white/[0.06]"
+      >
+        {/* Full-width ambient glow */}
         <div
-          id="contact"
-          className="relative w-full min-h-[90vh] flex items-center pt-24 pb-20 mt-16 border-t border-white/[0.06]"
-        >
-          {/* Full-width ambient glow */}
-          <div
-            className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full pointer-events-none opacity-50"
-            style={{
-              background: 'radial-gradient(ellipse at center, rgba(168, 85, 247, 0.15) 0%, rgba(147, 51, 234, 0.05) 50%, transparent 70%)',
-              transform: 'translate3d(-50%, 0, 0)',
-            }}
-          />
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full pointer-events-none opacity-50"
+          style={{
+            background: 'radial-gradient(ellipse at center, rgba(168, 85, 247, 0.15) 0%, rgba(147, 51, 234, 0.05) 50%, transparent 70%)',
+            transform: 'translate3d(-50%, 0, 0)',
+          }}
+        />
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 xl:px-20 py-20">
           {/* Contact Container - full width, no rounded card */}
