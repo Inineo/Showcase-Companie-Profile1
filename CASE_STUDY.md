@@ -99,12 +99,13 @@ Peluang penyempurnaan lainnya adalah menerapkan progressive loading untuk frame 
 | Area | Technology | Peran |
 | --- | --- | --- |
 | Framework | Next.js 16.3.6 (Turbopack) | React framework dengan SSR/SSG, routing otomatis, dan optimasi performa. |
-| UI Library | React 19 | Arsitektur berbasis komponen dengan hooks dan server components. |
-| Language | TypeScript 5 | Type-safe development dengan IntelliSense dan compile-time checks. |
-| Styling | Tailwind CSS v4 | Utility-first CSS framework dengan custom animations dan theming. |
+| UI Library | React 19.2.8 | Arsitektur berbasis komponen dengan hooks modern dan server components. |
+| Language | TypeScript 5 | Type-safe development dengan IntelliSense, strict mode, dan compile-time checks. |
+| Styling | Tailwind CSS v4 | Utility-first CSS framework dengan PostCSS, custom animations, dan theming. |
+| Linting | ESLint 9 + eslint-config-next | Code quality enforcement dan Next.js best practices. |
 | Interactivity | React Hooks + Canvas API | State management, cursor interaction, dan bidirectional cube animation. |
 | Hero Animation | Canvas 2D + WebP sequence | Rendering 215 frame animasi kubus dua arah secara stabil dan responsif. |
-| Typography | Google Fonts (Inter) via next/font | Tipografi premium dengan automatic font optimization. |
+| Typography | Google Fonts (Inter) via next/font | Tipografi premium dengan automatic font optimization dan preloading. |
 | Animations | CSS Keyframes + Tailwind | Breathing borders, gradient pulse, floating glass effects. |
 | Asset Preparation | FFmpeg | Ekstraksi dan optimasi sumber video menjadi 215 WebP frames. |
 

@@ -76,10 +76,11 @@ The central cube animation renders from a WebP image sequence with bidirectional
 | Area | Technology | Purpose |
 | --- | --- | --- |
 | Framework | Next.js 16.3.6 (Turbopack) | React framework with SSR/SSG capabilities |
-| UI Library | React 19 | Component-based architecture |
-| Styling | Tailwind CSS v4 | Utility-first CSS framework |
-| TypeScript | TypeScript 5 | Type-safe development |
-| Fonts | Google Fonts (Inter) | Premium typography |
+| UI Library | React 19.2.8 | Component-based architecture with modern hooks |
+| Styling | Tailwind CSS v4 | Utility-first CSS framework with PostCSS |
+| TypeScript | TypeScript 5 | Type-safe development with strict mode |
+| Linting | ESLint 9 + eslint-config-next | Code quality and Next.js best practices |
+| Fonts | Google Fonts (Inter) via next/font | Automatic font optimization and loading |
 | Hero Animation | Canvas 2D + WebP sequence | 215-frame bidirectional animation |
 | Asset Prep | FFmpeg | Frame extraction and optimization |
 
