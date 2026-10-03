@@ -314,15 +314,21 @@ export default function PricingSection() {
   return (
     <section
       id="pricing"
-      className="curtain-section relative z-40 w-full bg-[#030305] border-t border-purple-500/30 rounded-t-[3rem] pt-20 pb-0 select-none overflow-hidden"
+      className="curtain-section relative z-40 w-full bg-[#030305] rounded-t-[3rem] pt-20 pb-0 select-none overflow-hidden"
       style={{
         contain: 'paint layout',
         transform: 'translateZ(0)',
         willChange: 'auto',
       }}
     >
+      {/* Gradient breathing overlay - ungu ke hitam */}
+      <div 
+        className="absolute top-0 left-0 right-0 h-[2px] rounded-t-[3rem] bg-gradient-to-r from-black via-purple-400 to-black pointer-events-none z-[49]"
+        style={{ animation: 'curtain-breathing-gradient 3s ease-in-out infinite' }}
+      />
+      
       {/* Illuminated Horizon Rim Light */}
-      <div className="curtain-rim-light absolute top-0 left-0 right-0 h-[2px] rounded-t-[3rem] bg-gradient-to-r from-transparent via-purple-400 to-transparent pointer-events-none z-50" />
+      <div className="curtain-rim-light absolute top-0 left-0 right-0 h-[2px] rounded-t-[3rem] bg-gradient-to-r from-transparent via-purple-400 to-transparent pointer-events-none z-50 opacity-0" />
 
       {/* Ambient glow */}
       <div
@@ -1033,3 +1039,4 @@ export default function PricingSection() {
     </section>
   );
 }
+

@@ -108,6 +108,40 @@
   box-shadow: 0 0 15px rgba(192, 132, 252, 0.6);
 }
 
+/* Breathing animation for curtain borders */
+@keyframes curtain-breathing {
+  0%, 100% {
+    border-top-color: rgba(168, 85, 247, 0.6);
+  }
+  50% {
+    border-top-color: rgba(255, 255, 255, 1);
+  }
+}
+
+.curtain-breathing-border {
+  animation: curtain-breathing 3s ease-in-out infinite;
+}
+
+/* Gradient breathing animation - opacity based */
+@keyframes curtain-breathing-gradient {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Brighter gradient breathing for What We Do */
+@keyframes curtain-breathing-gradient-bright {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 /* Animated Scroll Indicator Dot */
 @keyframes scrollDotMotion {
   0% { transform: translateY(0); opacity: 0; }
