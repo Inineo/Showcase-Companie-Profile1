@@ -39,7 +39,7 @@ export default function Navbar() {
         onMouseLeave={() => setIsHovering(false)}
       />
       <nav
-        className={`fixed top-4 left-4 right-4 md:top-6 md:left-8 md:right-8 lg:left-12 lg:right-12 p-5 md:p-7 flex justify-between items-center z-[100] bg-[#030305]/65 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_12px_40px_-16px_rgba(0,0,0,0.9),0_0_30px_rgba(168,85,247,0.08)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed top-4 left-4 right-4 md:top-6 md:left-8 md:right-8 lg:left-12 lg:right-12 p-5 md:p-7 flex justify-between items-center z-[100] bg-[#030305]/65 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_12px_40px_-16px_rgba(0,0,0,0.9),0_0_30px_rgba(168,85,247,0.08),0_0_1px_1px_rgba(168,85,247,0.3)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isHidden && !isHovering
             ? '-translate-y-[calc(100%+2rem)] opacity-0 pointer-events-none'
             : 'translate-y-0 opacity-100 pointer-events-auto'
@@ -47,7 +47,12 @@ export default function Navbar() {
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
-        {/* Soft glass highlight — keeps the navbar edge quiet over the hero */}
+        {/* Illuminated rim light gradient dengan pulse animation */}
+        <div className="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400 to-transparent animate-pulse opacity-70 shadow-[0_0_8px_rgba(168,85,247,0.4)]" />
+          <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-400 to-transparent animate-pulse opacity-70 shadow-[0_0_8px_rgba(168,85,247,0.4)]" />
+        </div>
+
         <button
           type="button"
           className="flex items-center gap-3 text-xs md:text-sm tracking-[0.1em] uppercase hover:text-white text-gray-300 transition-colors cursor-pointer"
