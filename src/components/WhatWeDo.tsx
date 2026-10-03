@@ -27,7 +27,7 @@ export default function WhatWeDo() {
   return (
     <section
       id="what-we-do"
-      className="curtain-section relative z-30 w-full bg-[#030305] border-t border-purple-500/40 rounded-t-[3rem] shadow-[0_-30px_90px_rgba(0,0,0,0.98)] pb-32"
+      className="curtain-section relative z-30 w-full bg-[#030305] border-t-2 border-purple-400/80 rounded-t-[3rem] shadow-[0_-30px_90px_rgba(0,0,0,0.98)] pb-32"
     >
       {/* Clean Continuous Illuminated Horizon Rim Light dengan pulse animation */}
       <div className="curtain-rim-light absolute top-0 left-0 right-0 h-[4px] rounded-t-[3rem] bg-gradient-to-r from-transparent via-purple-300 to-transparent pointer-events-none z-50 animate-pulse shadow-[0_0_24px_rgba(168,85,247,1),0_0_48px_rgba(168,85,247,0.8),0_0_80px_rgba(168,85,247,0.4)]" />
