@@ -33,7 +33,7 @@ export default function WhatWeDo() {
       {/* Section Header (Pinned while cards stack, scrolls away with section) */}
       <div
         className={`sticky z-[50] w-full px-4 md:px-16 lg:px-24 xl:px-32 pt-6 md:pt-10 pb-4 md:pb-6 bg-[#030305] border-b border-black/10 shadow-[0_25px_45px_rgba(3,3,5,1)] transition-[top] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          navbarVisible ? 'top-[76px]' : 'top-0'
+          navbarVisible ? 'top-14 sm:top-[76px]' : 'top-0'
         }`}
         style={{ contain: 'layout style paint' }}
       >

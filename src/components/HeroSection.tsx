@@ -2,13 +2,13 @@ import HeroCube from './HeroCube';
 
 export default function HeroSection() {
   return (
-    <main className="sticky top-0 w-full min-h-[75vh] sm:min-h-screen flex flex-col sm:flex-row items-center justify-end sm:justify-between px-4 md:px-16 lg:px-24 xl:px-32 pt-14 sm:pt-24 pb-6 sm:pb-16 z-0 bg-black">
+    <main className="sticky top-0 w-full min-h-screen min-h-[100dvh] flex flex-col sm:flex-row items-center justify-center sm:justify-between px-4 md:px-16 lg:px-24 xl:px-32 pt-16 sm:pt-24 pb-16 sm:pb-16 z-0 bg-black">
       {/* Left Content */}
       <div className="relative z-10 max-w-2xl flex flex-col gap-4 md:gap-10 slide-up pointer-events-auto text-center md:text-left items-center md:items-start">
-        <h1 className="text-[1.35rem] sm:text-3xl md:text-5xl lg:text-5xl font-light leading-[1.2] tracking-tight text-white drop-shadow-2xl">
+        <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-5xl font-light leading-[1.25] tracking-tight text-white drop-shadow-2xl">
           We build digital<br className="hidden sm:inline" /> experiences that make<br className="hidden sm:inline" /> businesses work better.
         </h1>
-        <p className="text-gray-400 text-[11px] sm:text-sm md:text-base leading-relaxed max-w-xs sm:max-w-md font-light tracking-wide drop-shadow-lg">
+        <p className="text-gray-400 text-xs sm:text-sm md:text-base leading-relaxed max-w-xs sm:max-w-md font-light tracking-wide drop-shadow-lg">
           KIBI helps businesses turn ideas, problems, and opportunities into practical digital products.
         </p>
         <button
@@ -27,7 +27,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 w-full h-full flex items-center justify-center z-0 pointer-events-none overflow-hidden bg-black">
         <div className="parallax-container w-full h-full flex items-center justify-center relative">
           {/* Overlay */}
-          <div className="absolute left-0 top-0 w-full sm:w-1/2 h-full bg-gradient-to-r from-black/60 sm:from-black via-black/40 sm:via-black/80 to-transparent z-10" />
+          <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-black/80 via-black/40 to-black/90 sm:bg-gradient-to-r sm:from-black sm:via-black/80 sm:to-transparent z-10" />
 
           <div className="relative w-full h-full max-w-[1400px] flex items-center justify-center">
             <HeroCube />
@@ -68,12 +68,12 @@ export default function HeroSection() {
       {/* Scroll Indicator */}
       <a
         href="#what-we-do"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 text-gray-400 hover:text-white transition-colors group cursor-pointer pointer-events-auto"
+        className="absolute bottom-5 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 sm:gap-3 text-gray-400 hover:text-white transition-colors group cursor-pointer pointer-events-auto"
         aria-label="Scroll to What We Do section"
       >
-        <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-gray-500 group-hover:text-purple-400 transition-colors">Scroll to explore</span>
-        <div className="w-5 h-9 rounded-full border border-white/20 group-hover:border-purple-500/60 flex items-start justify-center p-1.5 transition-colors backdrop-blur-sm bg-white/[0.02]">
-          <div className="w-1 h-2 rounded-full bg-purple-400 animate-scroll-dot" />
+        <span className="text-[9px] sm:text-[10px] font-mono tracking-[0.25em] sm:tracking-[0.3em] uppercase text-gray-500 group-hover:text-purple-400 transition-colors">Scroll to explore</span>
+        <div className="w-4 h-7 sm:w-5 sm:h-9 rounded-full border border-white/20 group-hover:border-purple-500/60 flex items-start justify-center p-1 sm:p-1.5 transition-colors backdrop-blur-sm bg-white/[0.02]">
+          <div className="w-1 h-1.5 sm:h-2 rounded-full bg-purple-400 animate-scroll-dot" />
         </div>
       </a>
     </main>
