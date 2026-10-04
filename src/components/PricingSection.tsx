@@ -235,7 +235,7 @@ function HangingPriceTag({
 }: HangingPriceTagProps) {
   return (
     /* Posisi Tag di Pojok Kanan Atas Kartu */
-    <div className={`absolute ${top} ${right} z-40 pointer-events-auto`}>
+    <div className={`hidden sm:block absolute ${top} ${right} z-40 pointer-events-auto`}>
       <a
         href={linkHref}
         target="_blank"
@@ -314,7 +314,7 @@ export default function PricingSection() {
   return (
     <section
       id="pricing"
-      className="curtain-section relative z-40 w-full bg-[#030305] rounded-t-[3rem] pt-20 pb-0 select-none overflow-hidden"
+      className="curtain-section relative z-40 w-full bg-[#030305] rounded-t-[2rem] md:rounded-t-[3rem] pt-12 md:pt-20 pb-0 select-none overflow-hidden"
       style={{
         contain: 'paint layout',
         transform: 'translateZ(0)',
@@ -323,7 +323,7 @@ export default function PricingSection() {
     >
       {/* Gradient breathing overlay - ungu ke hitam */}
       <div 
-        className="absolute top-0 left-0 right-0 h-[2px] rounded-t-[3rem] bg-gradient-to-r from-black via-purple-400 to-black pointer-events-none z-[49]"
+        className="absolute top-0 left-0 right-0 h-[2px] rounded-t-[2rem] md:rounded-t-[3rem] bg-gradient-to-r from-black via-purple-400 to-black pointer-events-none z-[49]"
         style={{ animation: 'curtain-breathing-gradient 3s ease-in-out infinite' }}
       />
       
@@ -340,7 +340,7 @@ export default function PricingSection() {
       />
 
       {/* Section Header */}
-      <div className="relative z-10 w-full px-6 md:px-12 lg:px-16 xl:px-20 mb-10">
+      <div className="relative z-10 w-full px-4 md:px-12 lg:px-16 xl:px-20 mb-6 md:mb-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between max-w-7xl mx-auto">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
@@ -349,7 +349,7 @@ export default function PricingSection() {
                 Investment // 04
               </span>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-white leading-tight">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-light tracking-tight text-white leading-tight">
               Transparent Pricing.
             </h2>
           </div>
@@ -359,7 +359,7 @@ export default function PricingSection() {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-16 xl:px-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-12 lg:px-16 xl:px-20">
         {/* Universal Control Header: Balanced Layout */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 pb-6 border-b border-white/10">
           {/* Left Column: Tab Switcher & Billing Cycle Selector */}
@@ -456,7 +456,7 @@ export default function PricingSection() {
               return (
                 <div
                   key={pkg.id}
-                  className={`group relative rounded-2xl p-6 flex flex-col transition-all duration-300 ${isCardFour ? 'overflow-visible' : 'overflow-hidden'
+                  className={`group relative rounded-xl md:rounded-2xl p-4 md:p-6 flex flex-col transition-all duration-300 ${isCardFour ? 'overflow-visible' : 'overflow-hidden'
                     } ${isPopular
                       ? 'bg-[#0e0e18] border border-purple-500/80 shadow-[0_12px_40px_-10px_rgba(168,85,247,0.3)]'
                       : 'bg-[#0c0c14] border border-white/15 hover:border-purple-500/60 hover:shadow-[0_12px_35px_-10px_rgba(168,85,247,0.2)]'

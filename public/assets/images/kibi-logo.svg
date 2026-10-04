@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" fill="none">
+  <!-- KIBI Symbol 'K' -->
+  <g>
+    <!-- Left vertical bar of K with soft rounded top & bottom -->
+    <rect x="70" y="45" width="36" height="110" rx="12" fill="#2563eb" />
+    
+    <!-- Top-right diagonal arm of K with rounded corners -->
+    <path
+      d="M106 100 L158 55 C164 50 174 54 174 62 L174 72 C174 78 171 84 165 89 L128 116 Z"
+      fill="#2563eb"
+    />
+    
+    <!-- Bottom-right diagonal leg of K with rounded corners -->
+    <path
+      d="M112 104 L164 148 C170 153 176 156 176 155 C176 155 174 155 158 155 C152 155 146 152 141 148 L104 116 Z"
+      fill="#1d4ed8"
+    />
+  </g>
+
+  <!-- Wordmark 'K I B I' in bold geometric dark/white friendly font -->
+  <!-- Note: We can render using pure crisp paths or styled text for razor sharp display -->
+  <text
+    x="220"
+    y="126"
+    font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    font-size="82"
+    font-weight="800"
+    letter-spacing="0.08em"
+    fill="currentColor"
+  >
+    KIBI
+  </text>
+</svg>

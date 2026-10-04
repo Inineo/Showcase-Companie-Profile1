@@ -2,22 +2,22 @@ import HeroCube from './HeroCube';
 
 export default function HeroSection() {
   return (
-    <main className="sticky top-0 w-full min-h-screen flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 pt-24 pb-16 z-0 bg-black">
+    <main className="sticky top-0 w-full min-h-[75vh] sm:min-h-screen flex flex-col sm:flex-row items-center justify-end sm:justify-between px-4 md:px-16 lg:px-24 xl:px-32 pt-14 sm:pt-24 pb-6 sm:pb-16 z-0 bg-black">
       {/* Left Content */}
-      <div className="relative z-10 max-w-2xl flex flex-col gap-8 md:gap-10 mt-8 slide-up pointer-events-auto">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-light leading-[1.1] tracking-tight text-white drop-shadow-2xl">
+      <div className="relative z-10 max-w-2xl flex flex-col gap-4 md:gap-10 slide-up pointer-events-auto text-center md:text-left items-center md:items-start">
+        <h1 className="text-[1.35rem] sm:text-3xl md:text-5xl lg:text-5xl font-light leading-[1.2] tracking-tight text-white drop-shadow-2xl">
           We build digital<br className="hidden sm:inline" /> experiences that make<br className="hidden sm:inline" /> businesses work better.
         </h1>
-        <p className="text-gray-400 text-sm md:text-base leading-relaxed max-w-md font-light tracking-wide drop-shadow-lg">
-          KIBI helps businesses turn ideas, problems, and opportunities into practical digital products - websites, business systems, and digital experiences.
+        <p className="text-gray-400 text-[11px] sm:text-sm md:text-base leading-relaxed max-w-xs sm:max-w-md font-light tracking-wide drop-shadow-lg">
+          KIBI helps businesses turn ideas, problems, and opportunities into practical digital products.
         </p>
         <button
           type="button"
-          className="group relative flex items-center justify-between w-56 px-6 py-4 border border-white/20 rounded-full hover:border-white/60 transition-all duration-500 overflow-hidden mt-2 bg-black/20 backdrop-blur-sm text-gray-200 hover:text-white cursor-pointer"
+          className="group relative flex items-center justify-between w-44 sm:w-56 px-4 py-2.5 sm:px-6 sm:py-4 border border-white/20 rounded-full hover:border-white/60 transition-all duration-500 overflow-hidden bg-black/20 backdrop-blur-sm text-gray-200 hover:text-white cursor-pointer"
         >
           <div className="absolute inset-0 bg-white/5 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
-          <span className="text-sm tracking-[0.1em] uppercase relative z-10 font-medium">Start building</span>
-          <svg className="relative z-10 transform group-hover:translate-x-2 transition-transform duration-300" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <span className="text-xs sm:text-sm tracking-[0.1em] uppercase relative z-10 font-medium">Start building</span>
+          <svg className="relative z-10 transform group-hover:translate-x-2 transition-transform duration-300" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </button>
@@ -26,8 +26,8 @@ export default function HeroSection() {
       {/* 3D Hero Canvas Background */}
       <div className="absolute inset-0 w-full h-full flex items-center justify-center z-0 pointer-events-none overflow-hidden bg-black">
         <div className="parallax-container w-full h-full flex items-center justify-center relative">
-          {/* Overlay matches the source cube frames' pure-black background */}
-          <div className="absolute left-0 top-0 w-1/2 h-full bg-gradient-to-r from-black via-black/80 to-transparent z-10 opacity-80 mix-blend-multiply" />
+          {/* Overlay */}
+          <div className="absolute left-0 top-0 w-full sm:w-1/2 h-full bg-gradient-to-r from-black/60 sm:from-black via-black/40 sm:via-black/80 to-transparent z-10" />
 
           <div className="relative w-full h-full max-w-[1400px] flex items-center justify-center">
             <HeroCube />

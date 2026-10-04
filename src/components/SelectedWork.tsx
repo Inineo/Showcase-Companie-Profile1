@@ -142,11 +142,16 @@ export default function SelectedWork() {
       const sign = Math.sign(diff);
       const absD = Math.abs(diff);
 
+      // Responsive spread: tighter on mobile, wider on desktop
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+      const spreadPrimary = isMobile ? 200 : 375;
+      const spreadSecondary = isMobile ? 160 : 295;
+
       let translateX = 0;
       if (absD <= 1) {
-        translateX = sign * absD * 375;
+        translateX = sign * absD * spreadPrimary;
       } else {
-        translateX = sign * (375 + (absD - 1) * 295);
+        translateX = sign * (spreadPrimary + (absD - 1) * spreadSecondary);
       }
 
       const scale = Math.max(0.62, 1.0 - Math.min(1, absD / 2.6) * 0.32);
@@ -315,7 +320,8 @@ export default function SelectedWork() {
     dragDistanceRef.current = Math.abs(deltaX);
 
     if (dragDistanceRef.current > 6) {
-      const deltaIndex = deltaX / 360;
+      const dragDivisor = (typeof window !== 'undefined' && window.innerWidth < 640) ? 200 : 360;
+      const deltaIndex = deltaX / dragDivisor;
       virtualIndexRef.current = dragStartIndex.current - deltaIndex;
       applyTransforms(virtualIndexRef.current);
     }
@@ -379,8 +385,7 @@ export default function SelectedWork() {
 
       {/* Card Viewport */}
       <div
-        className="relative w-full max-w-[1700px] mx-auto flex items-center justify-center cursor-grab active:cursor-grabbing px-4"
-        style={{ height: '580px' }}
+        className="relative w-full max-w-[1700px] mx-auto flex items-center justify-center cursor-grab active:cursor-grabbing px-4 h-[420px] sm:h-[500px] md:h-[580px]"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}

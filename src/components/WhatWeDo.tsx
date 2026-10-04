@@ -27,12 +27,12 @@ export default function WhatWeDo() {
   return (
     <section
       id="what-we-do"
-      className="curtain-section relative z-30 w-full bg-[#030305] border-t-2 border-purple-400/80 rounded-t-[3rem] shadow-[0_-30px_90px_rgba(0,0,0,0.98)] pb-32"
+      className="curtain-section relative z-30 w-full bg-[#030305] border-t-2 border-purple-400/80 rounded-t-[2rem] md:rounded-t-[3rem] shadow-[0_-30px_90px_rgba(0,0,0,0.98)] pb-16 md:pb-32"
     >
 
       {/* Section Header (Pinned while cards stack, scrolls away with section) */}
       <div
-        className={`sticky z-[50] w-full px-6 md:px-16 lg:px-24 xl:px-32 pt-10 pb-6 bg-[#030305] border-b border-black/10 shadow-[0_25px_45px_rgba(3,3,5,1)] transition-[top] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`sticky z-[50] w-full px-4 md:px-16 lg:px-24 xl:px-32 pt-6 md:pt-10 pb-4 md:pb-6 bg-[#030305] border-b border-black/10 shadow-[0_25px_45px_rgba(3,3,5,1)] transition-[top] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           navbarVisible ? 'top-[76px]' : 'top-0'
         }`}
         style={{ contain: 'layout style paint' }}
@@ -43,7 +43,7 @@ export default function WhatWeDo() {
               <span className="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]" />
               <span className="text-xs uppercase tracking-[0.25em] text-purple-400 font-mono">Capabilities // 02</span>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light tracking-tight text-white leading-tight">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-light tracking-tight text-white leading-tight">
               What We Do.
             </h2>
           </div>
@@ -54,36 +54,36 @@ export default function WhatWeDo() {
       </div>
 
       {/* Overlapping Cards Stack Container (Isolated z-[10] stacking context below header z-[50]) */}
-      <div className="cards-stack relative z-10 max-w-6xl mx-auto flex flex-col items-center px-6 md:px-16 lg:px-24 xl:px-32 pt-10">
+      <div className="cards-stack relative z-10 max-w-6xl mx-auto flex flex-col items-center px-4 md:px-16 lg:px-24 xl:px-32 pt-6 md:pt-10">
         
         {/* Card 01: Web Experiences */}
         <article
-          className="stack-card sticky-card group w-full bg-[#0c0c14] border border-white/15 hover:border-purple-500/60 rounded-3xl p-8 md:p-12 lg:p-14 transition-all duration-500 shadow-[0_-5px_30px_rgba(168,85,247,0.08),0_20px_50px_rgba(0,0,0,0.9)] mb-16 overflow-hidden z-10"
+          className="stack-card sticky-card group w-full bg-[#0c0c14] border border-white/15 hover:border-purple-500/60 rounded-2xl md:rounded-3xl p-5 md:p-12 lg:p-14 transition-all duration-500 shadow-[0_-5px_30px_rgba(168,85,247,0.08),0_20px_50px_rgba(0,0,0,0.9)] mb-8 md:mb-16 overflow-hidden z-10"
           style={{ top: navbarVisible ? '260px' : '195px' }}
         >
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
           <div className="absolute -top-24 -right-24 w-80 h-80 bg-purple-600/10 rounded-full blur-2xl pointer-events-none group-hover:bg-purple-600/20 transition-colors duration-500" />
           <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] via-transparent to-transparent pointer-events-none" />
 
-          <div className="relative z-10 flex flex-col lg:flex-row justify-between lg:items-start gap-10">
+          <div className="relative z-10 flex flex-col lg:flex-row justify-between lg:items-start gap-5 md:gap-10">
             <div className="max-w-xl flex flex-col">
-              <div className="flex items-center gap-4 text-xs font-mono tracking-widest text-purple-400 uppercase mb-6">
+              <div className="flex items-center gap-3 text-[10px] md:text-xs font-mono tracking-widest text-purple-400 uppercase mb-3 md:mb-6">
                 <span>// 01</span>
                 <span className="w-8 h-[1px] bg-purple-500/40" />
                 <span>Atmospheric Interfaces</span>
               </div>
-              <h3 className="text-3xl md:text-4xl lg:text-5xl font-light text-white tracking-tight leading-snug mb-6">
+              <h3 className="text-xl md:text-4xl lg:text-5xl font-light text-white tracking-tight leading-snug mb-3 md:mb-6">
                 Web Experiences
               </h3>
-              <p className="text-gray-300 text-base md:text-lg font-light leading-relaxed mb-8">
+              <p className="text-gray-300 text-sm md:text-lg font-light leading-relaxed mb-4 md:mb-8">
                 High-impact brand flagships, immersive 3D/WebGL environments, and responsive interactive web showcases designed to evoke emotion and convert audience interest into loyalty.
               </p>
 
-              <div className="flex flex-wrap gap-2.5">
+              <div className="flex flex-wrap gap-1.5 md:gap-2.5">
                 {['Creative Development', '3D & Canvas Motion', 'Micro-Interactions', 'Editorial Direction'].map((tag) => (
                   <span
                     key={tag}
-                    className="px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider text-gray-200 bg-white/[0.05] border border-white/15 group-hover:border-purple-500/40 transition-colors"
+                    className="px-2.5 py-1 md:px-4 md:py-1.5 rounded-full text-[10px] md:text-xs font-mono uppercase tracking-wider text-gray-200 bg-white/[0.05] border border-white/15 group-hover:border-purple-500/40 transition-colors"
                   >
                     {tag}
                   </span>
@@ -91,13 +91,13 @@ export default function WhatWeDo() {
               </div>
             </div>
 
-            <div className="w-full lg:w-80 flex flex-col gap-5 p-6 rounded-2xl bg-white/[0.03] border border-white/10 self-stretch justify-between">
+            <div className="w-full lg:w-80 flex flex-col gap-3 md:gap-5 p-4 md:p-6 rounded-xl md:rounded-2xl bg-white/[0.03] border border-white/10 self-stretch justify-between">
               <div className="flex justify-between items-start">
                 <span className="text-xs uppercase tracking-[0.2em] font-mono text-gray-400">Core Metric</span>
                 <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
               </div>
               <div>
-                <div className="text-4xl md:text-5xl font-light text-white tracking-tight font-mono">
+                <div className="text-3xl md:text-5xl font-light text-white tracking-tight font-mono">
                   60<span className="text-purple-400 text-2xl font-sans">fps</span>
                 </div>
                 <p className="text-xs text-gray-400 mt-2 font-light leading-relaxed">

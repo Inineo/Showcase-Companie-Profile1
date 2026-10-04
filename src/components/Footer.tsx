@@ -73,7 +73,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative z-30 w-full bg-[#020204] text-white pt-16 pb-12 overflow-hidden border-t border-white/[0.08]">
+    <footer className="relative z-30 w-full bg-[#020204] text-white pt-10 md:pt-16 pb-8 md:pb-12 overflow-hidden border-t border-white/[0.08]">
       {/* Background Ambient Glows */}
       <div className="absolute top-0 left-1/4 -translate-x-1/2 w-[450px] h-[250px] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute top-1/2 right-1/4 w-[400px] h-[250px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
@@ -81,13 +81,13 @@ export default function Footer() {
       {/* Subtle top rim light gradient */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
+      <div className="max-w-7xl mx-auto px-4 md:px-12 lg:px-16">
         
         {/* MAIN ROW: Brand Column + Side-by-Side Category Columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 pb-14 border-b border-white/[0.08]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 pb-8 md:pb-14 border-b border-white/[0.08]">
           
           {/* LEFT: Logo & Description (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col gap-5">
+          <div className="lg:col-span-5 flex flex-col gap-4">
             <div className="flex items-center gap-3">
               <div className="relative h-9 w-[130px]">
                 <Image
