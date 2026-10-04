@@ -171,16 +171,10 @@
 
 /* Overlapping Stacked Cards */
 .sticky-card {
-  position: relative;
+  position: sticky;
   transform: translateZ(0);
   will-change: transform;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
-}
-
-@media (min-width: 768px) {
-  .sticky-card {
-    position: sticky;
-  }
 }
 
 .sticky-card:hover {

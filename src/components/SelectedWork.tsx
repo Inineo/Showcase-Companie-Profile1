@@ -144,8 +144,8 @@ export default function SelectedWork() {
 
       // Responsive spread: tighter on mobile, wider on desktop
       const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-      const spreadPrimary = isMobile ? 200 : 375;
-      const spreadSecondary = isMobile ? 160 : 295;
+      const spreadPrimary = isMobile ? 135 : 375;
+      const spreadSecondary = isMobile ? 100 : 295;
 
       let translateX = 0;
       if (absD <= 1) {
@@ -320,7 +320,7 @@ export default function SelectedWork() {
     dragDistanceRef.current = Math.abs(deltaX);
 
     if (dragDistanceRef.current > 6) {
-      const dragDivisor = (typeof window !== 'undefined' && window.innerWidth < 640) ? 200 : 360;
+      const dragDivisor = (typeof window !== 'undefined' && window.innerWidth < 640) ? 135 : 360;
       const deltaIndex = deltaX / dragDivisor;
       virtualIndexRef.current = dragStartIndex.current - deltaIndex;
       applyTransforms(virtualIndexRef.current);
@@ -351,11 +351,11 @@ export default function SelectedWork() {
     <section
       ref={sectionRef}
       id="selected-work"
-      className="relative z-40 w-full bg-[#030305] pt-32 pb-44 overflow-hidden select-none"
+      className="relative z-40 w-full bg-[#030305] pt-16 pb-20 sm:pt-32 sm:pb-44 overflow-hidden select-none"
       onMouseLeave={() => { isDraggingRef.current = false; }}
     >
       {/* Section Header */}
-      <div className="relative z-10 w-full px-6 md:px-16 lg:px-24 xl:px-32 mb-16">
+      <div className="relative z-10 w-full px-6 md:px-16 lg:px-24 xl:px-32 mb-8 sm:mb-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between max-w-6xl mx-auto">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
@@ -385,7 +385,7 @@ export default function SelectedWork() {
 
       {/* Card Viewport */}
       <div
-        className="relative w-full max-w-[1700px] mx-auto flex items-center justify-center cursor-grab active:cursor-grabbing px-4 h-[420px] sm:h-[500px] md:h-[580px]"
+        className="relative w-full max-w-[1700px] mx-auto flex items-center justify-center cursor-grab active:cursor-grabbing px-4 h-[290px] sm:h-[500px] md:h-[580px]"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -399,11 +399,11 @@ export default function SelectedWork() {
               key={project.id}
               ref={(el) => { cardRefs.current[index] = el; }}
               onClick={() => handleCardClick(index, project.href)}
-              className="selected-card-idle group block w-[260px] sm:w-[290px] md:w-[320px] rounded-[26px] overflow-hidden cursor-pointer absolute"
+              className="selected-card-idle group block w-[175px] sm:w-[290px] md:w-[320px] rounded-[18px] sm:rounded-[26px] overflow-hidden cursor-pointer absolute"
               style={{ willChange: 'transform, opacity', contain: 'layout style' }}
             >
               <div
-                className="relative w-full aspect-[1/1.45] overflow-hidden rounded-[26px]"
+                className="relative w-full aspect-[1/1.4] sm:aspect-[1/1.45] overflow-hidden rounded-[18px] sm:rounded-[26px]"
                 style={{ background: project.image ? undefined : theme.bg }}
               >
                 {project.image && (
@@ -427,25 +427,25 @@ export default function SelectedWork() {
                   style={{ opacity: 0, willChange: 'opacity' }}
                 />
 
-                <div className="absolute top-5 left-5 right-5 flex items-center justify-between z-10">
+                <div className="absolute top-3 left-3 right-3 sm:top-5 sm:left-5 sm:right-5 flex items-center justify-between z-10">
                   <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-white/20 backdrop-blur-md"
+                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shadow-lg border border-white/20 backdrop-blur-md"
                     style={{ background: project.badgeBg || '#4f46e5' }}
                   >
-                    <span className="text-[10px] font-bold text-white tracking-tighter font-mono">{project.badge}</span>
+                    <span className="text-[8px] sm:text-[10px] font-bold text-white tracking-tighter font-mono">{project.badge}</span>
                   </div>
-                  <div className="flex items-center gap-1 text-white font-semibold text-xs md:text-sm drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] font-mono">
+                  <div className="flex items-center gap-1 text-white font-semibold text-[10px] sm:text-xs md:text-sm drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] font-mono">
                     <span>{project.metric}</span>
                   </div>
                 </div>
 
-                <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-black/95 via-black/60 to-transparent pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-28 sm:h-44 bg-gradient-to-t from-black/95 via-black/60 to-transparent pointer-events-none" />
 
-                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 z-10">
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-medium text-white tracking-tight leading-snug drop-shadow-md mb-1.5 group-hover:text-purple-300 transition-colors">
+                <div className="absolute bottom-0 left-0 right-0 p-3.5 sm:p-6 z-10">
+                  <h3 className="text-sm sm:text-xl md:text-2xl font-medium text-white tracking-tight leading-snug drop-shadow-md mb-1 sm:mb-1.5 group-hover:text-purple-300 transition-colors">
                     {project.title}
                   </h3>
-                  <div className="flex items-center gap-2.5 text-xs md:text-sm text-gray-300/90 font-light drop-shadow">
+                  <div className="flex items-center gap-1.5 sm:gap-2.5 text-[10px] sm:text-xs md:text-sm text-gray-300/90 font-light drop-shadow">
                     <span>{project.year}</span>
                     <span className="w-1 h-1 rounded-full bg-purple-400/60" />
                     <span>{project.category}</span>

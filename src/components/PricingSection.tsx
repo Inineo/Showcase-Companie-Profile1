@@ -359,16 +359,16 @@ export default function PricingSection() {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-12 lg:px-16 xl:px-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-3 sm:px-4 md:px-12 lg:px-16 xl:px-20">
         {/* Universal Control Header: Balanced Layout */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 pb-6 border-b border-white/10">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-8 pb-4 sm:pb-6 border-b border-white/10">
           {/* Left Column: Tab Switcher & Billing Cycle Selector */}
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5 sm:gap-3">
             {/* Tab Switcher */}
             <div className="flex items-center gap-1 p-1 rounded-full bg-[#0c0c14] border border-white/15 shadow-inner">
               <button
                 onClick={() => setActiveTab('development')}
-                className={`px-5 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer ${activeTab === 'development'
+                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer ${activeTab === 'development'
                     ? 'bg-purple-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]'
                     : 'text-gray-400 hover:text-white hover:bg-white/[0.04]'
                   }`}
@@ -377,7 +377,7 @@ export default function PricingSection() {
               </button>
               <button
                 onClick={() => setActiveTab('recurring')}
-                className={`px-5 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer ${activeTab === 'recurring'
+                className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer ${activeTab === 'recurring'
                     ? 'bg-purple-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]'
                     : 'text-gray-400 hover:text-white hover:bg-white/[0.04]'
                   }`}
@@ -448,7 +448,7 @@ export default function PricingSection() {
 
         {/* ─── TAB 1: WEBSITE DEVELOPMENT ─── */}
         {activeTab === 'development' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 items-stretch">
+          <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-4 gap-2.5 sm:gap-5 items-stretch">
             {DEV_PACKAGES.map((pkg) => {
               const isPopular = pkg.popular;
               const isCardFour = pkg.id === '04';
@@ -456,7 +456,7 @@ export default function PricingSection() {
               return (
                 <div
                   key={pkg.id}
-                  className={`group relative rounded-xl md:rounded-2xl p-4 md:p-6 flex flex-col transition-all duration-300 ${isCardFour ? 'overflow-visible' : 'overflow-hidden'
+                  className={`group relative rounded-xl sm:rounded-2xl p-3 sm:p-6 flex flex-col transition-all duration-300 ${isCardFour ? 'overflow-visible' : 'overflow-hidden'
                     } ${isPopular
                       ? 'bg-[#0e0e18] border border-purple-500/80 shadow-[0_12px_40px_-10px_rgba(168,85,247,0.3)]'
                       : 'bg-[#0c0c14] border border-white/15 hover:border-purple-500/60 hover:shadow-[0_12px_35px_-10px_rgba(168,85,247,0.2)]'
@@ -492,17 +492,17 @@ export default function PricingSection() {
 
                   <div className="relative z-10 flex flex-col flex-1">
                     {/* Header: Index & Badge */}
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-xs font-mono tracking-widest text-purple-400 uppercase">
+                    <div className="flex items-center justify-between mb-2 sm:mb-4">
+                      <span className="text-[10px] sm:text-xs font-mono tracking-widest text-purple-400 uppercase">
                           // {pkg.id}
                       </span>
                       {isPopular ? (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-purple-300 bg-purple-500/20 border border-purple-500/40 shadow-[0_0_8px_rgba(168,85,247,0.3)]">
+                        <span className="px-1.5 sm:px-2.5 py-0.5 rounded-full text-[8px] sm:text-[10px] font-mono uppercase tracking-wider text-purple-300 bg-purple-500/20 border border-purple-500/40 shadow-[0_0_8px_rgba(168,85,247,0.3)]">
                           Popular
                         </span>
                       ) : (
                         pkg.badge && (
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-gray-400 bg-white/[0.04] border border-white/10">
+                          <span className="px-1.5 sm:px-2.5 py-0.5 rounded-full text-[8px] sm:text-[10px] font-mono uppercase tracking-wider text-gray-400 bg-white/[0.04] border border-white/10">
                             {pkg.badge}
                           </span>
                         )
@@ -510,26 +510,26 @@ export default function PricingSection() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl font-light text-white tracking-tight leading-snug mb-1.5 group-hover:text-purple-300 transition-colors">
+                    <h3 className="text-sm sm:text-xl font-medium sm:font-light text-white tracking-tight leading-snug mb-1 sm:mb-1.5 group-hover:text-purple-300 transition-colors">
                       {pkg.name}
                     </h3>
-                    <p className="text-xs text-gray-400 font-light leading-relaxed mb-5 min-h-[36px] line-clamp-2">
+                    <p className="text-[10px] sm:text-xs text-gray-400 font-light leading-snug sm:leading-relaxed mb-2.5 sm:mb-5 min-h-0 sm:min-h-[36px] line-clamp-1 sm:line-clamp-2">
                       {pkg.description}
                     </p>
 
                     {/* Price */}
-                    <div className="pt-3 pb-4 border-t border-white/10 mb-5 min-h-[72px] flex flex-col justify-end">
+                    <div className="pt-2 sm:pt-3 pb-2 sm:pb-4 border-t border-white/10 mb-2.5 sm:mb-5 min-h-0 sm:min-h-[72px] flex flex-col justify-end">
                       {pkg.id === '04' && (
-                        <span className="text-[10px] uppercase tracking-widest font-mono text-gray-500 block mb-0.5">
+                        <span className="text-[8px] sm:text-[10px] uppercase tracking-widest font-mono text-gray-500 block mb-0.5">
                           Starting From
                         </span>
                       )}
                       <div className="flex items-baseline gap-1">
-                        <span className="text-2xl md:text-3xl font-light text-white tracking-tight font-mono">
+                        <span className="text-lg sm:text-2xl md:text-3xl font-light text-white tracking-tight font-mono">
                           {pkg.price}
                         </span>
                         {pkg.priceSub && (
-                          <span className="text-xs font-mono text-purple-400 font-normal">
+                          <span className="text-[10px] sm:text-xs font-mono text-purple-400 font-normal">
                             {pkg.priceSub}
                           </span>
                         )}
@@ -537,43 +537,59 @@ export default function PricingSection() {
                     </div>
 
                     {/* Features */}
-                    <div className="space-y-2.5 mb-5 flex-1 flex flex-col justify-between">
-                      <div className="space-y-2.5">
+                    <div className="space-y-1 sm:space-y-2.5 mb-2.5 sm:mb-5 flex-1 flex flex-col justify-between">
+                      <div className="space-y-1 sm:space-y-2.5">
                         {pkg.features.map((feat, i) => (
-                          <div key={i} className="flex items-start gap-2 text-xs text-gray-300 font-light">
-                            <span className="w-1.5 h-1.5 rounded-full bg-purple-400/80 mt-1.5 shrink-0" />
-                            <span className="leading-relaxed">{feat}</span>
+                          <div
+                            key={i}
+                            className={`items-start gap-1 sm:gap-2 text-[10px] sm:text-xs text-gray-300 font-light ${
+                              i >= 3 ? 'hidden sm:flex' : 'flex'
+                            }`}
+                          >
+                            <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-purple-400/80 mt-1 sm:mt-1.5 shrink-0" />
+                            <span className="leading-tight sm:leading-relaxed line-clamp-1 sm:line-clamp-none">{feat}</span>
                           </div>
                         ))}
+                        {pkg.features.length > 3 && (
+                          <span className="sm:hidden text-[9px] font-mono text-purple-400/80 block pt-0.5">
+                            +{pkg.features.length - 3} fitur lainnya
+                          </span>
+                        )}
                       </div>
 
                       {/* Extra bottom info / SLA slot for perfect alignment */}
-                      <div className="pt-3 min-h-[58px] flex flex-col justify-end">
+                      <div className="pt-2 sm:pt-3 min-h-0 sm:min-h-[58px] flex flex-col justify-end">
                         {pkg.examples ? (
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10">
-                            <span className="text-[9px] uppercase tracking-widest font-mono text-purple-400 block mb-1">
-                              Kategori Solusi:
+                          <div className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-white/[0.03] border border-white/10">
+                            <span className="text-[8px] sm:text-[9px] uppercase tracking-widest font-mono text-purple-400 block mb-0.5 sm:mb-1">
+                              Solusi:
                             </span>
                             <div className="flex flex-wrap gap-1">
-                              {pkg.examples.map((ex, idx) => (
-                                <span key={idx} className="text-[10px] text-gray-300 bg-white/[0.05] border border-white/10 rounded px-1.5 py-0.5 font-mono">
+                              {pkg.examples.slice(0, 2).map((ex, idx) => (
+                                <span key={idx} className="text-[8px] sm:text-[10px] text-gray-300 bg-white/[0.05] border border-white/10 rounded px-1 py-0.5 font-mono">
+                                  {ex}
+                                </span>
+                              ))}
+                              <span className="sm:hidden text-[8px] text-purple-300/80 px-1 py-0.5 font-mono">+{pkg.examples.length - 2}</span>
+                              {pkg.examples.slice(2).map((ex, idx) => (
+                                <span key={idx + 2} className="hidden sm:inline-block text-[10px] text-gray-300 bg-white/[0.05] border border-white/10 rounded px-1.5 py-0.5 font-mono">
                                   {ex}
                                 </span>
                               ))}
                             </div>
                           </div>
                         ) : pkg.note ? (
-                          <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-purple-400/60 shrink-0" />
-                            <p className="text-[10px] text-gray-400 font-light italic leading-tight font-mono">
+                          <div className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-white/[0.02] border border-white/5 flex items-center gap-1 sm:gap-1.5">
+                            <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-purple-400/60 shrink-0" />
+                            <p className="text-[8px] sm:text-[10px] text-gray-400 font-light italic leading-tight font-mono line-clamp-1 sm:line-clamp-none">
                               {pkg.note}
                             </p>
                           </div>
                         ) : (
-                          <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80 shrink-0" />
-                            <span className="text-[10px] text-gray-400 font-mono">
-                              Full Source Code & Deployment
+                          <div className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-white/[0.02] border border-white/5 flex items-center gap-1 sm:gap-1.5">
+                            <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-emerald-400/80 shrink-0" />
+                            <span className="text-[8px] sm:text-[10px] text-gray-400 font-mono truncate">
+                              Full Source Code
                             </span>
                           </div>
                         )}
@@ -586,7 +602,7 @@ export default function PricingSection() {
                     href="https://wa.me/6282349239232?text=Halo%20KIBI,%20saya%20tertarik%20dengan%20layanan%20Website%20"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`relative z-10 w-full py-3 px-4 rounded-xl text-xs font-mono uppercase tracking-wider text-center transition-all duration-300 cursor-pointer block mt-auto ${isPopular
+                    className={`relative z-10 w-full py-2 sm:py-3 px-2 sm:px-4 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-mono uppercase tracking-wider text-center transition-all duration-300 cursor-pointer block mt-auto ${isPopular
                         ? 'bg-purple-600 hover:bg-purple-500 text-white shadow-[0_0_16px_rgba(168,85,247,0.4)]'
                         : 'bg-white/[0.05] hover:bg-white/10 hover:border-purple-500/40 text-gray-300 hover:text-white border border-white/15'
                       }`}
@@ -601,9 +617,9 @@ export default function PricingSection() {
 
         {/* ─── TAB 2: RECURRING RETAINER ─── */}
         {activeTab === 'recurring' && (
-          <div className="space-y-8">
+          <div className="space-y-4 sm:space-y-8">
             {/* Recurring Cards - compact 4-column */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 items-stretch">
+            <div className="grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-4 gap-2.5 sm:gap-5 items-stretch">
               {RECURRING_PACKAGES.map((pkg) => {
                 const isPopular = pkg.popular;
                 const isCardFour = pkg.id === '04';
@@ -621,7 +637,7 @@ export default function PricingSection() {
                 return (
                   <div
                     key={pkg.id}
-                    className={`group relative rounded-2xl p-6 flex flex-col transition-all duration-300 ${isCardFour ? 'overflow-visible' : 'overflow-hidden'
+                    className={`group relative rounded-xl sm:rounded-2xl p-3 sm:p-6 flex flex-col transition-all duration-300 ${isCardFour ? 'overflow-visible' : 'overflow-hidden'
                       } ${isPopular
                         ? 'bg-[#0e0e18] border border-purple-500/80 shadow-[0_12px_40px_-10px_rgba(168,85,247,0.3)]'
                         : 'bg-[#0c0c14] border border-white/15 hover:border-purple-500/60 hover:shadow-[0_12px_35px_-10px_rgba(168,85,247,0.2)]'
@@ -657,17 +673,17 @@ export default function PricingSection() {
 
                     <div className="relative z-10 flex flex-col flex-1">
                       {/* Index & Badge */}
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-xs font-mono tracking-widest text-purple-400 uppercase">
+                      <div className="flex items-center justify-between mb-2 sm:mb-4">
+                        <span className="text-[10px] sm:text-xs font-mono tracking-widest text-purple-400 uppercase">
                             // {pkg.id}
                         </span>
                         {isPopular ? (
-                          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-purple-300 bg-purple-500/20 border border-purple-500/40 shadow-[0_0_8px_rgba(168,85,247,0.3)]">
+                          <span className="px-1.5 sm:px-2.5 py-0.5 rounded-full text-[8px] sm:text-[10px] font-mono uppercase tracking-wider text-purple-300 bg-purple-500/20 border border-purple-500/40 shadow-[0_0_8px_rgba(168,85,247,0.3)]">
                             Popular
                           </span>
                         ) : (
                           pkg.badge && (
-                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider text-gray-400 bg-white/[0.04] border border-white/10">
+                            <span className="px-1.5 sm:px-2.5 py-0.5 rounded-full text-[8px] sm:text-[10px] font-mono uppercase tracking-wider text-gray-400 bg-white/[0.04] border border-white/10">
                               {pkg.badge}
                             </span>
                           )
@@ -675,57 +691,67 @@ export default function PricingSection() {
                       </div>
 
                       {/* Name & Target */}
-                      <h3 className="text-xl font-light text-white tracking-tight leading-snug mb-1.5 group-hover:text-purple-300 transition-colors">
+                      <h3 className="text-sm sm:text-xl font-medium sm:font-light text-white tracking-tight leading-snug mb-1 sm:mb-1.5 group-hover:text-purple-300 transition-colors">
                         {pkg.name}
                       </h3>
-                      <p className="text-xs text-gray-400 font-light leading-relaxed mb-5 min-h-[36px] line-clamp-2">
+                      <p className="text-[10px] sm:text-xs text-gray-400 font-light leading-snug sm:leading-relaxed mb-2.5 sm:mb-5 min-h-0 sm:min-h-[36px] line-clamp-1 sm:line-clamp-2">
                         {pkg.target}
                       </p>
 
                       {/* Price */}
-                      <div className="pt-3 pb-4 border-t border-white/10 mb-5 min-h-[72px] flex flex-col justify-end">
+                      <div className="pt-2 sm:pt-3 pb-2 sm:pb-4 border-t border-white/10 mb-2.5 sm:mb-5 min-h-0 sm:min-h-[72px] flex flex-col justify-end">
                         <div className="flex items-baseline gap-1">
-                          <span className="text-2xl md:text-3xl font-light text-white tracking-tight font-mono">
+                          <span className="text-lg sm:text-2xl md:text-3xl font-light text-white tracking-tight font-mono">
                             {displayPrice}
                           </span>
                           {pkg.id !== '04' && (
-                            <span className="text-xs font-mono text-purple-400">
+                            <span className="text-[10px] sm:text-xs font-mono text-purple-400">
                               {periodLabel}
                             </span>
                           )}
                         </div>
 
                         {billingCycle !== 'monthly' && pkg.id !== '04' ? (
-                          <div className="mt-1 text-[11px] font-mono text-emerald-400 flex items-center gap-1.5">
+                          <div className="mt-1 text-[9px] sm:text-[11px] font-mono text-emerald-400 flex items-center gap-1">
                             <span className="w-1 h-1 rounded-full bg-emerald-400" />
                             <span>Hemat {billingCycle === '6month' ? pkg.discount6m : pkg.discount12m}</span>
                           </div>
                         ) : (
-                          <div className="mt-1 text-[11px] font-mono text-gray-500 invisible">
+                          <div className="mt-1 text-[9px] sm:text-[11px] font-mono text-gray-500 invisible">
                             placeholder
                           </div>
                         )}
                       </div>
 
                       {/* Features */}
-                      <div className="space-y-2.5 mb-5 flex-1 flex flex-col justify-between">
-                        <div className="space-y-2.5">
+                      <div className="space-y-1 sm:space-y-2.5 mb-2.5 sm:mb-5 flex-1 flex flex-col justify-between">
+                        <div className="space-y-1 sm:space-y-2.5">
                           {pkg.features.map((feat, i) => (
-                            <div key={i} className="flex items-start gap-2 text-xs text-gray-300 font-light">
-                              <span className="w-1.5 h-1.5 rounded-full bg-purple-400/80 mt-1.5 shrink-0" />
-                              <span className="leading-relaxed">{feat}</span>
+                            <div
+                              key={i}
+                              className={`items-start gap-1 sm:gap-2 text-[10px] sm:text-xs text-gray-300 font-light ${
+                                i >= 3 ? 'hidden sm:flex' : 'flex'
+                              }`}
+                            >
+                              <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-purple-400/80 mt-1 sm:mt-1.5 shrink-0" />
+                              <span className="leading-tight sm:leading-relaxed line-clamp-1 sm:line-clamp-none">{feat}</span>
                             </div>
                           ))}
+                          {pkg.features.length > 3 && (
+                            <span className="sm:hidden text-[9px] font-mono text-purple-400/80 block pt-0.5">
+                              +{pkg.features.length - 3} fitur lainnya
+                            </span>
+                          )}
                         </div>
 
                         {/* SLA compact */}
-                        <div className="pt-3 min-h-[58px] flex flex-col justify-end">
-                          <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 space-y-1 text-[11px] font-mono text-gray-300">
-                            <div className="flex items-center gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                        <div className="pt-2 sm:pt-3 min-h-0 sm:min-h-[58px] flex flex-col justify-end">
+                          <div className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-white/[0.03] border border-white/10 space-y-0.5 sm:space-y-1 text-[9px] sm:text-[11px] font-mono text-gray-300">
+                            <div className="flex items-center gap-1 sm:gap-1.5">
+                              <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-purple-400 shrink-0" />
                               <span className="truncate">{pkg.slaResponse}</span>
                             </div>
-                            <div className="text-gray-500 pl-3 text-[10px]">
+                            <div className="text-gray-500 pl-2 sm:pl-3 text-[8px] sm:text-[10px] truncate">
                               {pkg.slaEmergency}
                             </div>
                           </div>
@@ -738,7 +764,7 @@ export default function PricingSection() {
                       href="https://wa.me/6282349239232?text=Halo%20KIBI,%20saya%20tertarik%20paket%20Recurring%20"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`relative z-10 w-full py-3 px-4 rounded-xl text-xs font-mono uppercase tracking-wider text-center transition-all duration-300 cursor-pointer block mt-auto ${isPopular
+                      className={`relative z-10 w-full py-2 sm:py-3 px-2 sm:px-4 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-mono uppercase tracking-wider text-center transition-all duration-300 cursor-pointer block mt-auto ${isPopular
                           ? 'bg-purple-600 hover:bg-purple-500 text-white shadow-[0_0_16px_rgba(168,85,247,0.4)]'
                           : 'bg-white/[0.05] hover:bg-white/10 hover:border-purple-500/40 text-gray-300 hover:text-white border border-white/15'
                         }`}
