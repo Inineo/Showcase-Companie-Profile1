@@ -11,6 +11,7 @@ export interface Project {
   metric: string;
   badge: string;
   badgeBg?: string;
+  glowColor?: string;
   image: string | null;
   href: string;
 }
@@ -24,6 +25,7 @@ const projects: Project[] = [
     metric: 'Live Demo',
     badge: 'FLEET',
     badgeBg: '#2563eb',
+    glowColor: '#3b82f6',
     image: '/assets/images/projects/travel-fleet-cover.jpg',
     href: 'https://dashboard-travel-chi.vercel.app/',
   },
@@ -35,6 +37,7 @@ const projects: Project[] = [
     metric: '60 fps',
     badge: '3D',
     badgeBg: '#7c3aed',
+    glowColor: '#ec4899',
     image: '/assets/images/projects/Valentine.png',
     href: 'https://valentine-web-1.vercel.app/',
   },
@@ -46,6 +49,7 @@ const projects: Project[] = [
     metric: 'Live Demo',
     badge: 'WEB',
     badgeBg: '#2563eb',
+    glowColor: '#eab308',
     image: '/assets/images/projects/EliteGym.png',
     href: 'https://elite-gym-green.vercel.app/',
   },
@@ -57,6 +61,7 @@ const projects: Project[] = [
     metric: 'Play Now',
     badge: 'GAME',
     badgeBg: '#0891b2',
+    glowColor: '#06b6d4',
     image: '/assets/images/projects/FoxLeap.png',
     href: 'https://devnero.itch.io/fox-leap',
   },
@@ -68,19 +73,9 @@ const projects: Project[] = [
     metric: 'View Design',
     badge: 'UI/UX',
     badgeBg: '#3336eaff',
+    glowColor: '#6366f1',
     image: '/assets/images/projects/LintasNusa.png',
     href: 'https://www.figma.com/design/blnagNBuGsr9ve62bPrXDl/LintasNusa?node-id=0-1&p=f',
-  },
-  {
-    id: 6,
-    title: 'Lintas Nusa Pro',
-    category: 'UI/UX Design',
-    year: '2024',
-    metric: 'View Design',
-    badge: 'UI/UX',
-    badgeBg: '#059669',
-    image: '/assets/images/projects/LintasNusa.png',
-    href: 'https://www.figma.com/design/blnagNBuGsr9ve62bPrXDl/LintasNusa?node-id=0-1',
   },
   {
     id: 7,
@@ -89,7 +84,8 @@ const projects: Project[] = [
     year: '2026',
     metric: 'Live Site',
     badge: 'WEB',
-    badgeBg: '#e11d48',
+    badgeBg: '#3d50ffff',
+    glowColor: '#8b5cf6',
     image: '/assets/images/projects/Portofolio.png',
     href: 'https://inineo.page.gd/',
   },
@@ -101,6 +97,7 @@ const projects: Project[] = [
     metric: 'View Design',
     badge: 'UI/UX',
     badgeBg: '#d97706',
+    glowColor: '#a855f7',
     image: '/assets/images/projects/sakupay.png',
     href: 'https://www.figma.com/design/mD8uqOq5wU3T8D19GjVIzk/Desgin-SakuPay',
   },
@@ -399,11 +396,27 @@ export default function SelectedWork() {
               key={project.id}
               ref={(el) => { cardRefs.current[index] = el; }}
               onClick={() => handleCardClick(index, project.href)}
-              className="selected-card-idle group block w-[175px] sm:w-[290px] md:w-[320px] rounded-[18px] sm:rounded-[26px] overflow-hidden cursor-pointer absolute"
-              style={{ willChange: 'transform, opacity', contain: 'layout style' }}
+              className="selected-card-idle group block w-[175px] sm:w-[290px] md:w-[320px] cursor-pointer absolute rounded-[18px] sm:rounded-[26px] overflow-hidden bg-black"
+              style={{ 
+                willChange: 'transform, opacity',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden',
+                transform: 'translateZ(0)',
+                WebkitFontSmoothing: 'subpixel-antialiased',
+              }}
             >
+              {/* Gradient Glow Background */}
               <div
-                className="relative w-full aspect-[1/1.4] sm:aspect-[1/1.45] overflow-hidden rounded-[18px] sm:rounded-[26px]"
+                className="absolute -inset-2 rounded-[18px] sm:rounded-[26px] blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none -z-10"
+                style={{
+                  background: project.glowColor
+                    ? `radial-gradient(ellipse at center, ${project.glowColor}60 0%, ${project.glowColor}20 50%, transparent 100%)`
+                    : 'transparent',
+                }}
+              />
+              
+              <div
+                className="relative w-full aspect-[1/1.4] sm:aspect-[1/1.45]"
                 style={{ background: project.image ? undefined : theme.bg }}
               >
                 {project.image && (
@@ -429,7 +442,7 @@ export default function SelectedWork() {
 
                 <div className="absolute top-3 left-3 right-3 sm:top-5 sm:left-5 sm:right-5 flex items-center justify-between z-10">
                   <div
-                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shadow-lg border border-white/20 backdrop-blur-md"
+                    className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shadow-lg backdrop-blur-md"
                     style={{ background: project.badgeBg || '#4f46e5' }}
                   >
                     <span className="text-[8px] sm:text-[10px] font-bold text-white tracking-tighter font-mono">{project.badge}</span>
@@ -439,7 +452,7 @@ export default function SelectedWork() {
                   </div>
                 </div>
 
-                <div className="absolute inset-x-0 bottom-0 h-28 sm:h-44 bg-gradient-to-t from-black/95 via-black/60 to-transparent pointer-events-none" />
+                <div className="absolute -left-1 -right-1 -bottom-1 h-32 sm:h-48 bg-gradient-to-t from-black via-black/70 to-transparent pointer-events-none" />
 
                 <div className="absolute bottom-0 left-0 right-0 p-3.5 sm:p-6 z-10">
                   <h3 className="text-sm sm:text-xl md:text-2xl font-medium text-white tracking-tight leading-snug drop-shadow-md mb-1 sm:mb-1.5 group-hover:text-purple-300 transition-colors">
