@@ -147,10 +147,10 @@ export default function SelectedWork() {
       const sign = Math.sign(diff);
       const absD = Math.abs(diff);
 
-      // Responsive spread: tighter on mobile, wider on desktop
+      // Responsive spread: mobile cards have dedicated spacing; desktop remains unchanged.
       const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-      const spreadPrimary = isMobile ? 135 : 375;
-      const spreadSecondary = isMobile ? 100 : 295;
+      const spreadPrimary = isMobile ? 165 : 375;
+      const spreadSecondary = isMobile ? 125 : 295;
 
       let translateX = 0;
       if (absD <= 1) {
@@ -340,7 +340,7 @@ export default function SelectedWork() {
     dragDistanceRef.current = Math.abs(deltaX);
 
     if (dragDistanceRef.current > 6) {
-      const dragDivisor = (typeof window !== 'undefined' && window.innerWidth < 640) ? 135 : 360;
+      const dragDivisor = (typeof window !== 'undefined' && window.innerWidth < 640) ? 165 : 360;
       const deltaIndex = deltaX / dragDivisor;
       virtualIndexRef.current = dragStartIndex.current - deltaIndex;
       applyTransforms(virtualIndexRef.current);
@@ -406,7 +406,7 @@ export default function SelectedWork() {
 
       {/* Card Viewport */}
       <div
-        className="relative z-10 w-full max-w-[1700px] mx-auto flex items-center justify-center cursor-grab active:cursor-grabbing px-4 h-[290px] sm:h-[500px] md:h-[580px]"
+        className="relative z-10 w-full max-w-[1700px] mx-auto flex items-center justify-center cursor-grab active:cursor-grabbing px-4 h-[250px] sm:h-[500px] md:h-[580px]"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -420,7 +420,7 @@ export default function SelectedWork() {
               key={project.id}
               ref={(el) => { cardRefs.current[index] = el; }}
               onClick={() => handleCardClick(index, project.href)}
-              className="selected-card-idle group block w-[175px] sm:w-[290px] md:w-[320px] cursor-pointer absolute"
+              className="selected-card-idle group block w-[150px] sm:w-[290px] md:w-[320px] cursor-pointer absolute"
               style={{ 
                 willChange: 'transform, opacity',
                 backfaceVisibility: 'hidden',
@@ -440,11 +440,16 @@ export default function SelectedWork() {
                   zIndex: 0,
                 }}
               />
-              
               <div 
-                className="relative z-10 w-full aspect-[1/1.4] sm:aspect-[1/1.45] rounded-[18px] sm:rounded-[26px] overflow-hidden bg-black"
+                className="selected-work-thumbnail relative z-10 w-full aspect-[1/1.4] sm:aspect-[1/1.45] bg-black"
                 style={{ 
                   backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                  clipPath: 'inset(0 round 18px)',
+                  WebkitClipPath: 'inset(0 round 18px)',
+                  isolation: 'isolate',
+                  transform: 'translateZ(0)',
+                  boxShadow: '0 0 0 1px rgba(255, 255, 255, 0.12), 0 18px 42px rgba(0, 0, 0, 0.55)',
                   background: project.image ? undefined : theme.bg 
                 }}
               >
@@ -452,7 +457,7 @@ export default function SelectedWork() {
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="absolute -inset-0.5 h-[calc(100%+4px)] w-[calc(100%+4px)] object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     draggable={false}
                   />
                 )}
