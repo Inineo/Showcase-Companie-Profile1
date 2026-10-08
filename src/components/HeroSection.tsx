@@ -34,8 +34,8 @@ export default function HeroSection() {
       {/* 3D Hero Canvas Background */}
       <div className="absolute inset-0 w-full h-full flex items-center justify-center z-0 pointer-events-none overflow-hidden bg-black">
         <div className="parallax-container w-full h-full flex items-center justify-center relative">
-          {/* Mobile vs Desktop gradient overlay: on mobile, center has transparent gradient so cube shines through clearly */}
-          <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-black/85 via-transparent to-black/90 sm:bg-gradient-to-r sm:from-black sm:via-black/80 sm:to-transparent z-10" />
+          {/* Mobile gradient overlay for text readability; hidden on desktop to show cube clearly */}
+          <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-black/85 via-transparent to-black/90 z-10 sm:hidden" />
 
           <div className="relative w-full h-full max-w-[1400px] flex items-center justify-center">
             <HeroCube />
