@@ -11,9 +11,23 @@ export interface Project {
   metric: string;
   badge: string;
   badgeBg?: string;
-  glowColor?: string;
   image: string | null;
   href: string;
+}
+
+/* ─── Helper untuk mengubah Hex Color (#RRGGBB atau #RRGGBBAA) ke valid rgba() ─── */
+function hexToRgba(hex: string, alpha: number): string {
+  let cleanHex = hex.replace('#', '');
+  if (cleanHex.length === 8) {
+    cleanHex = cleanHex.substring(0, 6);
+  }
+  if (cleanHex.length === 3) {
+    cleanHex = cleanHex.split('').map((c) => c + c).join('');
+  }
+  const r = parseInt(cleanHex.substring(0, 2), 16) || 0;
+  const g = parseInt(cleanHex.substring(2, 4), 16) || 0;
+  const b = parseInt(cleanHex.substring(4, 6), 16) || 0;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
 const projects: Project[] = [
@@ -24,8 +38,7 @@ const projects: Project[] = [
     year: '2026',
     metric: 'Live Demo',
     badge: 'FLEET',
-    badgeBg: '#2563eb',
-    glowColor: '#3b82f6',
+    badgeBg: '#005ff8',
     image: '/assets/images/projects/travel-fleet-cover.jpg',
     href: 'https://dashboard-travel-chi.vercel.app/',
   },
@@ -36,8 +49,7 @@ const projects: Project[] = [
     year: '2026',
     metric: '60 fps',
     badge: '3D',
-    badgeBg: '#7c3aed',
-    glowColor: '#ec4899',
+    badgeBg: '#ed3ae4',
     image: '/assets/images/projects/Valentine.png',
     href: 'https://valentine-web-1.vercel.app/',
   },
@@ -48,8 +60,7 @@ const projects: Project[] = [
     year: '2026',
     metric: 'Live Demo',
     badge: 'WEB',
-    badgeBg: '#2563eb',
-    glowColor: '#eab308',
+    badgeBg: '#357c15',
     image: '/assets/images/projects/EliteGym.png',
     href: 'https://elite-gym-green.vercel.app/',
   },
@@ -60,8 +71,7 @@ const projects: Project[] = [
     year: '2024',
     metric: 'Play Now',
     badge: 'GAME',
-    badgeBg: '#0891b2',
-    glowColor: '#06b6d4',
+    badgeBg: '#ff9100',
     image: '/assets/images/projects/FoxLeap.png',
     href: 'https://devnero.itch.io/fox-leap',
   },
@@ -72,8 +82,7 @@ const projects: Project[] = [
     year: '2024',
     metric: 'View Design',
     badge: 'UI/UX',
-    badgeBg: '#3336eaff',
-    glowColor: '#6366f1',
+    badgeBg: '#3336ea',
     image: '/assets/images/projects/LintasNusa.png',
     href: 'https://www.figma.com/design/blnagNBuGsr9ve62bPrXDl/LintasNusa?node-id=0-1&p=f',
   },
@@ -84,8 +93,7 @@ const projects: Project[] = [
     year: '2026',
     metric: 'Live Site',
     badge: 'WEB',
-    badgeBg: '#3d50ffff',
-    glowColor: '#8b5cf6',
+    badgeBg: '#3d50ff',
     image: '/assets/images/projects/Portofolio.png',
     href: 'https://inineo.page.gd/',
   },
@@ -96,8 +104,7 @@ const projects: Project[] = [
     year: '2024',
     metric: 'View Design',
     badge: 'UI/UX',
-    badgeBg: '#d97706',
-    glowColor: '#a855f7',
+    badgeBg: '#720288',
     image: '/assets/images/projects/sakupay.png',
     href: 'https://www.figma.com/design/mD8uqOq5wU3T8D19GjVIzk/Desgin-SakuPay',
   },
@@ -117,6 +124,7 @@ const placeholderThemes = [
 export default function SelectedWork() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const glowRef = useRef<HTMLDivElement>(null);
 
   const virtualIndexRef = useRef(0);
   const targetIndexRef = useRef<number | null>(null);
@@ -183,6 +191,12 @@ export default function SelectedWork() {
           dimEl.style.opacity = String(Math.max(0, 1 - brightness));
         }
 
+        // Make the color glow visible for the centered card, with a subtle glow on nearby cards.
+        const cardGlow = el.querySelector<HTMLDivElement>('.card-color-glow');
+        if (cardGlow) {
+          cardGlow.style.opacity = String(isCenter ? 0.82 : opacity > 0.3 ? 0.1 : 0);
+        }
+
         // Toggle shadow/ring classes via dataset flag
         if (isCenter && el.dataset.center !== '1') {
           el.dataset.center = '1';
@@ -193,6 +207,15 @@ export default function SelectedWork() {
           el.classList.remove('selected-card-active');
           el.classList.add('selected-card-idle');
         }
+      }
+      
+      // Update background glow color based on centered card
+      if (glowRef.current) {
+        const centerIndex = Math.round(vIndex);
+        const normalizedIndex = ((centerIndex % total) + total) % total;
+        const centerProject = projects[normalizedIndex];
+        const glowColor = centerProject?.badgeBg || '#a855f7';
+        glowRef.current.style.background = `radial-gradient(ellipse at center, ${hexToRgba(glowColor, 0.34)} 0%, ${hexToRgba(glowColor, 0.12)} 48%, transparent 74%)`;
       }
     },
     [total, computeCardProps],
@@ -371,18 +394,19 @@ export default function SelectedWork() {
         </div>
       </div>
 
-      {/* Atmospheric Ambient Glow (Hardware-accelerated Radial Gradient Shader - zero blur cost) */}
+      {/* Dynamic Ambient Glow - changes color with the centered card */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] rounded-full pointer-events-none opacity-70"
+        ref={glowRef}
+        className="absolute top-1/2 left-1/2 z-0 h-[500px] w-[1000px] -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none transition-[background] duration-700"
         style={{
-          background: 'radial-gradient(ellipse at center, rgba(168, 85, 247, 0.22) 0%, rgba(120, 20, 50, 0.1) 45%, transparent 70%)',
           transform: 'translate3d(-50%, -50%, 0)',
+          background: `radial-gradient(ellipse at center, ${hexToRgba(projects[0].badgeBg || '#005ff8', 0.34)} 0%, ${hexToRgba(projects[0].badgeBg || '#005ff8', 0.12)} 48%, transparent 74%)`,
         }}
       />
 
       {/* Card Viewport */}
       <div
-        className="relative w-full max-w-[1700px] mx-auto flex items-center justify-center cursor-grab active:cursor-grabbing px-4 h-[290px] sm:h-[500px] md:h-[580px]"
+        className="relative z-10 w-full max-w-[1700px] mx-auto flex items-center justify-center cursor-grab active:cursor-grabbing px-4 h-[290px] sm:h-[500px] md:h-[580px]"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -396,7 +420,7 @@ export default function SelectedWork() {
               key={project.id}
               ref={(el) => { cardRefs.current[index] = el; }}
               onClick={() => handleCardClick(index, project.href)}
-              className="selected-card-idle group block w-[175px] sm:w-[290px] md:w-[320px] cursor-pointer absolute rounded-[18px] sm:rounded-[26px] overflow-hidden bg-black"
+              className="selected-card-idle group block w-[175px] sm:w-[290px] md:w-[320px] cursor-pointer absolute"
               style={{ 
                 willChange: 'transform, opacity',
                 backfaceVisibility: 'hidden',
@@ -405,19 +429,24 @@ export default function SelectedWork() {
                 WebkitFontSmoothing: 'subpixel-antialiased',
               }}
             >
-              {/* Gradient Glow Background */}
+              {/* Per-card glow stays below content but above the section background. */}
               <div
-                className="absolute -inset-2 rounded-[18px] sm:rounded-[26px] blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 pointer-events-none -z-10"
+                className="card-color-glow absolute inset-0 pointer-events-none transition-opacity duration-500"
                 style={{
-                  background: project.glowColor
-                    ? `radial-gradient(ellipse at center, ${project.glowColor}60 0%, ${project.glowColor}20 50%, transparent 100%)`
-                    : 'transparent',
+                  background: `radial-gradient(ellipse at center, ${hexToRgba(project.badgeBg || '#4f46e5', 0.92)} 0%, ${hexToRgba(project.badgeBg || '#4f46e5', 0.52)} 35%, transparent 72%)`,
+                  filter: 'blur(32px)',
+                  opacity: 0,
+                  transform: 'scale(1.34)',
+                  zIndex: 0,
                 }}
               />
               
-              <div
-                className="relative w-full aspect-[1/1.4] sm:aspect-[1/1.45]"
-                style={{ background: project.image ? undefined : theme.bg }}
+              <div 
+                className="relative z-10 w-full aspect-[1/1.4] sm:aspect-[1/1.45] rounded-[18px] sm:rounded-[26px] overflow-hidden bg-black"
+                style={{ 
+                  backfaceVisibility: 'hidden',
+                  background: project.image ? undefined : theme.bg 
+                }}
               >
                 {project.image && (
                   <img
